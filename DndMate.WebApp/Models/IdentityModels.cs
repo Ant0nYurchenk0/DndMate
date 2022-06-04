@@ -23,7 +23,9 @@ namespace DndMate.WebApp.Models
 
     public class ApplicationDbContext : IdentityDbContext<Character>
     {
+        public DbSet<Spell> Spells { get; set; }
         public DbSet<Gamespace> Gamespaces { get; set; }
+        public DbSet<GamespaceSpell> GamespaceSpell { get; set; }
         public DbSet<GamespaceChar> GamespaceCharacters { get; set; }
 
         public ApplicationDbContext()
@@ -35,6 +37,7 @@ namespace DndMate.WebApp.Models
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<GamespaceChar>().HasKey(sc => new { sc.CharacterId, sc.GamespaceId });
+            modelBuilder.Entity<GamespaceSpell>().HasKey(sc => new { sc.SpellId, sc.GamespaceId });
         }
 
         public static ApplicationDbContext Create()
