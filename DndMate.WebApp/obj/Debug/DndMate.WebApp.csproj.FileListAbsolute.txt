@@ -106,3 +106,6 @@ C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\Dn
 C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.csproj.CopyComplete
 C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.dll
 C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.pdb
+C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.InitialModel.resources
+C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.csproj.GenerateResource.cache
+C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.InitialModel1.resources
