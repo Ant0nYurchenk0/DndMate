@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32519.379
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DndMate.WebApp", "DndMate.WebApp\DndMate.WebApp.csproj", "{3924B1BC-8D8E-4A8C-8E65-BB22B63A34EB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3924B1BC-8D8E-4A8C-8E65-BB22B63A34EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3924B1BC-8D8E-4A8C-8E65-BB22B63A34EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3924B1BC-8D8E-4A8C-8E65-BB22B63A34EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3924B1BC-8D8E-4A8C-8E65-BB22B63A34EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1CC9A78C-ADD0-4D31-8A79-D828F07ED403}
+	EndGlobalSection
+EndGlobal
