@@ -8,10 +8,11 @@ namespace DndMate.WebApp.Models
 
     public class Spell
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Image { get; set; }
         public int Level { get; set; }
+        public List<GamespaceSpell> Spells { get; set; }
     }
 
 }
