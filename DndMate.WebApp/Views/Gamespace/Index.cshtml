@@ -1,0 +1,22 @@
+﻿@model List<DndMate.WebApp.Models.Gamespace>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Gamespaces</h2>
+<ul>
+
+    @foreach (var gamespace in Model)
+    {
+        <li>
+            @gamespace.Name
+            <a href=" @Url.Action("Edit", "Gamespace", new { id= gamespace.Id})">Edit</a>
+            <a href=" @Url.Action("Delete", "Gamespace", new { id= gamespace.Id})">Delete</a>
+        </li>
+
+
+    }
+</ul>
+<form action="@Url.Action("Create", "Gamespace")">
+    <button>Add new</button>
+</form>

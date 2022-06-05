@@ -4,20 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace DndMate.WebApp.Models
+namespace DndMate.WebApp.Dtos
 {
-    public class Gamespace
+    public class GamespaceDto
     {
-        public Gamespace()
-        {
-            GamespaceCharacters = new List<GamespaceChar>();
-        }
-        [Key]
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
         public string Image { get; set; }
-        public List<GamespaceChar> GamespaceCharacters { get; set; }
     }
 }

@@ -15,10 +15,8 @@ namespace DndMate.WebApp.Models
         public int GamespaceId { get; set; }
         public Gamespace Gamespace { get; set; }
 
-        [Required]
         public CharacterClass CharacterClass { get; set; }
-        [Required]
-        [Range(1, 20)]
+        public Role Role { get; set; }
         public int Level { get; set; }
     }
 }
