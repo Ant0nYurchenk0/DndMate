@@ -1,0 +1,18 @@
+﻿@model IEnumerable<DndMate.WebApp.Dtos.NotificationDto>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Notifications</h2>
+<ul>
+
+    @foreach (var notification in Model)
+    {
+        <li>
+            <p>@notification.Message</p>
+            <a href="@Url.Action("Accept", "Notifications", new { id= notification.Id})">Accept</a>
+            <a href="@Url.Action("Deny", "Notifications", new { id= notification.Id})">Deny</a>
+        </li>
+    }
+</ul>
+

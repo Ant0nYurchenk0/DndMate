@@ -1,0 +1,24 @@
+﻿@model DndMate.WebApp.Dtos.NotificationDto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Submit", "Notifications"))
+{
+    @Html.ValidationSummary()
+    <div class="form-group">
+        @Html.LabelFor(n => n.UserEmail)
+        @Html.TextBoxFor(n => n.UserEmail, new { @class = "form-control" })
+        @Html.ValidationMessageFor(n => n.UserEmail)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(n => n.Message)
+        @Html.TextBoxFor(n => n.Message, new { @class = "form-control" })
+        @Html.ValidationMessageFor(n => n.Message)
+    </div>
+    @Html.HiddenFor(n => n.Id);
+    @Html.HiddenFor(n => n.GamespaceId);
+    @Html.AntiForgeryToken()
+    <button>Submit</button>
+}
