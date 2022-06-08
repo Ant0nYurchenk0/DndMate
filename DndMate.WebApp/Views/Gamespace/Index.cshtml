@@ -1,4 +1,4 @@
-﻿@model List<DndMate.WebApp.Models.Gamespace>
+﻿@model IEnumerable<DndMate.WebApp.Dtos.GamespaceDto>
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -9,9 +9,9 @@
     @foreach (var gamespace in Model)
     {
         <li>
-            @gamespace.Name
-            <a href=" @Url.Action("Edit", "Gamespace", new { id= gamespace.Id})">Edit</a>
-            <a href=" @Url.Action("Delete", "Gamespace", new { id= gamespace.Id})">Delete</a>
+            <a href="@Url.Action("Get", "Gamespace", new { id= gamespace.Id})">@gamespace.Name</a>            
+            <a href="@Url.Action("Edit", "Gamespace", new { id= gamespace.Id})">Edit</a>
+            <a href="@Url.Action("Delete", "Gamespace", new { id= gamespace.Id})">Delete</a>
         </li>
 
 

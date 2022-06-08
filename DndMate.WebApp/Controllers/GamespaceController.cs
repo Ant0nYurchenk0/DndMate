@@ -12,6 +12,7 @@ using System.Web.Mvc;
 
 namespace DndMate.WebApp.Controllers
 {
+    [Authorize]
     public class GamespaceController : Controller
     {
         // GET: Gamespace
@@ -31,7 +32,7 @@ namespace DndMate.WebApp.Controllers
                                 on g.Id equals gs.GamespaceId
                                 where gs.CharacterId == userId
                                 select g;                                           
-            return View(gamespaceList.ToList());
+            return View(gamespaceList.ToList().Select(n => Mapper.Map<Gamespace, GamespaceDto>(n)));
         }
         [Route("Gamespace/Create")]
         public ActionResult Create()
@@ -81,7 +82,8 @@ namespace DndMate.WebApp.Controllers
             var gamespace = _context.Gamespaces.SingleOrDefault(g => g.Id == id);
             if (gamespace == null)
                 return HttpNotFound();
-            return View("Gamespace", "Gamespace");
+            var gamespaceDto = Mapper.Map<Gamespace, GamespaceDto>(gamespace);
+            return View("Get",  gamespaceDto);
         }
         [Route("Gamespace/Leave")]
         public ActionResult Leave(string userId, int gamespaceId)
@@ -91,10 +93,6 @@ namespace DndMate.WebApp.Controllers
                 return HttpNotFound();
             _repository.Leave(gamespaceCharacter);
             return RedirectToAction("Index", "Gamespace");
-        }
-        public ActionResult AddUser(string userId, int gamespaceId)
-        {
-            return null;
-        }
+        }        
     }
 }

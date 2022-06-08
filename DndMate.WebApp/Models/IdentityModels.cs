@@ -23,6 +23,7 @@ namespace DndMate.WebApp.Models
 
     public class ApplicationDbContext : IdentityDbContext<Character>
     {
+        public DbSet<Notification> Notifications { get; set; }
         public DbSet<Spell> Spells { get; set; }
         public DbSet<Gamespace> Gamespaces { get; set; }
         public DbSet<GamespaceSpell> GamespaceSpell { get; set; }

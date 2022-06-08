@@ -46,20 +46,12 @@ namespace DndMate.WebApp.Repositories
             }
             else
             {
-                _context.GamespaceCharacters.Remove(gamespaceCharacter);
+                var gamespaceChar = _context.GamespaceCharacters.SingleOrDefault(gs => gs.GamespaceId == gamespaceCharacter.GamespaceId
+                                    && gs.CharacterId == gamespaceCharacter.CharacterId);
+                _context.GamespaceCharacters.Remove(gamespaceChar);
             }
             _context.SaveChanges();                
         }
-        //internal void AddUser(string userId, int gamespaceId)
-        //{
-        //    if (_context.GamespaceCharacters.Any(gs => gs.GamespaceId == gamespaceId && gs.CharacterId == userId))
-        //        return;
-        //    var gamespaceChar = new GamespaceChar();
-        //    gamespaceChar.CharacterId = userId;
-        //    gamespaceChar.GamespaceId = gamespaceId;
-        //    gamespaceChar.Role = Role.Player;
-        //    _context.GamespaceCharacters.Add(gamespaceChar);
-        //    _context.SaveChanges();
-        //}
+        
     }
 }

@@ -122,3 +122,6 @@ C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\bin\Ninject.
 C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\bin\Ninject.Web.Common.WebHost.xml
 C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\bin\Ninject.Web.Mvc.xml
 C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.temp.resources
+C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.AddNotifications.resources
+C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.AddedDataAnnotations.resources
+C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.temp1.resources
