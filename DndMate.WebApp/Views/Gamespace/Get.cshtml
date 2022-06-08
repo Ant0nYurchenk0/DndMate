@@ -8,5 +8,9 @@
 <h2>@Model.Name</h2>
 <p>@Model.Image</p>
 
+<a href="@Url.Action("Index", "Spells", new {gamespaceId = Model.Id})">Spells</a>
+<br />
+<a href="@Url.Action("Create", "Spells", new {gamespaceId = Model.Id})">Create Spell</a>
+<br />
 <a href="@Url.Action("Create", "Notifications", new {gamespaceId = Model.Id})">Invite</a>
 <a href="@Url.Action("Leave", "Gamespace", new {gamespaceId = Model.Id, userId = User.Identity.GetUserId()})">Leave</a>

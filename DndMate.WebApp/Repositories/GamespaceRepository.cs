@@ -27,7 +27,7 @@ namespace DndMate.WebApp.Repositories
             gamespaceChar.CharacterId = userId;
             gamespaceChar.GamespaceId = gamespace.Id;
             gamespaceChar.Role = Role.Master;
-            _context.GamespaceCharacters.Add(gamespaceChar);
+            _context.Characters.Add(gamespaceChar);
             _context.SaveChanges();
         }
 
@@ -46,9 +46,9 @@ namespace DndMate.WebApp.Repositories
             }
             else
             {
-                var gamespaceChar = _context.GamespaceCharacters.SingleOrDefault(gs => gs.GamespaceId == gamespaceCharacter.GamespaceId
+                var gamespaceChar = _context.Characters.SingleOrDefault(gs => gs.GamespaceId == gamespaceCharacter.GamespaceId
                                     && gs.CharacterId == gamespaceCharacter.CharacterId);
-                _context.GamespaceCharacters.Remove(gamespaceChar);
+                _context.Characters.Remove(gamespaceChar);
             }
             _context.SaveChanges();                
         }

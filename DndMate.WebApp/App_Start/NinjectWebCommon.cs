@@ -6,6 +6,7 @@ namespace DndMate.WebApp.App_Start
     using System;
     using System.Web;
     using DndMate.WebApp.Models;
+    using DndMate.WebApp.Repositories;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
@@ -63,6 +64,7 @@ namespace DndMate.WebApp.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<ApplicationDbContext>().To<ApplicationDbContext>();
+            kernel.Bind<CharactersRepository>().To<CharactersRepository>();
         }        
     }
 }

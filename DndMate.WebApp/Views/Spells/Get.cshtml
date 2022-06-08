@@ -1,0 +1,17 @@
+﻿@model DndMate.WebApp.ViewModels.GetSpellViewModel
+@{
+    ViewBag.Title = "Get";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Spell.Name</h2>
+<p>@Model.Spell.FullName</p>
+<form action="@Url.Action("AssignSpell", "Characters")">
+    <input type="hidden" value="@Model.Spell.Id" name="spellId" />
+    @foreach (var character in Model.Characters)
+    {
+        <input type="radio" value="@character.Id" name="charId" />
+        <label>@character.Name</label>
+    }
+    <button type="submit">Submit</button>
+</form>

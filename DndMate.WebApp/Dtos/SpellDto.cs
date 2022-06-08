@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace DndMate.WebApp.Models
+namespace DndMate.WebApp.Dtos
 {
-    public class Spell
+    public class SpellDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -20,7 +20,5 @@ namespace DndMate.WebApp.Models
         public string Duration { get; set; }
         public string Description { get; set; }
         public int GamespaceId { get; set; }
-        public Gamespace Gamespace { get; set; }
     }
-
 }

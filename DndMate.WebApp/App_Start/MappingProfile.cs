@@ -18,7 +18,15 @@ namespace DndMate.WebApp.App_Start
             Mapper.CreateMap<Notification, NotificationDto>();
             Mapper.CreateMap<NotificationDto, Notification>();
 
+            Mapper.CreateMap<SpellDto, Spell>();
+            Mapper.CreateMap<Spell, SpellDto>();
+
+            Mapper.CreateMap<GamespaceChar, GamespaceCharDto>();
+            Mapper.CreateMap<GamespaceCharDto, GamespaceChar>();
+
+            Mapper.CreateMap<GamespaceChar, GamespaceChar>();
             Mapper.CreateMap<Gamespace, Gamespace>();
+            Mapper.CreateMap<Spell, Spell>();
         }
     }
 }

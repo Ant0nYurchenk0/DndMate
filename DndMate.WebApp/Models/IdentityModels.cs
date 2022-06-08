@@ -21,29 +21,5 @@ namespace DndMate.WebApp.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<Character>
-    {
-        public DbSet<Notification> Notifications { get; set; }
-        public DbSet<Spell> Spells { get; set; }
-        public DbSet<Gamespace> Gamespaces { get; set; }
-        public DbSet<GamespaceSpell> GamespaceSpell { get; set; }
-        public DbSet<GamespaceChar> GamespaceCharacters { get; set; }
-
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
-        {
-
-        }
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<GamespaceChar>().HasKey(sc => new { sc.CharacterId, sc.GamespaceId });
-            modelBuilder.Entity<GamespaceSpell>().HasKey(sc => new { sc.SpellId, sc.GamespaceId });
-        }
-
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
-        }
-    }
+    
 }

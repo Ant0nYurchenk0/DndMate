@@ -1,0 +1,18 @@
+﻿@model IEnumerable<DndMate.WebApp.Dtos.SpellDto>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Spells</h2>
+<ul>
+
+    @foreach (var spell in Model)
+    {
+        <li>
+            <a href="@Url.Action("Get", "Spells", new {id = spell.Id})">@spell.Name</a>
+            <a href="@Url.Action("Edit", "Spells", new {id = spell.Id})">Edit</a>
+            <a href="@Url.Action("Delete", "Spells", new {id = spell.Id})">Delete</a>
+        </li>
+    }
+</ul>

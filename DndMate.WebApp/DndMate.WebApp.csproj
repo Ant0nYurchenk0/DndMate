@@ -189,12 +189,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CharactersController.cs" />
     <Compile Include="Controllers\GamespaceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
+    <Compile Include="Controllers\SpellsController.cs" />
+    <Compile Include="Dtos\GamespaceCharDto.cs" />
     <Compile Include="Dtos\GamespaceDto.cs" />
     <Compile Include="Dtos\NotificationDto.cs" />
+    <Compile Include="Dtos\SpellDto.cs" />
     <Compile Include="Enums\PlayerClass.cs" />
     <Compile Include="Enums\Role.cs" />
     <Compile Include="Global.asax.cs">
@@ -228,19 +232,42 @@
     <Compile Include="Migrations\202206080919483_temp1.designer.cs">
       <DependentUpon>202206080919483_temp1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202206080942306_AddPropertiesToSpell.cs" />
+    <Compile Include="Migrations\202206080942306_AddPropertiesToSpell.designer.cs">
+      <DependentUpon>202206080942306_AddPropertiesToSpell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206081001132_AddCharacterSpells.cs" />
+    <Compile Include="Migrations\202206081001132_AddCharacterSpells.designer.cs">
+      <DependentUpon>202206081001132_AddCharacterSpells.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206081016485_AddCharacterSpells1.cs" />
+    <Compile Include="Migrations\202206081016485_AddCharacterSpells1.designer.cs">
+      <DependentUpon>202206081016485_AddCharacterSpells1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206081030494_RemoveGamespaceSpell.cs" />
+    <Compile Include="Migrations\202206081030494_RemoveGamespaceSpell.designer.cs">
+      <DependentUpon>202206081030494_RemoveGamespaceSpell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206081603238_AddNameToCharacter.cs" />
+    <Compile Include="Migrations\202206081603238_AddNameToCharacter.designer.cs">
+      <DependentUpon>202206081603238_AddNameToCharacter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Gamespace.cs" />
     <Compile Include="Models\GamespaceChar.cs" />
-    <Compile Include="Models\GamespaceSpell.cs" />
+    <Compile Include="Models\GamespaceCharacterSpell.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Spell.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\CharactersRepository.cs" />
     <Compile Include="Repositories\GamespaceRepository.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Validations\EmailExists.cs" />
+    <Compile Include="ViewModels\GetSpellViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -303,9 +330,13 @@
     <Content Include="Views\Notifications\Form.cshtml" />
     <Content Include="Views\Gamespace\Get.cshtml" />
     <Content Include="Views\Notifications\Index.cshtml" />
+    <Content Include="Views\Spells\Form.cshtml" />
+    <Content Include="Views\Spells\Index.cshtml" />
+    <Content Include="Views\Spells\Get.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Characters\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -341,6 +372,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206080919483_temp1.resx">
       <DependentUpon>202206080919483_temp1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206080942306_AddPropertiesToSpell.resx">
+      <DependentUpon>202206080942306_AddPropertiesToSpell.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206081001132_AddCharacterSpells.resx">
+      <DependentUpon>202206081001132_AddCharacterSpells.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206081016485_AddCharacterSpells1.resx">
+      <DependentUpon>202206081016485_AddCharacterSpells1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206081030494_RemoveGamespaceSpell.resx">
+      <DependentUpon>202206081030494_RemoveGamespaceSpell.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206081603238_AddNameToCharacter.resx">
+      <DependentUpon>202206081603238_AddNameToCharacter.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

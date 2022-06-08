@@ -28,7 +28,7 @@ namespace DndMate.WebApp.Controllers
         {
             var userId = User.Identity.GetUserId();
             var gamespaceList = from g in _context.Gamespaces 
-                                join gs in _context.GamespaceCharacters 
+                                join gs in _context.Characters 
                                 on g.Id equals gs.GamespaceId
                                 where gs.CharacterId == userId
                                 select g;                                           
@@ -88,7 +88,7 @@ namespace DndMate.WebApp.Controllers
         [Route("Gamespace/Leave")]
         public ActionResult Leave(string userId, int gamespaceId)
         {
-            var gamespaceCharacter = _context.GamespaceCharacters.SingleOrDefault(gs => gs.GamespaceId == gamespaceId && gs.CharacterId == userId);
+            var gamespaceCharacter = _context.Characters.SingleOrDefault(gs => gs.GamespaceId == gamespaceId && gs.CharacterId == userId);
             if(gamespaceCharacter == null)
                 return HttpNotFound();
             _repository.Leave(gamespaceCharacter);

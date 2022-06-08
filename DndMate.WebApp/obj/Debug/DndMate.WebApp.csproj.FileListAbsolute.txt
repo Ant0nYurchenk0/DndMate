@@ -125,3 +125,8 @@ C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\Dn
 C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.AddNotifications.resources
 C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.AddedDataAnnotations.resources
 C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.temp1.resources
+C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.AddPropertiesToSpell.resources
+C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.AddCharacterSpells.resources
+C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.AddCharacterSpells1.resources
+C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.RemoveGamespaceSpell.resources
+C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.AddNameToCharacter.resources
