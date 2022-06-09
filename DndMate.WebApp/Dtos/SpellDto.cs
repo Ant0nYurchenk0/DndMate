@@ -12,7 +12,7 @@ namespace DndMate.WebApp.Dtos
         public string Name { get; set; }
         public string FullName { get; set; }
         public string Image { get; set; }
-        [Range(0, 20)]
+        [Range(0, 9)]
         public int Level { get; set; }
         public string CastingTime { get; set; }
         public string Range { get; set; }

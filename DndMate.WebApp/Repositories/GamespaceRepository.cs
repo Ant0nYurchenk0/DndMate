@@ -27,6 +27,8 @@ namespace DndMate.WebApp.Repositories
             gamespaceChar.CharacterId = userId;
             gamespaceChar.GamespaceId = gamespace.Id;
             gamespaceChar.Role = Role.Master;
+            gamespaceChar.Level = 20;
+            gamespaceChar.Name = "Master";
             _context.Characters.Add(gamespaceChar);
             _context.SaveChanges();
         }

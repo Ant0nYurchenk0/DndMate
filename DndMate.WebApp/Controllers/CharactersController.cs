@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DndMate.WebApp.Dtos;
+using DndMate.WebApp.Enums;
 using DndMate.WebApp.Models;
 using DndMate.WebApp.Repositories;
 using System;
@@ -36,8 +37,43 @@ namespace DndMate.WebApp.Controllers
                 _context.CharacterSpells.Add(characterSpell);
                 _context.SaveChanges();
             }
-            return RedirectToAction("Get", "Spells", new { id = spellId });
-            
+            return RedirectToAction("Get", "Spells", new { id = spellId });            
+        }
+        [Route("Characters/Create")]
+        public ActionResult Create(string charId, int gamespaceId)
+        {
+            var charDto = new GamespaceCharDto();
+            charDto.CharacterId = charId;
+            charDto.GamespaceId = gamespaceId;
+            charDto.Role = Role.Player;
+            return View("Form", charDto);
+        }
+        [ValidateAntiForgeryToken]
+        public ActionResult Save(GamespaceCharDto characterDto)
+        {
+            if (!ModelState.IsValid)
+                return View("Form", characterDto);
+
+            if (!_context.Characters.Any(s => s.Id == characterDto.Id))
+            {
+                _context.Characters.Add(Mapper.Map<GamespaceChar>(characterDto));
+            }
+            else
+            {
+                var spellInDb = _context.Characters.SingleOrDefault(s => s.Id == characterDto.Id);
+                Mapper.Map(characterDto, spellInDb);
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Get", "Gamespace", new { id = characterDto.GamespaceId});
+        }
+        [Route("Characters/Edit")]
+        public ActionResult Edit(string charId, int gamespaceId)
+        {
+            var character = _context.Characters.SingleOrDefault(c => c.CharacterId == charId && c.GamespaceId == gamespaceId);
+            if (character == null)
+                return HttpNotFound();
+            var characterDto = Mapper.Map<GamespaceCharDto>(character);
+            return View("Form", characterDto);
         }
     }
 }

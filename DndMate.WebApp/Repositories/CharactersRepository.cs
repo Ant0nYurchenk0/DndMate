@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DndMate.WebApp.Dtos;
+using DndMate.WebApp.Enums;
 using DndMate.WebApp.Models;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,10 @@ namespace DndMate.WebApp.Repositories
         {
             return _context.Characters.Where(c => c.GamespaceId == id).ToList().Select(c => Mapper.Map<GamespaceCharDto>(c));
 
+        }
+        public IEnumerable<GamespaceCharDto> GetPlayerCharacters(int id)
+        {
+            return _context.Characters.Where(c => c.GamespaceId == id && c.Role == Role.Player).ToList().Select(c => Mapper.Map<GamespaceCharDto>(c));
         }
     }
 }

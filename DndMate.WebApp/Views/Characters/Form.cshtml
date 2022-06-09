@@ -1,0 +1,27 @@
+﻿@model DndMate.WebApp.Dtos.GamespaceCharDto
+@using DndMate.WebApp.Enums
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Save", "Characters"))
+{
+    @Html.AntiForgeryToken();
+    @Html.HiddenFor(m => m.CharacterId)
+    @Html.HiddenFor(m => m.GamespaceId)
+    @Html.HiddenFor(m => m.Role)
+
+    @Html.LabelFor(m => m.Name)
+    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Name)
+
+    @Html.LabelFor(m => m.Level)
+    @Html.TextBoxFor(m => m.Level, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Level)
+
+    @Html.LabelFor(m => m.CharacterClass)
+    @Html.DropDownListFor(m => m.CharacterClass, new SelectList(Enum.GetValues(typeof(CharacterClass)), "Select Class"), new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.CharacterClass)
+    <button>Submit</button>
+}

@@ -81,7 +81,7 @@ namespace DndMate.WebApp.Controllers
             if (spell == null)
                 return HttpNotFound();
             viewModel.Spell = Mapper.Map<Spell, SpellDto>(spell);
-            viewModel.Characters = _characterRepository.GetCharacters(spell.GamespaceId);
+            viewModel.Characters = _characterRepository.GetPlayerCharacters(spell.GamespaceId);
             return View("Get", viewModel);
         }
     }

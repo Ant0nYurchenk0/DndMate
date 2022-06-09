@@ -59,15 +59,8 @@ namespace DndMate.WebApp.Controllers
             if (notification == null)
                 return HttpNotFound();
             if (_context.Characters.Any(gs => gs.GamespaceId == notification.GamespaceId && gs.CharacterId == userId))
-                return RedirectToAction("Deny", "Notifications");
-            var gamespaceChar = new GamespaceChar();
-            gamespaceChar.CharacterId = userId;
-            gamespaceChar.GamespaceId = notification.GamespaceId;
-            gamespaceChar.Role = Role.Player;
-            _context.Characters.Add(gamespaceChar);
-            _context.Notifications.Remove(notification);
-            _context.SaveChanges();
-            return RedirectToAction("Index", "Notifications");
+                return RedirectToAction("Deny", "Notifications", new {id = id});
+            return RedirectToAction("Create", "Characters", new {charId = userId, gamespaceId = notification.GamespaceId});
         }
     }
 }

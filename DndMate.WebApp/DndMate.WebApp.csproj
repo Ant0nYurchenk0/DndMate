@@ -252,6 +252,14 @@
     <Compile Include="Migrations\202206081603238_AddNameToCharacter.designer.cs">
       <DependentUpon>202206081603238_AddNameToCharacter.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202206090845047_AddPropertiesToCharacter.cs" />
+    <Compile Include="Migrations\202206090845047_AddPropertiesToCharacter.designer.cs">
+      <DependentUpon>202206090845047_AddPropertiesToCharacter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206090858375_AddPropertiesToCharacter1.cs" />
+    <Compile Include="Migrations\202206090858375_AddPropertiesToCharacter1.designer.cs">
+      <DependentUpon>202206090858375_AddPropertiesToCharacter1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -267,6 +275,7 @@
     <Compile Include="Repositories\GamespaceRepository.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Validations\EmailExists.cs" />
+    <Compile Include="Validations\MasterOrHasClass.cs" />
     <Compile Include="ViewModels\GetSpellViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -333,10 +342,10 @@
     <Content Include="Views\Spells\Form.cshtml" />
     <Content Include="Views\Spells\Index.cshtml" />
     <Content Include="Views\Spells\Get.cshtml" />
+    <Content Include="Views\Characters\Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Characters\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -387,6 +396,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206081603238_AddNameToCharacter.resx">
       <DependentUpon>202206081603238_AddNameToCharacter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206090845047_AddPropertiesToCharacter.resx">
+      <DependentUpon>202206090845047_AddPropertiesToCharacter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206090858375_AddPropertiesToCharacter1.resx">
+      <DependentUpon>202206090858375_AddPropertiesToCharacter1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
