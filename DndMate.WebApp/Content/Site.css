@@ -1,1 +1,27 @@
-﻿
+﻿.gamespace {
+    width: 300px;
+    height: 250px;
+}
+
+.gamespace .card-body {
+    padding: 0;
+}
+.gamespace img{
+    top: 0;
+    position: relative;
+    width: 300px;
+    overflow: hidden;
+
+}
+
+a:link, a:visited, a:hover, a:active {
+    text-decoration: none;
+}
+.navbar-vertical{
+    width: 50px;
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: -1;
+}

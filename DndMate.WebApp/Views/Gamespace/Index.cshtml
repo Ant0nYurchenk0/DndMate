@@ -2,21 +2,21 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<br />
 <h2>Gamespaces</h2>
-<ul>
-
-    @foreach (var gamespace in Model)
-    {
-        <li>
-            <a href="@Url.Action("Get", "Gamespace", new { id= gamespace.Id})">@gamespace.Name</a>            
-            <a href="@Url.Action("Edit", "Gamespace", new { id= gamespace.Id})">Edit</a>
-            <a href="@Url.Action("Delete", "Gamespace", new { id= gamespace.Id})">Delete</a>
-        </li>
-
-
-    }
-</ul>
+@foreach (var gamespace in Model)
+{
+    <a href="@Url.Action("Get","Gamespace", new { id = gamespace.Id })">
+        <div class="card border-secondary mb-3 gamespace" style="max-width: 20rem;">
+            <div class="card-body">
+                <img class="card-img-top" src="https://assets1.ignimgs.com/thumbs/userUploaded/2019/5/29/dndmobilebr-1559158864269.jpg" alt="Card image cap">
+                <div class="card-title-back">
+                    <h4 class="card-title">@gamespace.Name</h4>
+                </div>
+            </div>
+        </div>
+    </a>
+}
 <form action="@Url.Action("Create", "Gamespace")">
-    <button>Add new</button>
+    <button class="btn btn-primary">Create new</button>
 </form>

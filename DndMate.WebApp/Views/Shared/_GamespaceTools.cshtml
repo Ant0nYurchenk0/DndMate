@@ -1,0 +1,35 @@
+﻿@model DndMate.WebApp.ViewModels.GamespaceViewModel
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <ul class="navbar-nav ms-md-auto">
+            <li class="nav-item">
+                <form action="@Url.Action("Get", "Characters", new {id = Model.Character.Id})">
+                    <button class="btn">
+                        @Model.Character.Name
+                    </button>
+                </form>
+            </li>
+            <li class="nav-item">
+                <div class="btn">
+                    Lvl: @Model.Character.Level
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+<nav class="navbar-vertical navbar navbar-expand-lg navbar-light bg-light">
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Active</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>
+    </ul>
+</nav>

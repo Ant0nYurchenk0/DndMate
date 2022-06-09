@@ -10,8 +10,8 @@
 </head>
 <body>
     @Html.Partial("_NavBar")
+    @RenderBody()
     <div class="container body-content">
-        @RenderBody()
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
