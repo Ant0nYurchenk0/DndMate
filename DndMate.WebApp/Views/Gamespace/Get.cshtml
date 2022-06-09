@@ -1,16 +1,19 @@
-﻿@model DndMate.WebApp.ViewModels.GamespaceViewModel
+﻿@model DndMate.WebApp.ViewModels.GamespacePropsViewModel
 @using Microsoft.AspNet.Identity;
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @Html.Partial("_GamespaceTools", Model)
-<h2>@Model.Gamespace.Name</h2>
-<p>@Model.Gamespace.Image</p>
+<div class="gamespace-content">
 
-<a href="@Url.Action("Index", "Spells", new {gamespaceId = Model.Gamespace.Id})">Spells</a>
-<br />
-<a href="@Url.Action("Create", "Spells", new {gamespaceId = Model.Gamespace.Id})">Create Spell</a>
-<br />
-<a href="@Url.Action("Create", "Notifications", new {gamespaceId = Model.Gamespace.Id})">Invite</a>
-<a href="@Url.Action("Leave", "Gamespace", new {gamespaceId = Model.Gamespace.Id, userId = User.Identity.GetUserId()})">Leave</a>
+    <h2>@Model.Gamespace.Name</h2>
+    <p>@Model.Gamespace.Image</p>
+
+    <a href="@Url.Action("Index", "Spells", new {gamespaceId = Model.Gamespace.Id})">Spells</a>
+    <br />
+    <a href="@Url.Action("Create", "Spells", new {gamespaceId = Model.Gamespace.Id})">Create Spell</a>
+    <br />
+    <a href="@Url.Action("Create", "Notifications", new {gamespaceId = Model.Gamespace.Id})">Invite</a>
+    <a href="@Url.Action("Leave", "Gamespace", new {gamespaceId = Model.Gamespace.Id, userId = User.Identity.GetUserId()})">Leave</a>
+</div>

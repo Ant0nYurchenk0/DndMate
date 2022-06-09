@@ -1,25 +1,4 @@
-﻿@*<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="more options">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("About", "About", "Home")</li>
-                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                <li>@Html.ActionLink("Notifications", )</li>
-            </ul>
-            @Html.Partial("_LoginPartial")
-        </div>
-    </div>
-</div>*@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+﻿<nav class="navbar navbar-main navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
         <a class="navbar-brand">D&D\Mate</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,14 +11,7 @@
                     <a class="nav-link active" href="@Url.Action("Index", "Home")">Home</a>
                 </li>
             </ul>
-            <ul class="navbar-nav ms-md-auto">
-                <li class="nav-item">
-                    <form action="@Url.Action("Index", "Notifications")">
-                        <button class="btn nav-link">
-                            <img />
-                        </button>
-                    </form>
-                </li>
+            <ul class="navbar-nav ms-md-auto">                
                 @Html.Partial("_LoginPartial")
             </ul>
         </div>

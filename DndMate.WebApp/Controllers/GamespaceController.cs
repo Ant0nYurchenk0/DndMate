@@ -19,13 +19,11 @@ namespace DndMate.WebApp.Controllers
         // GET: Gamespace
         private ApplicationDbContext _context;
         private GamespaceRepository _repository;
-        private CharactersRepository _charRepository;
 
-        public GamespaceController(ApplicationDbContext context, GamespaceRepository repository, CharactersRepository charRepository)
+        public GamespaceController(ApplicationDbContext context, GamespaceRepository repository)
         {
             _context = context;
             _repository = repository;
-            _charRepository = charRepository;
         }
 
         public ActionResult Index()
@@ -86,14 +84,13 @@ namespace DndMate.WebApp.Controllers
             var gamespace = _context.Gamespaces.SingleOrDefault(g => g.Id == id);
             if (gamespace == null)
                 return HttpNotFound();
-            var viewModel = new GamespaceViewModel();
-            viewModel.Gamespace = Mapper.Map<Gamespace, GamespaceDto>(gamespace);
-            viewModel.Character = _charRepository.GetCharacter(User.Identity.GetUserId(), id);
+            var viewModel = _repository.GetViewModel(id, User.Identity.GetUserId());
             return View("Get",  viewModel);
         }
         [Route("Gamespace/Leave")]
-        public ActionResult Leave(string userId, int gamespaceId)
+        public ActionResult Leave(int gamespaceId)
         {
+            var userId = User.Identity.GetUserId();
             var gamespaceCharacter = _context.Characters.SingleOrDefault(gs => gs.GamespaceId == gamespaceId && gs.CharacterId == userId);
             if(gamespaceCharacter == null)
                 return HttpNotFound();

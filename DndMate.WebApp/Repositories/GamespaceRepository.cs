@@ -2,6 +2,7 @@
 using DndMate.WebApp.Dtos;
 using DndMate.WebApp.Enums;
 using DndMate.WebApp.Models;
+using DndMate.WebApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +13,15 @@ namespace DndMate.WebApp.Repositories
     public class GamespaceRepository
     {
         private ApplicationDbContext _context;
+        private CharactersRepository _charRepository;
 
-        public GamespaceRepository(ApplicationDbContext context)
+
+        public GamespaceRepository(ApplicationDbContext context, CharactersRepository charRepository)
         {
             _context = context;
+            _charRepository = charRepository;
         }
-        internal void Create(GamespaceDto gamespaceDto, string userId)
+        public void Create(GamespaceDto gamespaceDto, string userId)
         {
             var gamespace = Mapper.Map<GamespaceDto, Gamespace>(gamespaceDto);
             _context.Gamespaces.Add(gamespace);
@@ -33,13 +37,13 @@ namespace DndMate.WebApp.Repositories
             _context.SaveChanges();
         }
 
-        internal void Update(GamespaceDto gamespaceDto)
+        public void Update(GamespaceDto gamespaceDto)
         {
             var gamespaceInDb = _context.Gamespaces.SingleOrDefault(x => x.Id == gamespaceDto.Id);
             Mapper.Map(gamespaceDto, gamespaceInDb);
             _context.SaveChanges();
         }
-        internal void Leave(GamespaceChar gamespaceCharacter)
+        public void Leave(GamespaceChar gamespaceCharacter)
         {
             if(gamespaceCharacter.Role == Role.Master)
             {
@@ -53,6 +57,15 @@ namespace DndMate.WebApp.Repositories
                 _context.Characters.Remove(gamespaceChar);
             }
             _context.SaveChanges();                
+        }
+        public GamespacePropsViewModel GetViewModel(int id, string userId)
+        {
+            var gamespace = _context.Gamespaces.SingleOrDefault(g => g.Id == id);
+            var viewModel = new GamespacePropsViewModel();
+            viewModel.Gamespace = Mapper.Map<Gamespace, GamespaceDto>(gamespace);
+            viewModel.Character = Mapper.Map<GamespaceCharDto>(_charRepository.GetCharacter(userId, id));
+            viewModel.Notification = new NotificationDto();
+            return viewModel;
         }
         
     }

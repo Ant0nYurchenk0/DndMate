@@ -6,9 +6,9 @@ using System.Web;
 
 namespace DndMate.WebApp.ViewModels
 {
-    public class GamespaceViewModel
+    public class CharacterViewModel
     {
-        public GamespaceDto Gamespace { get; set; }
+        public GamespacePropsViewModel Gamespace { get; set; }
         public GamespaceCharDto Character { get; set; }
     }
 }

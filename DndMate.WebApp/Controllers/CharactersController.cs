@@ -3,6 +3,7 @@ using DndMate.WebApp.Dtos;
 using DndMate.WebApp.Enums;
 using DndMate.WebApp.Models;
 using DndMate.WebApp.Repositories;
+using DndMate.WebApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,15 @@ namespace DndMate.WebApp.Controllers
     {
         private ApplicationDbContext _context;
         private CharactersRepository _repository;
+        private GamespaceRepository _gamespaceRepository;
+
 
         // GET: Characters
-        public CharactersController(ApplicationDbContext context, CharactersRepository repository)
+        public CharactersController(ApplicationDbContext context, CharactersRepository repository, GamespaceRepository gamespaceRepository)
         {
             _context = context;
             _repository = repository;
+            _gamespaceRepository = gamespaceRepository;
         }
         public ActionResult Index(int gamespaceId)
         {
@@ -74,6 +78,16 @@ namespace DndMate.WebApp.Controllers
                 return HttpNotFound();
             var characterDto = Mapper.Map<GamespaceCharDto>(character);
             return View("Form", characterDto);
+        }
+        public ActionResult Get(int id)
+        {
+            var viewModel = new CharacterViewModel();
+            var character = _context.Characters.SingleOrDefault(c => c.Id == id);
+            if (character == null)
+                return HttpNotFound();
+            viewModel.Character = Mapper.Map<GamespaceCharDto>(character);
+            viewModel.Gamespace = _gamespaceRepository.GetViewModel(character.GamespaceId, character.CharacterId);
+            return View(viewModel);
         }
     }
 }

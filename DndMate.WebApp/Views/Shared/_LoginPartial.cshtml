@@ -1,17 +1,24 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-
     <li class="nav-item">
-        <form action="@Url.Action("Index", "Account")">
-            <button class="btn nav-link text-info">Account</button>
+        <form action="@Url.Action("Index", "Notifications")">
+            <button class="btn nav-link notifications">
+                <img src="~/source/email.png" />
+                <p class="count"></p>
+            </button>
+        </form>
+    </li>
+    <li class="nav-item">
+        <form action="@Url.Action("Manage", "Account")">
+            <button class="btn nav-link ">Account</button>
         </form>
     </li>
     <li class="nav-item">
         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
         {
             @Html.AntiForgeryToken()
-            <button class="btn nav-link text-danger" href="javascript:document.getElementById('logoutForm').submit()">Log out</button>
+            <button class="btn nav-link " href="javascript:document.getElementById('logoutForm').submit()">Log out</button>
         }
     </li>
 }
@@ -19,12 +26,12 @@ else
 {
     <li class="nav-item">
         <form action="@Url.Action("Register", "Account")">
-            <button class="btn nav-link text-success">Register</button>
+            <button class="btn nav-link ">Register</button>
         </form>
     </li>
     <li class="nav-item">
         <form action="@Url.Action("Login", "Account")">
-            <button class="btn nav-link text-success" >Log in</button>
+            <button class="btn nav-link ">Log in</button>
         </form>
     </li>
 

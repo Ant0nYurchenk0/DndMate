@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using DndMate.WebApp.Dtos;
+using DndMate.WebApp.Enums;
 using DndMate.WebApp.Models;
 using DndMate.WebApp.Repositories;
 using DndMate.WebApp.ViewModels;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,18 +17,27 @@ namespace DndMate.WebApp.Controllers
     {
         private CharactersRepository _characterRepository;
         private ApplicationDbContext _context;
+        private GamespaceRepository _gamespaceRepository;
+
 
         // GET: Spells
-        public SpellsController(ApplicationDbContext context, CharactersRepository repository)
+        public SpellsController(ApplicationDbContext context, CharactersRepository repository, GamespaceRepository gamespaceRepository)
         {
             _characterRepository = repository;
             _context = context;
+            _gamespaceRepository = gamespaceRepository;
         }
         [Route("Spells")]
-        public ActionResult Index(int gamespaceId)
+        public ActionResult Index(int gamespaceId, int charId)
         {
-            var spells = _context.Spells.Where(s => s.GamespaceId == gamespaceId).ToList().Select(s => Mapper.Map<SpellDto>(s));
-            return View(spells);
+            var character = _context.Characters.Single(c => c.Id == charId);
+            var viewModel = new SpellListViewModel();
+            viewModel.Gamespace = _gamespaceRepository.GetViewModel(gamespaceId, User.Identity.GetUserId());
+            if(character.Role == Role.Master)
+                viewModel.Spells = _context.Spells.Where(s => s.GamespaceId == gamespaceId).ToList().Select(s => Mapper.Map<SpellDto>(s));
+            else
+                viewModel.Spells = _context.CharacterSpells.Where(s => s.CharacterId == charId).ToList().Select(s => Mapper.Map<SpellDto>(s));
+            return View(viewModel);
         }
         [Route("Spells/Create")]
         public ActionResult Create(int gamespaceId)
