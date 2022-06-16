@@ -277,6 +277,7 @@
     <Compile Include="Validations\EmailExists.cs" />
     <Compile Include="Validations\MasterOrHasClass.cs" />
     <Compile Include="ViewModels\CharacterViewModel.cs" />
+    <Compile Include="ViewModels\SpellFormViewModel.cs" />
     <Compile Include="ViewModels\SpellListViewModel.cs" />
     <Compile Include="ViewModels\GamespacePropsViewModel.cs" />
     <Compile Include="ViewModels\GetSpellViewModel.cs" />
@@ -382,7 +383,6 @@
     <Content Include="Views\Notifications\Index.cshtml" />
     <Content Include="Views\Spells\Form.cshtml" />
     <Content Include="Views\Spells\Index.cshtml" />
-    <Content Include="Views\Spells\Get.cshtml" />
     <Content Include="Views\Characters\Form.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
     <Content Include="Views\Shared\_GamespaceTools.cshtml" />

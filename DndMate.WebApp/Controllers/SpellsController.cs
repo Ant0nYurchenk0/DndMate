@@ -28,23 +28,24 @@ namespace DndMate.WebApp.Controllers
             _gamespaceRepository = gamespaceRepository;
         }
         [Route("Spells")]
-        public ActionResult Index(int gamespaceId, int charId)
+        public ActionResult Index(int gamespaceId)
         {
-            var character = _context.Characters.Single(c => c.Id == charId);
+            var userId = User.Identity.GetUserId();
+            var character = _context.Characters.Single(c => c.GamespaceId == gamespaceId && c.CharacterId == userId);
             var viewModel = new SpellListViewModel();
             viewModel.Gamespace = _gamespaceRepository.GetViewModel(gamespaceId, User.Identity.GetUserId());
-            if(character.Role == Role.Master)
-                viewModel.Spells = _context.Spells.Where(s => s.GamespaceId == gamespaceId).ToList().Select(s => Mapper.Map<SpellDto>(s));
-            else
-                viewModel.Spells = _context.CharacterSpells.Where(s => s.CharacterId == charId).ToList().Select(s => Mapper.Map<SpellDto>(s));
+            viewModel.Spells = _context.Spells.Where(s => s.GamespaceId == gamespaceId).ToList().Select(s => Mapper.Map<SpellDto>(s));
+            viewModel.AssignedSpells = _context.CharacterSpells.Where(s => s.CharacterId == character.Id).ToList().Select(s => Mapper.Map<SpellDto>(s.Spell));
             return View(viewModel);
         }
         [Route("Spells/Create")]
         public ActionResult Create(int gamespaceId)
         {
-            var spellDto = new SpellDto();
-            spellDto.GamespaceId = gamespaceId;
-            return View("Form", spellDto);
+            var viewModel = new SpellFormViewModel();
+            viewModel.Gamespace = _gamespaceRepository.GetViewModel(gamespaceId, User.Identity.GetUserId());
+            viewModel.Spell = new SpellDto();
+            viewModel.Spell.GamespaceId = gamespaceId;
+            return View("Form", viewModel);
         }
         [Route("Spells/Delete")]
         public ActionResult Delete(int id)
@@ -63,14 +64,23 @@ namespace DndMate.WebApp.Controllers
             if (spell == null)
                 return HttpNotFound();
             var spellDto = Mapper.Map<Spell, SpellDto>(spell);
-            return View("Form", spellDto);
+            var viewModel = new SpellFormViewModel();
+            viewModel.Gamespace = _gamespaceRepository.GetViewModel(spellDto.GamespaceId, User.Identity.GetUserId());
+            viewModel.Spell = spellDto;
+            return View("Form", viewModel);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(SpellDto spellDto)
+        public ActionResult Save(SpellFormViewModel form)
         {
+            var spellDto = form.Spell;
             if (!ModelState.IsValid)
-                return View("Form", spellDto);
+            {
+                var viewModel = new SpellFormViewModel();
+                viewModel.Gamespace = _gamespaceRepository.GetViewModel(spellDto.GamespaceId, User.Identity.GetUserId());
+                viewModel.Spell = spellDto;
+                return View("Form", viewModel);
+            }
 
             if (!_context.Spells.Any(s => s.Id == spellDto.Id))
             {
@@ -83,17 +93,6 @@ namespace DndMate.WebApp.Controllers
             }
             _context.SaveChanges();
             return RedirectToAction("Index", "Spells", new { gamespaceId = spellDto.GamespaceId });
-        }
-        [Route("Spells/Get")]
-        public ActionResult Get(int id)
-        {
-            var viewModel = new GetSpellViewModel();
-            var spell = _context.Spells.SingleOrDefault(s => s.Id == id);
-            if (spell == null)
-                return HttpNotFound();
-            viewModel.Spell = Mapper.Map<Spell, SpellDto>(spell);
-            viewModel.Characters = _characterRepository.GetPlayerCharacters(spell.GamespaceId);
-            return View("Get", viewModel);
         }
     }
 }

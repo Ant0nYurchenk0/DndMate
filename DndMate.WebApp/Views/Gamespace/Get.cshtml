@@ -10,10 +10,5 @@
     <h2>@Model.Gamespace.Name</h2>
     <p>@Model.Gamespace.Image</p>
 
-    <a href="@Url.Action("Index", "Spells", new {gamespaceId = Model.Gamespace.Id})">Spells</a>
-    <br />
-    <a href="@Url.Action("Create", "Spells", new {gamespaceId = Model.Gamespace.Id})">Create Spell</a>
-    <br />
-    <a href="@Url.Action("Create", "Notifications", new {gamespaceId = Model.Gamespace.Id})">Invite</a>
-    <a href="@Url.Action("Leave", "Gamespace", new {gamespaceId = Model.Gamespace.Id, userId = User.Identity.GetUserId()})">Leave</a>
+    
 </div>

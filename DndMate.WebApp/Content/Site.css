@@ -95,3 +95,10 @@ a:link, a:visited, a:hover, a:active {
 .character-props{
     margin-top: 30px;
 }
+.accordion{
+    margin-top: 10px;
+}
+.field-validation-error {
+
+    color: #df382c !important;
+}

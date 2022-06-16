@@ -11,5 +11,6 @@ namespace DndMate.WebApp.ViewModels
         public GamespaceDto Gamespace { get; set; }
         public GamespaceCharDto Character { get; set; }
         public NotificationDto Notification { get; set; }
+        public IEnumerable<GamespaceCharDto> Characters { get; set; }
     }
 }

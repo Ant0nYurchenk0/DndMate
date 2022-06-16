@@ -10,11 +10,13 @@
                     </button>
                 </form>
             </li>
+        </ul>
+        <ul class="toolbar navbar-nav ms-md-auto">
             <li class="nav-item">
-                <a class="btn btn-info" data-bs-toggle="modal" data-bs-target="#invite">Invite</a>
+                <button class="btn link-info" data-bs-toggle="modal" data-bs-target="#invite">Invite</button>
             </li>
             <li class="nav-item">
-                <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#leave">Leave</a>
+                <button class="btn link-danger" data-bs-toggle="modal" data-bs-target="#leave">Leave</button>
             </li>
         </ul>
     </div>
@@ -83,7 +85,6 @@
             {
                 <div class="modal-body">
 
-                    @Html.ValidationSummary()
                         <div class="form-group">
                             @Html.LabelFor(n => n.Notification.UserEmail)
                             @Html.TextBoxFor(n => n.Notification.UserEmail, new { @class = "form-control" })

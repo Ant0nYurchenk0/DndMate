@@ -1,52 +1,54 @@
-﻿@model DndMate.WebApp.Dtos.SpellDto
+﻿@model DndMate.WebApp.ViewModels.SpellFormViewModel
 
 @{
     ViewBag.Title = "Form";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@Html.Partial("_GamespaceTools", Model.Gamespace)
 
-@using (Html.BeginForm("Save", "Spells"))
-{
-    @Html.ValidationSummary()
+<div class="gamespace-content">
 
-    @Html.LabelFor(m => m.Name)
-    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-    @Html.ValidationMessageFor(m => m.Name)
-
-    @Html.LabelFor(m => m.FullName)
-    @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
-    @Html.ValidationMessageFor(m => m.FullName)
-
-    @Html.LabelFor(m => m.Image)
-    @Html.TextBoxFor(m => m.Image, new { @class = "form-control" })
-    @Html.ValidationMessageFor(m => m.Image)
-
-    @Html.LabelFor(m => m.Level)
-    @Html.TextBoxFor(m => m.Level, new { @class = "form-control" })
-    @Html.ValidationMessageFor(m => m.Level)
-
-    @Html.LabelFor(m => m.CastingTime)
-    @Html.TextBoxFor(m => m.CastingTime, new { @class = "form-control" })
-    @Html.ValidationMessageFor(m => m.CastingTime)
-
-    @Html.LabelFor(m => m.Range)
-    @Html.TextBoxFor(m => m.Range, new { @class = "form-control" })
-    @Html.ValidationMessageFor(m => m.Range)
-
-    @Html.LabelFor(m => m.Components)
-    @Html.TextBoxFor(m => m.Components, new { @class = "form-control" })
-    @Html.ValidationMessageFor(m => m.Components)
-
-    @Html.LabelFor(m => m.Duration)
-    @Html.TextBoxFor(m => m.Duration, new { @class = "form-control" })
-    @Html.ValidationMessageFor(m => m.Duration)
-
-    @Html.LabelFor(m => m.Description)
-    @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
-    @Html.ValidationMessageFor(m => m.Description)
-
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.GamespaceId)
-    @Html.HiddenFor(m => m.Id);
-    <button>Submit</button>
-}
+    @using (Html.BeginForm("Save", "Spells", FormMethod.Post))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.Spell.Name)
+            @Html.TextBoxFor(m => m.Spell.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Spell.Name)
+            <br />
+            @Html.LabelFor(m => m.Spell.FullName)
+            @Html.TextBoxFor(m => m.Spell.FullName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Spell.FullName)
+            <br />
+            @Html.LabelFor(m => m.Spell.Level)
+            @Html.TextBoxFor(m => m.Spell.Level, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Spell.Level)
+            <br />
+            @Html.LabelFor(m => m.Spell.CastingTime)
+            @Html.TextBoxFor(m => m.Spell.CastingTime, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Spell.CastingTime)
+            <br />
+            @Html.LabelFor(m => m.Spell.Range)
+            @Html.TextBoxFor(m => m.Spell.Range, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Spell.Range)
+            <br />
+            @Html.LabelFor(m => m.Spell.Components)
+            @Html.TextBoxFor(m => m.Spell.Components, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Spell.Components)
+            <br />
+            @Html.LabelFor(m => m.Spell.Duration)
+            @Html.TextBoxFor(m => m.Spell.Duration, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Spell.Duration)
+            <br />
+            @Html.LabelFor(m => m.Spell.Description)
+            @Html.TextAreaFor(m => m.Spell.Description, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Spell.Description)
+            <br />
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Spell.GamespaceId)
+            @Html.HiddenFor(m => m.Spell.Id)
+            <br />
+        </div>
+        <a class="btn btn-secondary" href="@Url.Action("Index", "Spells", new {gamespaceId = Model.Gamespace.Gamespace.Id})">Cancel</a>
+        <button class="btn btn-primary">Submit</button>
+    }
+</div>

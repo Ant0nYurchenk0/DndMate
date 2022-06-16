@@ -32,6 +32,7 @@ namespace DndMate.WebApp.Controllers
         }
         public ActionResult AssignSpell(int charId, int spellId)
         {
+            var gamespaceId = _context.Characters.Single(c=>c.Id == charId).GamespaceId;
             if(!_context.CharacterSpells.Any(cs=>cs.CharacterId == charId && cs.SpellId == spellId))
             {
                 var characterSpell = new GamespaceCharacterSpell();
@@ -41,7 +42,18 @@ namespace DndMate.WebApp.Controllers
                 _context.CharacterSpells.Add(characterSpell);
                 _context.SaveChanges();
             }
-            return RedirectToAction("Get", "Spells", new { id = spellId });            
+            return RedirectToAction("Index", "Spells", new { gamespaceId = gamespaceId });            
+        }
+        public ActionResult DropSpell(int charId, int spellId)
+        {
+            var gamespaceId = _context.Characters.Single(c => c.Id == charId).GamespaceId;
+            var characterSpell = _context.CharacterSpells.SingleOrDefault(cs => cs.CharacterId == charId && cs.SpellId == spellId);
+            if (characterSpell == null)
+                return HttpNotFound();
+            _context.CharacterSpells.Remove(characterSpell);
+            _context.SaveChanges();
+            
+            return RedirectToAction("Index", "Spells", new { gamespaceId = gamespaceId });
         }
         [Route("Characters/Create")]
         public ActionResult Create(string charId, int gamespaceId)

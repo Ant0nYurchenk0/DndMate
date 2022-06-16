@@ -1,5 +1,4 @@
 ﻿using DndMate.WebApp.Dtos;
-using DndMate.WebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +6,9 @@ using System.Web;
 
 namespace DndMate.WebApp.ViewModels
 {
-    public class SpellListViewModel
+    public class SpellFormViewModel
     {
         public GamespacePropsViewModel Gamespace { get; set; }
-        public IEnumerable<SpellDto> Spells { get; set; }
-        public IEnumerable<SpellDto> AssignedSpells { get; set; }
-
+        public SpellDto Spell { get; set; }
     }
 }
