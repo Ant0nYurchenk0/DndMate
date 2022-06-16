@@ -3,6 +3,16 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var level0 = Model.Spells.Where(s => s.Level == 0).ToList();
+    var level1 = Model.Spells.Where(s => s.Level == 1).ToList();
+    var level2 = Model.Spells.Where(s => s.Level == 2).ToList();
+    var level3 = Model.Spells.Where(s => s.Level == 3).ToList();
+    var level4 = Model.Spells.Where(s => s.Level == 4).ToList();
+    var level5 = Model.Spells.Where(s => s.Level == 5).ToList();
+    var level6 = Model.Spells.Where(s => s.Level == 6).ToList();
+    var level7 = Model.Spells.Where(s => s.Level == 7).ToList();
+    var level8 = Model.Spells.Where(s => s.Level == 8).ToList();
+    var level9 = Model.Spells.Where(s => s.Level == 9).ToList();
 }
 @Html.Partial("_GamespaceTools", Model.Gamespace)
 <div class="gamespace-content">
@@ -16,7 +26,9 @@
             <a class="btn btn-primary add-btn" href="@Url.Action("Create", "Spells", new {gamespaceId = Model.Gamespace.Gamespace.Id})">Add new</a>
         </div>
     </div>
-    @foreach (var spell in Model.AssignedSpells)
+
+    <h4>Cantrips: </h4>
+    @foreach (var spell in level0)
     {
         <div class="accordion" id="assigneditem@(spell.Id)">
             <div class="accordion-item">
@@ -54,14 +66,439 @@
                         <p>
                             @spell.Description
                         </p>
-                        <a class="link-dark" href="@Url.Action("DropSpell", "Characters", new {charId=Model.Gamespace.Character.Id, spellId = spell.Id})">Drop</a>
+                        <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Spells", new {id = spell.Id})">Edit</a>
+                        <a class="btn btn-outline-dark" href="@Url.Action("DropSpell", "Characters", new {charId=Model.Gamespace.Character.Id, spellId = spell.Id})">Drop</a>
                     </div>
                 </div>
             </div>
         </div>
-
     }
     <hr />
+    <h4>Level1: </h4>
+    @foreach (var spell in level1)
+    {
+        <div class="accordion" id="assigneditem@(spell.Id)">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#assignedinfo@(spell.Id)" aria-expanded="false" aria-controls="collapseOne">
+                        @spell.Name
+                    </button>
+                </h2>
+                <div id="assignedinfo@(spell.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#assigneditem@(spell.Id)" style="">
+                    <div class="accordion-body">
+                        <table class="table-borderless">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Level</th>
+                                    <td>@spell.Level</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Range</th>
+                                    <td>@spell.Range</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Duration</th>
+                                    <td>@spell.Duration</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Components</th>
+                                    <td>@spell.Components</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Casting time</th>
+                                    <td>@spell.CastingTime</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>
+                            @spell.Description
+                        </p>
+                        <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Spells", new {id = spell.Id})">Edit</a>
+                        <a class="btn btn-outline-dark" href="@Url.Action("DropSpell", "Characters", new {charId=Model.Gamespace.Character.Id, spellId = spell.Id})">Drop</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <hr />
+    <h4>Level2: </h4>
+    @foreach (var spell in level2)
+    {
+        <div class="accordion" id="assigneditem@(spell.Id)">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#assignedinfo@(spell.Id)" aria-expanded="false" aria-controls="collapseOne">
+                        @spell.Name
+                    </button>
+                </h2>
+                <div id="assignedinfo@(spell.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#assigneditem@(spell.Id)" style="">
+                    <div class="accordion-body">
+                        <table class="table-borderless">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Level</th>
+                                    <td>@spell.Level</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Range</th>
+                                    <td>@spell.Range</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Duration</th>
+                                    <td>@spell.Duration</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Components</th>
+                                    <td>@spell.Components</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Casting time</th>
+                                    <td>@spell.CastingTime</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>
+                            @spell.Description
+                        </p>
+                        <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Spells", new {id = spell.Id})">Edit</a>
+                        <a class="btn btn-outline-dark" href="@Url.Action("DropSpell", "Characters", new {charId=Model.Gamespace.Character.Id, spellId = spell.Id})">Drop</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <hr />
+    <h4>Level 3:</h4>
+    @foreach (var spell in level3)
+    {
+        <div class="accordion" id="assigneditem@(spell.Id)">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#assignedinfo@(spell.Id)" aria-expanded="false" aria-controls="collapseOne">
+                        @spell.Name
+                    </button>
+                </h2>
+                <div id="assignedinfo@(spell.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#assigneditem@(spell.Id)" style="">
+                    <div class="accordion-body">
+                        <table class="table-borderless">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Level</th>
+                                    <td>@spell.Level</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Range</th>
+                                    <td>@spell.Range</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Duration</th>
+                                    <td>@spell.Duration</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Components</th>
+                                    <td>@spell.Components</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Casting time</th>
+                                    <td>@spell.CastingTime</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>
+                            @spell.Description
+                        </p>
+                        <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Spells", new {id = spell.Id})">Edit</a>
+                        <a class="btn btn-outline-dark" href="@Url.Action("DropSpell", "Characters", new {charId=Model.Gamespace.Character.Id, spellId = spell.Id})">Drop</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <hr />
+    <h4>Level 4:</h4>
+    @foreach (var spell in level4)
+    {
+        <div class="accordion" id="assigneditem@(spell.Id)">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#assignedinfo@(spell.Id)" aria-expanded="false" aria-controls="collapseOne">
+                        @spell.Name
+                    </button>
+                </h2>
+                <div id="assignedinfo@(spell.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#assigneditem@(spell.Id)" style="">
+                    <div class="accordion-body">
+                        <table class="table-borderless">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Level</th>
+                                    <td>@spell.Level</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Range</th>
+                                    <td>@spell.Range</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Duration</th>
+                                    <td>@spell.Duration</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Components</th>
+                                    <td>@spell.Components</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Casting time</th>
+                                    <td>@spell.CastingTime</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>
+                            @spell.Description
+                        </p>
+                        <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Spells", new {id = spell.Id})">Edit</a>
+                        <a class="btn btn-outline-dark" href="@Url.Action("DropSpell", "Characters", new {charId=Model.Gamespace.Character.Id, spellId = spell.Id})">Drop</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <hr />
+    <h4>Level 5:</h4>
+    @foreach (var spell in level5)
+    {
+        <div class="accordion" id="assigneditem@(spell.Id)">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#assignedinfo@(spell.Id)" aria-expanded="false" aria-controls="collapseOne">
+                        @spell.Name
+                    </button>
+                </h2>
+                <div id="assignedinfo@(spell.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#assigneditem@(spell.Id)" style="">
+                    <div class="accordion-body">
+                        <table class="table-borderless">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Level</th>
+                                    <td>@spell.Level</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Range</th>
+                                    <td>@spell.Range</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Duration</th>
+                                    <td>@spell.Duration</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Components</th>
+                                    <td>@spell.Components</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Casting time</th>
+                                    <td>@spell.CastingTime</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>
+                            @spell.Description
+                        </p>
+                        <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Spells", new {id = spell.Id})">Edit</a>
+                        <a class="btn btn-outline-dark" href="@Url.Action("DropSpell", "Characters", new {charId=Model.Gamespace.Character.Id, spellId = spell.Id})">Drop</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <hr />
+    <h4>Level 6:</h4>
+    @foreach (var spell in level6)
+    {
+        <div class="accordion" id="assigneditem@(spell.Id)">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#assignedinfo@(spell.Id)" aria-expanded="false" aria-controls="collapseOne">
+                        @spell.Name
+                    </button>
+                </h2>
+                <div id="assignedinfo@(spell.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#assigneditem@(spell.Id)" style="">
+                    <div class="accordion-body">
+                        <table class="table-borderless">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Level</th>
+                                    <td>@spell.Level</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Range</th>
+                                    <td>@spell.Range</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Duration</th>
+                                    <td>@spell.Duration</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Components</th>
+                                    <td>@spell.Components</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Casting time</th>
+                                    <td>@spell.CastingTime</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>
+                            @spell.Description
+                        </p>
+                        <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Spells", new {id = spell.Id})">Edit</a>
+                        <a class="btn btn-outline-dark" href="@Url.Action("DropSpell", "Characters", new {charId=Model.Gamespace.Character.Id, spellId = spell.Id})">Drop</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <hr />
+    <h4>Level 7:</h4>
+    @foreach (var spell in level7)
+    {
+        <div class="accordion" id="assigneditem@(spell.Id)">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#assignedinfo@(spell.Id)" aria-expanded="false" aria-controls="collapseOne">
+                        @spell.Name
+                    </button>
+                </h2>
+                <div id="assignedinfo@(spell.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#assigneditem@(spell.Id)" style="">
+                    <div class="accordion-body">
+                        <table class="table-borderless">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Level</th>
+                                    <td>@spell.Level</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Range</th>
+                                    <td>@spell.Range</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Duration</th>
+                                    <td>@spell.Duration</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Components</th>
+                                    <td>@spell.Components</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Casting time</th>
+                                    <td>@spell.CastingTime</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>
+                            @spell.Description
+                        </p>
+                        <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Spells", new {id = spell.Id})">Edit</a>
+                        <a class="btn btn-outline-dark" href="@Url.Action("DropSpell", "Characters", new {charId=Model.Gamespace.Character.Id, spellId = spell.Id})">Drop</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <hr />
+    <h4>Level 8:</h4>
+    @foreach (var spell in level8)
+    {
+        <div class="accordion" id="assigneditem@(spell.Id)">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#assignedinfo@(spell.Id)" aria-expanded="false" aria-controls="collapseOne">
+                        @spell.Name
+                    </button>
+                </h2>
+                <div id="assignedinfo@(spell.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#assigneditem@(spell.Id)" style="">
+                    <div class="accordion-body">
+                        <table class="table-borderless">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Level</th>
+                                    <td>@spell.Level</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Range</th>
+                                    <td>@spell.Range</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Duration</th>
+                                    <td>@spell.Duration</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Components</th>
+                                    <td>@spell.Components</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Casting time</th>
+                                    <td>@spell.CastingTime</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>
+                            @spell.Description
+                        </p>
+                        <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Spells", new {id = spell.Id})">Edit</a>
+                        <a class="btn btn-outline-dark" href="@Url.Action("DropSpell", "Characters", new {charId=Model.Gamespace.Character.Id, spellId = spell.Id})">Drop</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <hr />
+    <h4>Level 9:</h4>
+    @foreach (var spell in level9)
+    {
+        <div class="accordion" id="assigneditem@(spell.Id)">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#assignedinfo@(spell.Id)" aria-expanded="false" aria-controls="collapseOne">
+                        @spell.Name
+                    </button>
+                </h2>
+                <div id="assignedinfo@(spell.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#assigneditem@(spell.Id)" style="">
+                    <div class="accordion-body">
+                        <table class="table-borderless">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Level</th>
+                                    <td>@spell.Level</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Range</th>
+                                    <td>@spell.Range</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Duration</th>
+                                    <td>@spell.Duration</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Components</th>
+                                    <td>@spell.Components</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Casting time</th>
+                                    <td>@spell.CastingTime</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>
+                            @spell.Description
+                        </p>
+                        <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Spells", new {id = spell.Id})">Edit</a>
+                        <a class="btn btn-outline-dark" href="@Url.Action("DropSpell", "Characters", new {charId=Model.Gamespace.Character.Id, spellId = spell.Id})">Drop</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <hr />
+    <hr />
+    <h4>All:</h4>
     @foreach (var spell in Model.Spells)
     {
         <div class="accordion" id="item@(spell.Id)">
@@ -100,22 +537,34 @@
                         <p>
                             @spell.Description
                         </p>
-                        <a class="link-info" href="@Url.Action("AssignSpell", "Characters", new {charId=Model.Gamespace.Character.Id, spellId = spell.Id})">Get</a>
-                        <a class="link-warning" href="@Url.Action("Edit", "Spells", new {id = spell.Id})">Edit</a>
-                        <a class="link-danger" href="@Url.Action("Delete", "Spells", new {id = spell.Id})">Delete</a>
-                        <div class="dropdown">
-                            <a class="btn btn-outline-secondary btn-sm dropdown-toggle" href="#" id="charactersList" data-bs-toggle="dropdown">
-                                Assign spell to
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                @foreach (var character in Model.Gamespace.Characters)
-                                {
-                                    <li>
-                                        <a href="@Url.Action("AssignSpell", "Characters", new {spellId = spell.Id, charId = Model.Gamespace.Character.Id})" class="dropdown-item" >@Model.Gamespace.Character.Name</a>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
+                        @if (Model.Gamespace.Character.Role == Role.Master)
+                        {
+
+                            <span class="dropdown">
+                                <a class="btn btn-outline-secondary dropdown-toggle" href="#" id="charactersList" data-bs-toggle="dropdown">
+                                    Assign spell to
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    @foreach (var character in Model.Gamespace.Characters)
+                                    {
+                                        if (character.Role != Role.Master)
+                                        {
+
+                                            <li>
+                                                <a href="@Url.Action("AssignSpell", "Characters", new {spellId = spell.Id, charId = character.Id})" class="dropdown-item">@character.Name</a>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </span>
+                            <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Spells", new {id = spell.Id})">Edit</a>
+                            <a class="btn btn-outline-danger" href="@Url.Action("Delete", "Spells", new {id = spell.Id})">Delete</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-outline-info" href="@Url.Action("AssignSpell", "Characters", new {charId=Model.Gamespace.Character.Id, spellId = spell.Id})">Get</a>
+                            <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Spells", new {id = spell.Id})">Edit</a>
+                        }
                     </div>
                 </div>
             </div>

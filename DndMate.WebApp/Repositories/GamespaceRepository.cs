@@ -66,6 +66,7 @@ namespace DndMate.WebApp.Repositories
             viewModel.Character = Mapper.Map<GamespaceCharDto>(_charRepository.GetCharacter(userId, id));
             viewModel.Characters = _context.Characters.Where(c => c.GamespaceId == id).ToList().Select(c=>Mapper.Map<GamespaceCharDto>(c));
             viewModel.Notification = new NotificationDto();
+            viewModel.Notification.GamespaceId = id;
             return viewModel;
         }
         

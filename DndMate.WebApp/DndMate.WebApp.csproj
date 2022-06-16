@@ -378,7 +378,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Gamespace\Form.cshtml" />
     <Content Include="Views\Gamespace\Index.cshtml" />
-    <Content Include="Views\Notifications\Form.cshtml" />
     <Content Include="Views\Gamespace\Get.cshtml" />
     <Content Include="Views\Notifications\Index.cshtml" />
     <Content Include="Views\Spells\Form.cshtml" />

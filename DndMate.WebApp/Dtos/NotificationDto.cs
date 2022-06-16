@@ -12,6 +12,7 @@ namespace DndMate.WebApp.Dtos
         public int GamespaceId { get; set; }
         [EmailExists]
         public string UserEmail { get; set; }
+
         public string Message { get; set; }
     }
 }

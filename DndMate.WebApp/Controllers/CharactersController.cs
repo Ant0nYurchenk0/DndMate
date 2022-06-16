@@ -44,7 +44,7 @@ namespace DndMate.WebApp.Controllers
             }
             return RedirectToAction("Index", "Spells", new { gamespaceId = gamespaceId });            
         }
-        public ActionResult DropSpell(int charId, int spellId)
+        public ActionResult DropSpell(int charId = 0, int spellId)
         {
             var gamespaceId = _context.Characters.Single(c => c.Id == charId).GamespaceId;
             var characterSpell = _context.CharacterSpells.SingleOrDefault(cs => cs.CharacterId == charId && cs.SpellId == spellId);

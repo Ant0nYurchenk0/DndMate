@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DndMate.WebApp.Enums;
+using DndMate.WebApp.ViewModels;
 
 namespace DndMate.WebApp.Controllers
 {
@@ -28,20 +29,15 @@ namespace DndMate.WebApp.Controllers
                 .Select(n=>Mapper.Map<Notification, NotificationDto>(n)); 
             return View(notifications);
         }
-        public ActionResult Submit(NotificationDto notificationDto)
+        public ActionResult Submit(GamespacePropsViewModel form)
         {
-            if (!ModelState.IsValid)
-                return View("Form",  notificationDto);
+            var notificationDto = form.Notification;
             var notification = Mapper.Map<NotificationDto, Notification>(notificationDto);
+            if (!ModelState.IsValid)
+                return RedirectToAction("Get", "Gamespace", new { id = notification.GamespaceId });
             _context.Notifications.Add(notification);
             _context.SaveChanges();
-            return RedirectToAction("Get", "Gamespace", new {id=notification.GamespaceId});
-        }
-        public ActionResult Create(int gamespaceId)
-        {
-            var notificationDto = new NotificationDto();
-            notificationDto.GamespaceId = gamespaceId;
-            return View("Form", notificationDto);
+            return RedirectToAction("Get", "Gamespace", new { id = notification.GamespaceId });
         }
         public ActionResult Deny(int id)
         {
