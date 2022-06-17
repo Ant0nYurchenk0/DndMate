@@ -16,5 +16,6 @@ namespace DndMate.WebApp.Models
         public string UserEmail { get; set; }
         [MaxLength(100)]
         public string Message { get; set; }
+        public string GamespaceName { get; set; }
     }
 }

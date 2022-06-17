@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace DndMate.WebApp.Controllers
 {
+    [Authorize]
     public class SpellsController : Controller
     {
         private CharactersRepository _characterRepository;
@@ -34,8 +35,9 @@ namespace DndMate.WebApp.Controllers
             var character = _context.Characters.Single(c => c.GamespaceId == gamespaceId && c.CharacterId == userId);
             var viewModel = new SpellListViewModel();
             viewModel.Gamespace = _gamespaceRepository.GetViewModel(gamespaceId, User.Identity.GetUserId());
-            viewModel.Spells = _context.Spells.Where(s => s.GamespaceId == gamespaceId).ToList().Select(s => Mapper.Map<SpellDto>(s));
-            viewModel.AssignedSpells = _context.CharacterSpells.Where(s => s.CharacterId == character.Id).ToList().Select(s => Mapper.Map<SpellDto>(s.Spell));
+            viewModel.Spells = _context.Spells.Where(s => s.GamespaceId == gamespaceId).ToList().Select(s => Mapper.Map<SpellDto>(s)) ?? new List<SpellDto>();
+            viewModel.AssignedSpells = _context.CharacterSpells.Where(s => s.CharacterId == character.Id).ToList().Select(s => Mapper.Map<SpellDto>(s.Spell)) ?? new List<SpellDto>();
+            viewModel.AssignedSpells = _context.CharacterSpells.Where(s => s.CharacterId == character.Id).ToList().Select(s => Mapper.Map<SpellDto>(s.Spell)) ?? new List<SpellDto>();
             return View(viewModel);
         }
         [Route("Spells/Create")]
@@ -54,6 +56,8 @@ namespace DndMate.WebApp.Controllers
             if (spell == null)
                 return HttpNotFound();
             _context.Spells.Remove(spell);
+            foreach(var charSpell in _context.CharacterSpells.Where(cs=>cs.SpellId == id))
+                _context.CharacterSpells.Remove(charSpell);
             _context.SaveChanges();
             return RedirectToAction("Index", "Spells", new {gamespaceId = spell.GamespaceId});
         }

@@ -4,6 +4,7 @@ using DndMate.WebApp.Enums;
 using DndMate.WebApp.Models;
 using DndMate.WebApp.Repositories;
 using DndMate.WebApp.ViewModels;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ using System.Web.Mvc;
 
 namespace DndMate.WebApp.Controllers
 {
+    [Authorize]
+
     public class CharactersController : Controller
     {
         private ApplicationDbContext _context;
@@ -28,12 +31,15 @@ namespace DndMate.WebApp.Controllers
         }
         public ActionResult Index(int gamespaceId)
         {
-            return View(_repository.GetCharacters(gamespaceId));
+            var viewModel = new CharacterListViewModel();
+            viewModel.Gamespace = _gamespaceRepository.GetViewModel(gamespaceId, User.Identity.GetUserId());
+            viewModel.Characters = _repository.GetCharacters(gamespaceId);
+            return View(viewModel);
         }
         public ActionResult AssignSpell(int charId, int spellId)
         {
-            var gamespaceId = _context.Characters.Single(c=>c.Id == charId).GamespaceId;
-            if(!_context.CharacterSpells.Any(cs=>cs.CharacterId == charId && cs.SpellId == spellId))
+            var gamespaceId = _context.Characters.Single(c => c.Id == charId).GamespaceId;
+            if (!_context.CharacterSpells.Any(cs => cs.CharacterId == charId && cs.SpellId == spellId))
             {
                 var characterSpell = new GamespaceCharacterSpell();
                 characterSpell.CharacterId = charId;
@@ -42,9 +48,9 @@ namespace DndMate.WebApp.Controllers
                 _context.CharacterSpells.Add(characterSpell);
                 _context.SaveChanges();
             }
-            return RedirectToAction("Index", "Spells", new { gamespaceId = gamespaceId });            
+            return RedirectToAction("Index", "Spells", new { gamespaceId = gamespaceId });
         }
-        public ActionResult DropSpell(int charId = 0, int spellId)
+        public ActionResult DropSpell(int charId, int spellId)
         {
             var gamespaceId = _context.Characters.Single(c => c.Id == charId).GamespaceId;
             var characterSpell = _context.CharacterSpells.SingleOrDefault(cs => cs.CharacterId == charId && cs.SpellId == spellId);
@@ -52,7 +58,7 @@ namespace DndMate.WebApp.Controllers
                 return HttpNotFound();
             _context.CharacterSpells.Remove(characterSpell);
             _context.SaveChanges();
-            
+
             return RedirectToAction("Index", "Spells", new { gamespaceId = gamespaceId });
         }
         [Route("Characters/Create")]
@@ -98,7 +104,7 @@ namespace DndMate.WebApp.Controllers
             if (character == null)
                 return HttpNotFound();
             viewModel.Character = Mapper.Map<GamespaceCharDto>(character);
-            viewModel.Gamespace = _gamespaceRepository.GetViewModel(character.GamespaceId, character.CharacterId);
+            viewModel.Gamespace = _gamespaceRepository.GetViewModel(character.GamespaceId, User.Identity.GetUserId());
             return View(viewModel);
         }
     }

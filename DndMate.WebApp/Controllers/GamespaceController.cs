@@ -29,24 +29,39 @@ namespace DndMate.WebApp.Controllers
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
+            var viewModel = new GamespaceListViewModel();
             var gamespaceList = from g in _context.Gamespaces 
                                 join gs in _context.Characters 
                                 on g.Id equals gs.GamespaceId
                                 where gs.CharacterId == userId
-                                select g;                                           
-            return View(gamespaceList.ToList().Select(n => Mapper.Map<Gamespace, GamespaceDto>(n)));
+                                select g;
+            foreach (var gamespace in gamespaceList.ToList())
+            {                
+                var character = _context.Characters.SingleOrDefault(c => c.CharacterId == userId);
+                var gamespaceWithChar = new GamespaceWithCharacter
+                {
+                    Gamespace = Mapper.Map<GamespaceDto>(gamespace),
+                    Character = Mapper.Map<GamespaceCharDto>(character)
+                };
+                viewModel.Gamespaces.Add(gamespaceWithChar);
+            }
+            return View(viewModel);
         }
         [Route("Gamespace/Create")]
         public ActionResult Create()
         {
-            return View("Form", new GamespaceDto());
+            var viewModel = new GamespaceFormViewModel();
+            viewModel.GamespaceProps = new GamespacePropsViewModel();
+            viewModel.Gamespace = new GamespaceDto();
+            return View("Form", viewModel);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(GamespaceDto gamespaceDto)
+        public ActionResult Save(GamespaceFormViewModel form)
         {
+            var gamespaceDto = form.Gamespace; 
             if (!ModelState.IsValid)
-                return View("Form", gamespaceDto);
+                return View("Form", form);
 
             if(!_context.Gamespaces.Any(g=>g.Id == gamespaceDto.Id))
             {
@@ -57,16 +72,19 @@ namespace DndMate.WebApp.Controllers
                 _repository.Update(gamespaceDto);
             }
             
-            return RedirectToAction("Index", "Gamespace");
+            return RedirectToAction("Get", "Gamespace", new {id=gamespaceDto.Id});
         }
         [Route("Gamespace/Edit")]
         public ActionResult Edit(int id)
         {
+            var viewModel = new GamespaceFormViewModel();
+            viewModel.GamespaceProps = _repository.GetViewModel(id, User.Identity.GetUserId());
+
             var gamespace = _context.Gamespaces.SingleOrDefault(g => g.Id == id);
             if (gamespace == null)
                 return HttpNotFound();
-            var gamespaceDto = Mapper.Map<Gamespace, GamespaceDto>(gamespace);
-            return View("Form", gamespaceDto);
+            viewModel.Gamespace = Mapper.Map<Gamespace, GamespaceDto>(gamespace);
+            return View("Form", viewModel);
         }
         [Route("Gamespace/Delete")]
         public ActionResult Delete(int id)

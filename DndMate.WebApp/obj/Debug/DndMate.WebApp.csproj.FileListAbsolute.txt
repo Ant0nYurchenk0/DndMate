@@ -266,3 +266,8 @@ C:\Users\anton.yurchenko\Documents\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.W
 C:\Users\anton.yurchenko\Documents\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.csproj.CopyComplete
 C:\Users\anton.yurchenko\Documents\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.dll
 C:\Users\anton.yurchenko\Documents\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.pdb
+C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.RemoveImageAndFullnameFromSpell.resources
+C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.RemoveCharacterSpells.resources
+C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.AddCharacterSpells2.resources
+C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.AddGamespaceNameToNotification.resources
+C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.GamespaceRemoveImageAddDescription.resources

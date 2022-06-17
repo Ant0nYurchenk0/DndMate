@@ -11,42 +11,49 @@
     @using (Html.BeginForm("Save", "Spells", FormMethod.Post))
     {
         <div class="form-group">
-            @Html.LabelFor(m => m.Spell.Name)
-            @Html.TextBoxFor(m => m.Spell.Name, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Spell.Name)
+            <div class="row">
+                <div class="col-md-6">
+                    <br />
+                    @Html.LabelFor(m => m.Spell.Name)
+                    @Html.TextBoxFor(m => m.Spell.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Spell.Name)
+                    <br />
+                    @Html.LabelFor(m => m.Spell.Level)
+                    @Html.TextBoxFor(m => m.Spell.Level, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Spell.Level)
+                    <br />
+                    @Html.LabelFor(m => m.Spell.CastingTime)
+                    @Html.TextBoxFor(m => m.Spell.CastingTime, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Spell.CastingTime)
+                </div>
+                <div class="col-md-6">
+                    <br />
+                    @Html.LabelFor(m => m.Spell.Range)
+                    @Html.TextBoxFor(m => m.Spell.Range, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Spell.Range)
+                    <br />
+                    @Html.LabelFor(m => m.Spell.Components)
+                    @Html.TextBoxFor(m => m.Spell.Components, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Spell.Components)
+                    <br />
+                    @Html.LabelFor(m => m.Spell.Duration)
+                    @Html.TextBoxFor(m => m.Spell.Duration, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Spell.Duration)
+
+                </div>
+            </div>
             <br />
-            @Html.LabelFor(m => m.Spell.FullName)
-            @Html.TextBoxFor(m => m.Spell.FullName, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Spell.FullName)
-            <br />
-            @Html.LabelFor(m => m.Spell.Level)
-            @Html.TextBoxFor(m => m.Spell.Level, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Spell.Level)
-            <br />
-            @Html.LabelFor(m => m.Spell.CastingTime)
-            @Html.TextBoxFor(m => m.Spell.CastingTime, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Spell.CastingTime)
-            <br />
-            @Html.LabelFor(m => m.Spell.Range)
-            @Html.TextBoxFor(m => m.Spell.Range, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Spell.Range)
-            <br />
-            @Html.LabelFor(m => m.Spell.Components)
-            @Html.TextBoxFor(m => m.Spell.Components, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Spell.Components)
-            <br />
-            @Html.LabelFor(m => m.Spell.Duration)
-            @Html.TextBoxFor(m => m.Spell.Duration, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Spell.Duration)
-            <br />
-            @Html.LabelFor(m => m.Spell.Description)
-            @Html.TextAreaFor(m => m.Spell.Description, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Spell.Description)
+            <div class="row">
+                <div class="col-12">
+                    @Html.LabelFor(m => m.Spell.Description)
+                    @Html.TextAreaFor(m => m.Spell.Description, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Spell.Description)
+                </div>
+            </div>
             <br />
             @Html.AntiForgeryToken()
             @Html.HiddenFor(m => m.Spell.GamespaceId)
             @Html.HiddenFor(m => m.Spell.Id)
-            <br />
         </div>
         <a class="btn btn-secondary" href="@Url.Action("Index", "Spells", new {gamespaceId = Model.Gamespace.Gamespace.Id})">Cancel</a>
         <button class="btn btn-primary">Submit</button>

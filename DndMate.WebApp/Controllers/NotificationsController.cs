@@ -33,6 +33,7 @@ namespace DndMate.WebApp.Controllers
         {
             var notificationDto = form.Notification;
             var notification = Mapper.Map<NotificationDto, Notification>(notificationDto);
+            notification.GamespaceName = _context.Gamespaces.SingleOrDefault(n => n.Id == notification.GamespaceId).Name;
             if (!ModelState.IsValid)
                 return RedirectToAction("Get", "Gamespace", new { id = notification.GamespaceId });
             _context.Notifications.Add(notification);

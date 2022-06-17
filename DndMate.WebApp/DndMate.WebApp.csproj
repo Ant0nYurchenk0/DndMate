@@ -197,6 +197,7 @@
     <Compile Include="Controllers\SpellsController.cs" />
     <Compile Include="Dtos\GamespaceCharDto.cs" />
     <Compile Include="Dtos\GamespaceDto.cs" />
+    <Compile Include="Dtos\GamespaceWithCharacter.cs" />
     <Compile Include="Dtos\NotificationDto.cs" />
     <Compile Include="Dtos\SpellDto.cs" />
     <Compile Include="Enums\PlayerClass.cs" />
@@ -260,6 +261,26 @@
     <Compile Include="Migrations\202206090858375_AddPropertiesToCharacter1.designer.cs">
       <DependentUpon>202206090858375_AddPropertiesToCharacter1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202206170908148_RemoveImageAndFullnameFromSpell.cs" />
+    <Compile Include="Migrations\202206170908148_RemoveImageAndFullnameFromSpell.designer.cs">
+      <DependentUpon>202206170908148_RemoveImageAndFullnameFromSpell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206170909375_RemoveCharacterSpells.cs" />
+    <Compile Include="Migrations\202206170909375_RemoveCharacterSpells.designer.cs">
+      <DependentUpon>202206170909375_RemoveCharacterSpells.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206170911023_AddCharacterSpells2.cs" />
+    <Compile Include="Migrations\202206170911023_AddCharacterSpells2.designer.cs">
+      <DependentUpon>202206170911023_AddCharacterSpells2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206171629278_AddGamespaceNameToNotification.cs" />
+    <Compile Include="Migrations\202206171629278_AddGamespaceNameToNotification.designer.cs">
+      <DependentUpon>202206171629278_AddGamespaceNameToNotification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206171646261_GamespaceRemoveImageAddDescription.cs" />
+    <Compile Include="Migrations\202206171646261_GamespaceRemoveImageAddDescription.designer.cs">
+      <DependentUpon>202206171646261_GamespaceRemoveImageAddDescription.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -276,7 +297,10 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Validations\EmailExists.cs" />
     <Compile Include="Validations\MasterOrHasClass.cs" />
+    <Compile Include="ViewModels\CharacterListViewModel.cs" />
     <Compile Include="ViewModels\CharacterViewModel.cs" />
+    <Compile Include="ViewModels\GamespaceFormViewModel.cs" />
+    <Compile Include="ViewModels\GamespaceListViewModel.cs" />
     <Compile Include="ViewModels\SpellFormViewModel.cs" />
     <Compile Include="ViewModels\SpellListViewModel.cs" />
     <Compile Include="ViewModels\GamespacePropsViewModel.cs" />
@@ -386,6 +410,7 @@
     <Content Include="Views\Shared\_NavBar.cshtml" />
     <Content Include="Views\Shared\_GamespaceTools.cshtml" />
     <Content Include="Views\Characters\Get.cshtml" />
+    <Content Include="Views\Characters\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -437,6 +462,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206090858375_AddPropertiesToCharacter1.resx">
       <DependentUpon>202206090858375_AddPropertiesToCharacter1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206170908148_RemoveImageAndFullnameFromSpell.resx">
+      <DependentUpon>202206170908148_RemoveImageAndFullnameFromSpell.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206170909375_RemoveCharacterSpells.resx">
+      <DependentUpon>202206170909375_RemoveCharacterSpells.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206170911023_AddCharacterSpells2.resx">
+      <DependentUpon>202206170911023_AddCharacterSpells2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206171629278_AddGamespaceNameToNotification.resx">
+      <DependentUpon>202206171629278_AddGamespaceNameToNotification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206171646261_GamespaceRemoveImageAddDescription.resx">
+      <DependentUpon>202206171646261_GamespaceRemoveImageAddDescription.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

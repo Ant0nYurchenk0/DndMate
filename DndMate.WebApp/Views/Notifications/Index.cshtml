@@ -2,17 +2,38 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<br />
+<br />
+<br />
+<div class="gamespace-content">
+    <h2>Notifications</h2>
+    <hr />
 
-<h2>Notifications</h2>
-<ul>
-
-    @foreach (var notification in Model)
+    @if (Model.Count() == 0)
     {
-        <li>
-            <p>@notification.Message</p>
-            <a href="@Url.Action("Accept", "Notifications", new { id= notification.Id})">Accept</a>
-            <a href="@Url.Action("Deny", "Notifications", new { id= notification.Id})">Deny</a>
-        </li>
+        <p class="text-muted">Nothing here.</p>
     }
-</ul>
+    else
+    {
+        foreach (var notification in Model)
+        {
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            @notification.GamespaceName
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+                        <div class="accordion-body">
+                            <p>@notification.Message</p>
+                            <a class="btn btn-outline-success" href="@Url.Action("Accept", "Notifications", new { id= notification.Id})">Accept</a>
+                            <a class="btn btn-outline-danger" href="@Url.Action("Deny", "Notifications", new { id= notification.Id})">Deny</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
 
+</div>

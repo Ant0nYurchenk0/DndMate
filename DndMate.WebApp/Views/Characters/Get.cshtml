@@ -4,67 +4,628 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @Html.Partial("_GamespaceTools", Model.Gamespace)
+
 <div class="gamespace-content">
-    <div class="row">
-        <div class="col-md-6">
-            <h2>@Model.Character.Name</h2>
+
+    <h3>@Model.Character.Name</h3>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="#stats">Stats</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#charachteristics">Characteristics</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#personality">Personality</a>
+        </li>
+
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade active show" id="stats">
+            <br />
+            <table class="props-table">
+                <tbody>
+                    <tr>
+                        <th scope="row">Inspiration</th>
+                        <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Proficiency bonus</th>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Passive Wisdom</th>
+                        <td>18</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <div class="row character-props">
+                <div class="col-md-3 col-5">
+                    <div class=" stat-table">
+                        <div class="stat">
+                            <p class="name">Strength</p>
+                            <h4 class="bonus">5</h4>
+                            <p class="value">18</p>
+                        </div>
+                        <div class="stat">
+                            <p class="name">Dexterity</p>
+                            <h4 class="bonus">5</h4>
+                            <p class="value">18</p>
+                        </div>
+                        <div class="stat">
+                            <p class="name">Constitution</p>
+                            <h4 class="bonus">5</h4>
+                            <p class="value">18</p>
+                        </div>
+                        <div class="stat">
+                            <p class="name">Intelligence</p>
+                            <h4 class="bonus">5</h4>
+                            <p class="value">18</p>
+                        </div>
+                        <div class="stat">
+                            <p class="name">Wisdom</p>
+                            <h4 class="bonus">5</h4>
+                            <p class="value">18</p>
+                        </div>
+                        <div class="stat">
+                            <p class="name">Charisma</p>
+                            <h4 class="bonus">5</h4>
+                            <p class="value">18</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="second-table col-md-3 col-7">
+                    <div class="saving-throws">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th colspan="3" class="text-center" scope="row">SAVING THROWS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                    </th>
+                                    <td class="text-decoration-underline"> 3 </td>
+                                    <td class="throw-name">Strength</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                    </th>
+                                    <td class="text-decoration-underline">3</td>
+                                    <td>Dexterity</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                    </th>
+                                    <td class="text-decoration-underline">3</td>
+                                    <td>Constitution</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                    </th>
+                                    <td class="text-decoration-underline">3</td>
+                                    <td>Intelligence</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                    </th>
+                                    <td class="text-decoration-underline">3</td>
+                                    <td>Wisdom</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                    </th>
+                                    <td class="text-decoration-underline">3</td>
+                                    <td>Charisma</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <br />
+
+                    <div class="saving-throws">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th colspan="3" class="text-center" scope="row">SKILLS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th colspan="3" class="text-center">Strength</th>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                    </th>
+                                    <td class="text-decoration-underline"> 3 </td>
+                                    <td class="throw-name">Athletics</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="3" class="text-center">Dexterity</th>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                    </th>
+                                    <td class="text-decoration-underline"> 3 </td>
+                                    <td class="throw-name">Acrobatics</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                    </th>
+                                    <td class="text-decoration-underline"> 3 </td>
+                                    <td class="throw-name">Sleight of Hand</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                    </th>
+                                    <td class="text-decoration-underline"> 3 </td>
+                                    <td class="throw-name">Stealth</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="3" class="text-center">Intelligence</th>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                    </th>
+                                    <td class="text-decoration-underline"> 3 </td>
+                                    <td class="throw-name">Arcana</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                    </th>
+                                    <td class="text-decoration-underline"> 3 </td>
+                                    <td class="throw-name">History</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                    </th>
+                                    <td class="text-decoration-underline"> 3 </td>
+                                    <td class="throw-name">Nature</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                    </th>
+                                    <td class="text-decoration-underline"> 3 </td>
+                                    <td class="throw-name">Religion</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="3" class="text-center">Wisdom</th>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                    </th>
+                                    <td class="text-decoration-underline"> 3 </td>
+                                    <td class="throw-name">Animal Handling</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                    </th>
+                                    <td class="text-decoration-underline"> 3 </td>
+                                    <td class="throw-name">Insight</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                    </th>
+                                    <td class="text-decoration-underline"> 3 </td>
+                                    <td class="throw-name">Medicine</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                    </th>
+                                    <td class="text-decoration-underline"> 3 </td>
+                                    <td class="throw-name">Perception</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                    </th>
+                                    <td class="text-decoration-underline"> 3 </td>
+                                    <td class="throw-name">Survival</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="3" class="text-center">Charisma</th>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                    </th>
+                                    <td class="text-decoration-underline"> 3 </td>
+                                    <td class="throw-name">Deception</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                    </th>
+                                    <td class="text-decoration-underline"> 3 </td>
+                                    <td class="throw-name">Intimidation</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                    </th>
+                                    <td class="text-decoration-underline"> 3 </td>
+                                    <td class="throw-name">Performance</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                    </th>
+                                    <td class="text-decoration-underline"> 3 </td>
+                                    <td class="throw-name">Persuasion</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <div class="col-md-6">
+        <div class="tab-pane fade" id="charachteristics">
             <div class="row">
-                <div class="col-4">@Model.Character.CharacterClass.ToString()</div>
-                <div class="col-4">@Model.Character.Level Lvl.</div>
-                <div class="col-4">Background</div>
-            </div>
-            <div class="row">
-                <div class="col-4">Race</div>
-                <div class="col-4">Alignment</div>
-                <div class="col-4">Exp.</div>
+                <div class="col-md-6">
+
+                    <br />
+                    <table class="props-table">
+                        <tbody>
+                            <tr>
+                                <th scope="row">Level</th>
+                                <td>@Model.Gamespace.Character.Level</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Class</th>
+                                <td>@Model.Character.CharacterClass</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Race</th>
+                                <td>Dark Elf</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><hr /></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Armor class</th>
+                                <td>16</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Initiative</th>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Speed</th>
+                                <td>6 feet</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Hit Dice</th>
+                                <td>1d6</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <div class="row">
+                        <div class="col-4">
+                            <h5>Hit Points</h5>
+                        </div>
+                        <div class="col-5">
+                            <a class="btn btn-sm btn-outline-secondary">Heal all</a>
+                        </div>
+                        <div class="col-3"></div>
+                    </div>
+                    <table class="slots-table">
+                        <tbody>
+                            <tr>
+                                <th scope="row" class="text-danger">32</th>
+                                <th scope="row" class="text-info"></th>
+                                <th scope="row">/</th>
+                                <th scope="row" class="text-success">32</th>
+                                <td>
+                                    <form>
+                                        <div class="form-group">
+                                            <div class="input-group hp-input">
+                                                <input type="text" class="form-control form-control-sm" placeholder="# of HP">
+                                                <button class="btn btn-sm btn-success" type="button" id="button-addon2">+</button>
+                                                <button class="btn btn-sm btn-danger" type="button" id="button-addon2">-</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <div class="row">
+                        <div class="col-4">
+                            <h5>Death Saves</h5>
+                        </div>
+                        <div class="col-5">
+                            <a class="btn btn-sm btn-outline-secondary">Reset</a>
+                        </div>
+                        <div class="col-3"></div>
+                    </div>
+                    <table class="slots-table">
+                        <tbody>
+                            <tr>
+                                <th scope="row" class="text-success">Successes</th>
+                                <td>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                </td>
+                                <td><a class="btn btn-sm btn-outline-success" href="#">+</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-danger">Failures</th>
+                                <td>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                </td>
+                                <td><a class="btn btn-sm btn-outline-danger" href="#">+</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                </div>
+                <div class="col-md-6">
+                    <br />
+                    <div class="row">
+                        <div class="col-5">
+                            <h5>Spell Slots</h5>
+                        </div>
+                        <div class="col-5">
+                            <a class="btn btn-sm btn-outline-secondary">Restore all</a>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+                    <table class="slots-table">
+                        <tbody>
+                            <tr>
+                                <th scope="row" class="text-dark">Level 1</th>
+                                <td>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                </td>
+                                <td><a class="btn btn-outline-dark" href="#">+</a></td>
+                                <td><a class="btn btn-outline-dark" href="#">-</a></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-dark">Level 2</th>
+                                <td>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                </td>
+                                <td><a class="btn btn-outline-dark" href="#">+</a></td>
+                                <td><a class="btn btn-outline-dark" href="#">-</a></td>
+
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-dark">Level 3</th>
+                                <td>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                </td>
+                                <td><a class="btn btn-outline-dark" href="#">+</a></td>
+                                <td><a class="btn btn-outline-dark" href="#">-</a></td>
+
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-dark">Level 4</th>
+                                <td>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                </td>
+                                <td><a class="btn btn-outline-dark" href="#">+</a></td>
+                                <td><a class="btn btn-outline-dark" href="#">-</a></td>
+
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-dark">Level 5</th>
+                                <td>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                </td>
+                                <td><a class="btn btn-outline-dark" href="#">+</a></td>
+                                <td><a class="btn btn-outline-dark" href="#">-</a></td>
+
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-dark">Level 6</th>
+                                <td>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                </td>
+                                <td><a class="btn btn-outline-dark" href="#">+</a></td>
+                                <td><a class="btn btn-outline-dark" href="#">-</a></td>
+
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-dark">Level 7</th>
+                                <td>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                </td>
+                                <td><a class="btn btn-outline-dark" href="#">+</a></td>
+                                <td><a class="btn btn-outline-dark" href="#">-</a></td>
+
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-dark">Level 8</th>
+                                <td>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                </td>
+                                <td><a class="btn btn-outline-dark" href="#">+</a></td>
+                                <td><a class="btn btn-outline-dark" href="#">-</a></td>
+
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-dark">Level 9</th>
+                                <td>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                </td>
+                                <td><a class="btn btn-outline-dark" href="#">+</a></td>
+                                <td><a class="btn btn-outline-dark" href="#">-</a></td>
+
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-dark">Special</th>
+                                <td>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                </td>
+                                <td><a class="btn btn-outline-dark" href="#">+</a></td>
+                                <td><a class="btn btn-outline-dark" href="#">-</a></td>
+
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row character-props">
-        <div class="col-1 stat-table">
-            <div class="stat">
-                <p class="name">Strength</p>
-                <h4 class="bonus">5</h4>
-                <p class="value">18</p>
-            </div>
-            <div class="stat">
-                <p class="name">Dexterity</p>
-                <h4 class="bonus">5</h4>
-                <p class="value">18</p>
-            </div>
-            <div class="stat">
-                <p class="name">Constitution</p>
-                <h4 class="bonus">5</h4>
-                <p class="value">18</p>
-            </div>
-            <div class="stat">
-                <p class="name">Intelligence</p>
-                <h4 class="bonus">5</h4>
-                <p class="value">18</p>
-            </div>
-            <div class="stat">
-                <p class="name">Wisdom</p>
-                <h4 class="bonus">5</h4>
-                <p class="value">18</p>
-            </div>
-            <div class="stat">
-                <p class="name">Charisma</p>
-                <h4 class="bonus">5</h4>
-                <p  class="value">18</p>
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="row">
-                <span>+</span>
-                <span>Inspiration</span>
-            </div>
-            <div class="row">
-                <span>+</span>
-                <span>Inspiration</span>
+        <div class="tab-pane fade" id="personality">
+            <br />
+            <table class="props-table">
+                <tbody>
+                    <tr>
+                        <th scope="row">Alignment</th>
+                        <td>Neutral</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Background</th>
+                        <td>Happy childhood</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <div class="accordion" id="personality-accordition">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#traits">
+                            Personality Traits
+                        </button>
+                    </h2>
+                    <div id="traits" class="accordion-collapse collapse" data-bs-parent="#personality-accordition">
+                        <div class="accordion-body">
+                            <p class="description">
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ideals">
+                            Ideals
+                        </button>
+                    </h2>
+                    <div id="ideals" class="accordion-collapse collapse" data-bs-parent="#personality-accordition">
+                        <div class="accordion-body">
+                            <p class="description">
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header " id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bonds">
+                            Bonds
+                        </button>
+                    </h2>
+                    <div id="bonds" class="accordion-collapse collapse" data-bs-parent="#personality-accordition">
+                        <div class="accordion-body">
+                            <p class="description">
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header " id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flaws">
+                            Flaws
+                        </button>
+                    </h2>
+                    <div id="flaws" class="accordion-collapse collapse" data-bs-parent="#personality-accordition">
+                        <div class="accordion-body">
+                            <p class="description">
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header " id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#profs">
+                            Proficiencies & Languages  
+                        </button>
+                    </h2>
+                    <div id="profs" class="accordion-collapse collapse" data-bs-parent="#personality-accordition">
+                        <div class="accordion-body">
+                            <p class="description">
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header " id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#features">
+                            Features & Traits
+                        </button>
+                    </h2>
+                    <div id="features" class="accordion-collapse collapse" data-bs-parent="#personality-accordition">
+                        <div class="accordion-body">
+                            <p class="description">
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 

@@ -10,8 +10,6 @@ namespace DndMate.WebApp.Controllers
     {
         public ActionResult Index()
         {
-            if(User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Gamespace");
             return View();
         }
 

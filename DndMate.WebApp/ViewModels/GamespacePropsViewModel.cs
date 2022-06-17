@@ -8,6 +8,10 @@ namespace DndMate.WebApp.ViewModels
 {
     public class GamespacePropsViewModel
     {
+        public GamespacePropsViewModel()
+        {
+            Characters = new List<GamespaceCharDto>();
+        }
         public GamespaceDto Gamespace { get; set; }
         public GamespaceCharDto Character { get; set; }
         public NotificationDto Notification { get; set; }

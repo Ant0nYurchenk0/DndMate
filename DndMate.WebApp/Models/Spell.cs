@@ -10,8 +10,6 @@ namespace DndMate.WebApp.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string FullName { get; set; }
-        public string Image { get; set; }
         [Range(0, 9)]
         public int Level { get; set; }
         public string CastingTime { get; set; }

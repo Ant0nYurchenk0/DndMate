@@ -1,20 +1,40 @@
 ﻿@model DndMate.WebApp.ViewModels.GamespacePropsViewModel
+@using DndMate.WebApp.Enums
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <ul class="nav toolbar">
             <li class="nav-item">
-                <form action="@Url.Action("Get", "Characters", new { id = Model.Character.Id })">
-                    <button class="btn">
+                @if (Model.Character.Role == Role.Master)
+                {
+                    <div class="btn " href="#">
                         <img class="character" src="~/Source/rogue.jpg" />
                         @Model.Character.Name
-                    </button>
-                </form>
+                    </div>
+                }
+                else
+                {
+                    <form action="@Url.Action("Get", "Characters", new { id = Model.Character.Id })">
+                        <button class="btn ">
+                            <img class="character" src="~/Source/rogue.jpg" />
+                            @Model.Character.Name
+                        </button>
+                    </form>
+                }
+
             </li>
         </ul>
-        <ul class="toolbar navbar-nav ms-md-auto">
+        <ul class="toolbar-no-left-margin navbar-nav ms-md-auto">
             <li class="nav-item">
                 <button class="btn link-info" data-bs-toggle="modal" data-bs-target="#invite">Invite</button>
             </li>
+            @if (Model.Character.Role == Role.Master)
+            {
+
+                <li class="nav-item">
+                    <a class="btn link-warning" href="@Url.Action("Edit", "Gamespace", new {id=Model.Gamespace.Id})">Edit</a>
+                </li>
+            }
             <li class="nav-item">
                 <button class="btn link-danger" data-bs-toggle="modal" data-bs-target="#leave">Leave</button>
             </li>
@@ -24,28 +44,28 @@
 <nav class="navbar-vertical navbar navbar-expand-lg navbar-light bg-light">
     <ul class="nav flex-column">
         <li class="nav-item vertical-item">
-            <a class="nav-link" href="@Url.Action("Get", "Gamespace", new { id = Model.Gamespace.Id })">
+            <a class="nav-link" href="@Url.Action("Get", "Gamespace", new { id = Model.Gamespace.Id })" data-bs-toggle="tooltip" data-bs-placement="right" title="Story">
                 <img class="icon" src="~/source/book.png" />
             </a>
         </li>
         <li class="nav-item  vertical-item">
-            <a class="nav-link" href="@Url.Action("Index", "Spells", new {gamespaceId = Model.Gamespace.Id, charId = Model.Character.Id})">
+            <a class="nav-link" href="@Url.Action("Index", "Spells", new {gamespaceId = Model.Gamespace.Id, charId = Model.Character.Id})" data-bs-toggle="tooltip" data-bs-placement="right" title="Spells">
                 <img class="icon" src="~/source/scroll.png" />
             </a>
         </li>
         <li class="nav-item vertical-item">
-            <a class="nav-link" href="@Url.Action()">
+            <a class="nav-link" href="@Url.Action()" data-bs-toggle="tooltip" data-bs-placement="right" title="Inventory">
                 <img class="icon" src="~/source/money-bag.png" />
             </a>
         </li>
         <li class="nav-item vertical-item">
-            <a class="nav-link" href="@Url.Action()">
+            <a class="nav-link" href="@Url.Action()" data-bs-toggle="tooltip" data-bs-placement="right" title="Game characters">
                 <img class="icon" src="~/source/assasin.png" />
             </a>
         </li>
 
         <li class="nav-item vertical-item">
-            <a class="nav-link" href="@Url.Action()">
+            <a class="nav-link" href="@Url.Action("Index", "Characters", new {gamespaceId = Model.Gamespace.Id})" data-bs-toggle="tooltip" data-bs-placement="right" title="Players">
                 <img class="icon" src="~/source/team.png" />
             </a>
         </li>
@@ -65,7 +85,7 @@
             <div class="modal-footer">
                 <a class="btn btn-secondary" data-bs-dismiss="modal">Cancel</a>
                 <form action="@Url.Action("Leave", "Gamespace")">
-                    <input type="hidden" name="gamespaceId" value="@Model.Gamespace.Id"/>
+                    <input type="hidden" name="gamespaceId" value="@Model.Gamespace.Id" />
                     <button class="btn btn-danger">Leave</button>
                 </form>
             </div>
@@ -85,19 +105,19 @@
             {
                 <div class="modal-body">
 
-                        <div class="form-group">
-                            @Html.LabelFor(n => n.Notification.UserEmail)
-                            @Html.TextBoxFor(n => n.Notification.UserEmail, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(n => n.Notification.UserEmail)
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(n => n.Notification.Message)
-                            @Html.TextAreaFor(n => n.Notification.Message, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(n => n.Notification.Message)
-                        </div>
-                        @Html.HiddenFor(n => n.Notification.Id)
-                        @Html.HiddenFor(n => n.Notification.GamespaceId)
-                        @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        @Html.LabelFor(n => n.Notification.UserEmail)
+                        @Html.TextBoxFor(n => n.Notification.UserEmail, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(n => n.Notification.UserEmail)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(n => n.Notification.Message)
+                        @Html.TextAreaFor(n => n.Notification.Message, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(n => n.Notification.Message)
+                    </div>
+                    @Html.HiddenFor(n => n.Notification.Id)
+                    @Html.HiddenFor(n => n.Notification.GamespaceId)
+                    @Html.AntiForgeryToken()
                 </div>
                 <div class="modal-footer">
                     <a class="btn btn-secondary" data-bs-dismiss="modal">Cancel</a>
