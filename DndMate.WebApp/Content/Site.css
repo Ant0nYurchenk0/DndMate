@@ -5,7 +5,9 @@
 body::-webkit-scrollbar {
     display: none;
 }
-
+ul{
+    list-style:none;
+}
 body {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -212,4 +214,8 @@ a:link, a:visited, a:hover, a:active {
 .floating-input {
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=");
     cursor: auto;
+}
+.character-button{
+    border:none;
+    background: none;
 }

@@ -5,38 +5,33 @@
     <div class="container-fluid">
         <ul class="nav toolbar">
             <li class="nav-item">
-                @if (Model.Character.Role == Role.Master)
+                <form action="@Url.Action("Get", "Gamespace")">
+                     <input type="hidden" name="id" value="@Model.Gamespace.Id"/>
+                    <button class="character-button" href="#">
+                        <img class="character" src="https://cdn-icons-png.flaticon.com/512/210/210579.png" />
+                        @Model.Gamespace.Name
+                    </button>
+                </form>
+            </li>
+            <li class="nav-item space-right"></li>
+            <li class="nav-item">
+                @if (Model.Character.CharacterClass == CharacterClass.Master)
                 {
-                    <div class="btn " href="#">
-                        <img class="character" src="~/Source/rogue.jpg" />
+                    <div class="character-button" href="#">
+                        <img class="character" src="@Class.Icons[Model.Character.CharacterClass]" />
                         @Model.Character.Name
                     </div>
                 }
                 else
                 {
                     <form action="@Url.Action("Get", "Characters", new { id = Model.Character.Id })">
-                        <button class="btn ">
-                            <img class="character" src="~/Source/rogue.jpg" />
+                        <button class="character-button">
+                            <img class="character" src="https://cdn-icons.flaticon.com/png/512/4352/premium/4352171.png?token=exp=1655540768~hmac=cae335287e46d55f289e4487531ada2a" />
                             @Model.Character.Name
                         </button>
                     </form>
                 }
 
-            </li>
-        </ul>
-        <ul class="toolbar-no-left-margin navbar-nav ms-md-auto">
-            <li class="nav-item">
-                <button class="btn link-info" data-bs-toggle="modal" data-bs-target="#invite">Invite</button>
-            </li>
-            @if (Model.Character.Role == Role.Master)
-            {
-
-                <li class="nav-item">
-                    <a class="btn link-warning" href="@Url.Action("Edit", "Gamespace", new {id=Model.Gamespace.Id})">Edit</a>
-                </li>
-            }
-            <li class="nav-item">
-                <button class="btn link-danger" data-bs-toggle="modal" data-bs-target="#leave">Leave</button>
             </li>
         </ul>
     </div>
@@ -45,32 +40,78 @@
     <ul class="nav flex-column">
         <li class="nav-item vertical-item">
             <a class="nav-link" href="@Url.Action("Get", "Gamespace", new { id = Model.Gamespace.Id })" data-bs-toggle="tooltip" data-bs-placement="right" title="Story">
-                <img class="icon" src="~/source/book.png" />
+                <img class="icon" src="https://cdn-icons.flaticon.com/png/512/3145/premium/3145755.png?token=exp=1655538882~hmac=d3e0fba60ac3ebb0b99aecedcfc5706f" />
             </a>
         </li>
         <li class="nav-item  vertical-item">
             <a class="nav-link" href="@Url.Action("Index", "Spells", new {gamespaceId = Model.Gamespace.Id, charId = Model.Character.Id})" data-bs-toggle="tooltip" data-bs-placement="right" title="Spells">
-                <img class="icon" src="~/source/scroll.png" />
+                <img class="icon" src="https://cdn-icons-png.flaticon.com/512/4334/4334368.png" />
             </a>
         </li>
         <li class="nav-item vertical-item">
             <a class="nav-link" href="@Url.Action()" data-bs-toggle="tooltip" data-bs-placement="right" title="Inventory">
-                <img class="icon" src="~/source/money-bag.png" />
+                <img class="icon" src="https://cdn-icons-png.flaticon.com/512/6184/6184882.png" />
             </a>
         </li>
-        <li class="nav-item vertical-item">
-            <a class="nav-link" href="@Url.Action()" data-bs-toggle="tooltip" data-bs-placement="right" title="Game characters">
-                <img class="icon" src="~/source/assasin.png" />
-            </a>
-        </li>
-
         <li class="nav-item vertical-item">
             <a class="nav-link" href="@Url.Action("Index", "Characters", new {gamespaceId = Model.Gamespace.Id})" data-bs-toggle="tooltip" data-bs-placement="right" title="Players">
-                <img class="icon" src="~/source/team.png" />
+                <img class="icon" src="https://cdn-icons-png.flaticon.com/512/476/476863.png" />
             </a>
         </li>
+        <li class="nav-item vertical-item" data-bs-toggle="tooltip" data-bs-placement="right" title="More options">
+            <button class="character-button nav-link" data-bs-toggle="modal" data-bs-target="#more">
+                <img class="icon" src="https://cdn-icons.flaticon.com/png/512/2661/premium/2661475.png?token=exp=1655539562~hmac=4495bc3561dc4e170955ab724dcde665" />
+            </button>
+        </li>
+
+
     </ul>
 </nav>
+
+<div class="modal fade" id="more" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Gamespace Options</h5>
+                <a class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    @if (Model.Character.CharacterClass == CharacterClass.Master)
+                    {
+                        <li class="nav-item vertical-item">
+                            <a class="nav-link" href="@Url.Action("Edit", "Gamespace", new { id = Model.Gamespace.Id })">
+                                <img class="icon space-right" src="https://cdn-icons-png.flaticon.com/512/2633/2633009.png" />
+                                <span class="text-secondary">
+                                    Edit
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    <li class="nav-item vertical-item">
+                        <button class="character-button nav-link" data-bs-toggle="modal" data-bs-target="#invite">
+                            <img class="icon space-right" src="https://cdn-icons-png.flaticon.com/512/2725/2725443.png" />
+                            <span class="text-secondary">
+                                Invite new player
+                            </span>
+                        </button>
+                    </li>
+                    <li class="nav-item vertical-item">
+                        <button class="character-button nav-link" data-bs-toggle="modal" data-bs-target="#leave">
+                            <img class="icon space-right" src="https://cdn-icons.flaticon.com/png/512/3541/premium/3541911.png?token=exp=1655539294~hmac=d55cf309e61b3408f004e976d47a6b3b" />
+                            <span class="text-secondary">
+                                Leave gamespace
+                            </span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-secondary" data-bs-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="leave" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -83,7 +124,7 @@
                 <p>Are you sure you want to leave @Model.Gamespace.Name?<br /> All data about your character will be removed.</p>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-secondary" data-bs-dismiss="modal">Cancel</a>
+                <a class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#more">Cancel</a>
                 <form action="@Url.Action("Leave", "Gamespace")">
                     <input type="hidden" name="gamespaceId" value="@Model.Gamespace.Id" />
                     <button class="btn btn-danger">Leave</button>
@@ -120,7 +161,7 @@
                     @Html.AntiForgeryToken()
                 </div>
                 <div class="modal-footer">
-                    <a class="btn btn-secondary" data-bs-dismiss="modal">Cancel</a>
+                    <a class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#more">Cancel</a>
                     <button type="submit" class="btn btn-info">Invite</button>
                 </div>
             }

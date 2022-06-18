@@ -37,7 +37,7 @@ namespace DndMate.WebApp.Controllers
                                 select g;
             foreach (var gamespace in gamespaceList.ToList())
             {                
-                var character = _context.Characters.SingleOrDefault(c => c.CharacterId == userId);
+                var character = _context.Characters.SingleOrDefault(c => c.CharacterId == userId && c.GamespaceId == gamespace.Id);
                 var gamespaceWithChar = new GamespaceWithCharacter
                 {
                     Gamespace = Mapper.Map<GamespaceDto>(gamespace),
@@ -65,14 +65,14 @@ namespace DndMate.WebApp.Controllers
 
             if(!_context.Gamespaces.Any(g=>g.Id == gamespaceDto.Id))
             {
-                _repository.Create(gamespaceDto, User.Identity.GetUserId());
+                gamespaceDto.Id = _repository.Create(gamespaceDto, User.Identity.GetUserId());
             }
             else
             {
                 _repository.Update(gamespaceDto);
             }
             
-            return RedirectToAction("Get", "Gamespace", new {id=gamespaceDto.Id});
+            return RedirectToAction("Get", "Gamespace", new {id = gamespaceDto.Id});
         }
         [Route("Gamespace/Edit")]
         public ActionResult Edit(int id)

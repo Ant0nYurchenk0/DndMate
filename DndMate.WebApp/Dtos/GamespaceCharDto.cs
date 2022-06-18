@@ -16,10 +16,7 @@ namespace DndMate.WebApp.Dtos
         public string Name { get; set; }
         public string CharacterId { get; set; }
         public int GamespaceId { get; set; }
-        [MasterOrHasClass]
-        public CharacterClass? CharacterClass { get; set; }
-        [MasterOrHasClass]
-        public Role? Role { get; set; }
+        public CharacterClass CharacterClass { get; set; }
         [Required]
         [Range(0, 20)]
         public int? Level { get; set; }

@@ -24,7 +24,7 @@ namespace DndMate.WebApp.Repositories
         }
         public IEnumerable<GamespaceCharDto> GetPlayerCharacters(int id)
         {
-            return _context.Characters.Where(c => c.GamespaceId == id && c.Role == Role.Player).ToList().Select(c => Mapper.Map<GamespaceCharDto>(c));
+            return _context.Characters.Where(c => c.GamespaceId == id && c.CharacterClass != CharacterClass.Master).ToList().Select(c => Mapper.Map<GamespaceCharDto>(c));
         }
         public GamespaceChar GetCharacter(string charId, int gamespaceId)
         {

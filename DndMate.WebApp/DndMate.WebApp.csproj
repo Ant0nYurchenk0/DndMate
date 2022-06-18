@@ -200,8 +200,8 @@
     <Compile Include="Dtos\GamespaceWithCharacter.cs" />
     <Compile Include="Dtos\NotificationDto.cs" />
     <Compile Include="Dtos\SpellDto.cs" />
+    <Compile Include="Enums\Class.cs" />
     <Compile Include="Enums\PlayerClass.cs" />
-    <Compile Include="Enums\Role.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -281,6 +281,10 @@
     <Compile Include="Migrations\202206171646261_GamespaceRemoveImageAddDescription.designer.cs">
       <DependentUpon>202206171646261_GamespaceRemoveImageAddDescription.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202206180824192_RemoveRoleFromCharacter.cs" />
+    <Compile Include="Migrations\202206180824192_RemoveRoleFromCharacter.designer.cs">
+      <DependentUpon>202206180824192_RemoveRoleFromCharacter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -296,7 +300,6 @@
     <Compile Include="Repositories\GamespaceRepository.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Validations\EmailExists.cs" />
-    <Compile Include="Validations\MasterOrHasClass.cs" />
     <Compile Include="ViewModels\CharacterListViewModel.cs" />
     <Compile Include="ViewModels\CharacterViewModel.cs" />
     <Compile Include="ViewModels\GamespaceFormViewModel.cs" />
@@ -477,6 +480,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206171646261_GamespaceRemoveImageAddDescription.resx">
       <DependentUpon>202206171646261_GamespaceRemoveImageAddDescription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206180824192_RemoveRoleFromCharacter.resx">
+      <DependentUpon>202206180824192_RemoveRoleFromCharacter.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

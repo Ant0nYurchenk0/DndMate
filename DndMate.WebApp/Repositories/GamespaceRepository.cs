@@ -21,7 +21,7 @@ namespace DndMate.WebApp.Repositories
             _context = context;
             _charRepository = charRepository;
         }
-        public void Create(GamespaceDto gamespaceDto, string userId)
+        public int Create(GamespaceDto gamespaceDto, string userId)
         {
             var gamespace = Mapper.Map<GamespaceDto, Gamespace>(gamespaceDto);
             _context.Gamespaces.Add(gamespace);
@@ -30,11 +30,12 @@ namespace DndMate.WebApp.Repositories
             var gamespaceChar = new GamespaceChar();
             gamespaceChar.CharacterId = userId;
             gamespaceChar.GamespaceId = gamespace.Id;
-            gamespaceChar.Role = Role.Master;
+            gamespaceChar.CharacterClass = CharacterClass.Master;
             gamespaceChar.Level = 20;
             gamespaceChar.Name = "Master";
             _context.Characters.Add(gamespaceChar);
             _context.SaveChanges();
+            return gamespace.Id;
         }
 
         public void Update(GamespaceDto gamespaceDto)
@@ -45,7 +46,7 @@ namespace DndMate.WebApp.Repositories
         }
         public void Leave(GamespaceChar gamespaceCharacter)
         {
-            if(gamespaceCharacter.Role == Role.Master)
+            if(gamespaceCharacter.CharacterClass == CharacterClass.Master)
             {
                 var gamespace = _context.Gamespaces.Single(g => g.Id == gamespaceCharacter.GamespaceId);
                 _context.Gamespaces.Remove(gamespace);

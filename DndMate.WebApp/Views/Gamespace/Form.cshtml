@@ -24,6 +24,8 @@ else
         <div class="form-group">
             <div class="row">
                 <div class="col-md-12">
+                    @Html.HiddenFor(m => m.Gamespace.Id)
+
                     @Html.LabelFor(m => m.Gamespace.Name)
                     @Html.TextBoxFor(m => m.Gamespace.Name, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.Gamespace.Name)
@@ -32,12 +34,20 @@ else
                     @Html.TextAreaFor(m => m.Gamespace.Description, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.Gamespace.Description)
 
-                    @Html.HiddenFor(m => m.Gamespace.Id);
                 </div>
             </div>
         </div>
         <br />
-        <a class="btn btn-secondary" href="@Url.Action("Get", "Gamespace", new {id = Model.GamespaceProps.Gamespace.Id})">Cancel</a>
-        <button class="btn btn-primary">Submit</button>
+        if (Model.Gamespace.Id != 0)
+        {
+            <a class="btn btn-secondary" href="@Url.Action("Get", "Gamespace", new {id = Model.GamespaceProps.Gamespace.Id})">Cancel</a>
+
+        }
+        else
+        {
+            <a class="btn btn-secondary" href="@Url.Action("Index", "Gamespace")">Cancel</a>
+
+        }
+        <button type="submit" class="btn btn-primary">Submit</button>
     }
 </div>

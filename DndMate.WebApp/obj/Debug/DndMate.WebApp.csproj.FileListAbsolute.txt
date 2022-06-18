@@ -271,3 +271,4 @@ C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\Dn
 C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.AddCharacterSpells2.resources
 C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.AddGamespaceNameToNotification.resources
 C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.GamespaceRemoveImageAddDescription.resources
+C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.RemoveRoleFromCharacter.resources

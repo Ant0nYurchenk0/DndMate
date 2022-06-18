@@ -150,7 +150,7 @@
                                             <p class="description">
                                                 @spell.Description
                                             </p>
-                                            @if (Model.Gamespace.Character.Role == Role.Master)
+                                            @if (Model.Gamespace.Character.CharacterClass == CharacterClass.Master)
                                             {
 
                                                 <span class="dropdown">
@@ -160,7 +160,7 @@
                                                     <ul class="dropdown-menu" role="menu">
                                                         @foreach (var character in Model.Gamespace.Characters)
                                                         {
-                                                            if (character.Role != Role.Master)
+                                                            if (character.CharacterClass != CharacterClass.Master)
                                                             {
 
                                                                 <li>

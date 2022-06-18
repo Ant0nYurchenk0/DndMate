@@ -67,7 +67,6 @@ namespace DndMate.WebApp.Controllers
             var charDto = new GamespaceCharDto();
             charDto.CharacterId = charId;
             charDto.GamespaceId = gamespaceId;
-            charDto.Role = Role.Player;
             return View("Form", charDto);
         }
         [ValidateAntiForgeryToken]

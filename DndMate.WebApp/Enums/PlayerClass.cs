@@ -7,6 +7,7 @@ namespace DndMate.WebApp.Enums
 {
     public enum CharacterClass
     {
-        Rogue = 0,
+        Master = 0,
+        Rogue = 1,
     }
 }

@@ -3,8 +3,8 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var master = Model.Characters.Single(c => c.Role == Role.Master);
-    var players = Model.Characters.Where(c => c.Role == Role.Player);
+    var master = Model.Characters.Single(c => c.CharacterClass == CharacterClass.Master);
+    var players = Model.Characters.Where(c => c.CharacterClass != CharacterClass.Master);
 }
 
 @Html.Partial("_GamespaceTools", Model.Gamespace)
@@ -12,10 +12,10 @@
 <div class="gamespace-content">
     <h4>Master:</h4>
     <div class=" player-card" style="max-width: 20rem;">
-        <img class="character" src="~/Source/rogue.jpg" />
-        <strong class="text-primary">Name:</strong>
+        <img class="character" src="@Class.Icons[master.CharacterClass]" />
+        <strong class="text-primary">Role:</strong>
         <span class="space-right">
-            @master.Name
+            @master.CharacterClass
         </span>
     </div>
     <hr />
@@ -24,10 +24,14 @@
     {
         <a class="btn btn-long" href="@Url.Action("Get", "Characters", new { id = player.Id })">
             <div class=" player-card" style="max-width: 20rem;">
-                <img class="character" src="~/Source/rogue.jpg" />
+                <img class="character" src="@Class.Icons[player.CharacterClass]" />
                 <strong class="text-primary">Name:</strong>
                 <span class="space-right">
                     @player.Name
+                </span>
+                <strong class="text-primary">Class:</strong>
+                <span class="space-right">
+                    @player.CharacterClass
                 </span>
                 <strong class="text-primary">Level:</strong>
                 <span class="space-right">

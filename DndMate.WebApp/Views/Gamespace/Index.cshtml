@@ -28,32 +28,39 @@
             <div class="accordion" id="accordionExample">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#gamespace@(gamespace.Gamespace.Id)" aria-expanded="false" aria-controls="collapseOne">
                             @gamespace.Gamespace.Name
                         </button>
                     </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+                    <div id="gamespace@(gamespace.Gamespace.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
                         <div class="accordion-body">
                             <p class="description">
                                 @gamespace.Gamespace.Description
                                 <div class="btn-long">
                                     <div class=" player-card" style="max-width: 20rem;">
-                                        <img class="character" src="~/Source/rogue.jpg" />
-                                        <strong class="text-primary">Name:</strong>
-                                        <span class="space-right">
-                                            @gamespace.Character.Name
-                                        </span>
-                                        @if (gamespace.Character.Role == Role.Master)
+                                        <img class="character" src="@Class.Icons[gamespace.Character.CharacterClass]" />
+                                        @if (gamespace.Character.CharacterClass != CharacterClass.Master)
                                         {
+                                            <strong class="text-primary">Name:</strong>
+                                            <span class="space-right">
+                                                @gamespace.Character.Name
+                                            </span>
                                             <strong class="text-primary">Level:</strong>
                                             <span class="space-right">
                                                 @gamespace.Character.Level
                                             </span>
+                                            <strong class="text-primary">Role:</strong>
+                                            <span class="space-right">
+                                                @gamespace.Character.CharacterClass
+                                            </span>
                                         }
-                                        <strong class="text-primary">Role:</strong>
-                                        <span class="space-right">
-                                            @gamespace.Character.Role
-                                        </span>
+                                        else
+                                        {
+                                            <strong class="text-primary">Role:</strong>
+                                            <span class="space-right">
+                                                @gamespace.Character.CharacterClass
+                                            </span>
+                                        }
                                     </div>
                                 </div>
                             </p>
