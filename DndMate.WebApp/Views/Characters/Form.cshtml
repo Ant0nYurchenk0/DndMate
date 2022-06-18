@@ -1,27 +1,606 @@
-﻿@model DndMate.WebApp.Dtos.GamespaceCharDto
+﻿@model DndMate.WebApp.ViewModels.CharacterViewModel
 @using DndMate.WebApp.Enums
 @{
     ViewBag.Title = "Form";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var classList = Enum.GetValues(typeof(CharacterClass))
+                        .Cast<CharacterClass>()
+                        .Where(e => e != CharacterClass.Master)
+                        .Select(e => new SelectListItem
+                        {
+                            Value = ((int)e).ToString(),
+                            Text = e.ToString()
+                        });
 }
-
+@if (Model.Character.Id != 0)
+{
+    @Html.Partial("_GamespaceTools", Model.Gamespace);
+    <input type="hidden" name="page" value="character" />
+}
+else
+{
+    <br />
+    <br />
+    <br />
+}
 @using (Html.BeginForm("Save", "Characters"))
 {
-    @Html.AntiForgeryToken();
-    @Html.HiddenFor(m => m.CharacterId)
-    @Html.HiddenFor(m => m.GamespaceId)
-    @Html.HiddenFor(m => m.Role)
+    if (Model.Character.Id != 0)
+    {
+        <input type="hidden" name="page" value="character" />
+    }
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Character.Id)
+    @Html.HiddenFor(m => m.Character.CharacterId)
+    @Html.HiddenFor(m => m.Character.GamespaceId)
+    @Html.HiddenFor(m => m.Character.Level1Used)
+    @Html.HiddenFor(m => m.Character.Level2Used)
+    @Html.HiddenFor(m => m.Character.Level3Used)
+    @Html.HiddenFor(m => m.Character.Level4Used)
+    @Html.HiddenFor(m => m.Character.Level5Used)
+    @Html.HiddenFor(m => m.Character.Level6Used)
+    @Html.HiddenFor(m => m.Character.Level7Used)
+    @Html.HiddenFor(m => m.Character.Level8Used)
+    @Html.HiddenFor(m => m.Character.Level9Used)
+    @Html.HiddenFor(m => m.Character.SpecialUsed)
+    @Html.HiddenFor(m => m.Character.Successes)
+    @Html.HiddenFor(m => m.Character.Failures)
+    @Html.HiddenFor(m => m.Character.CurrentHP)
+    @Html.HiddenFor(m => m.Character.BonusHP)
+    <div class="gamespace-content">
+        @Html.ValidationSummary()
+        <div class="row">
+            <div class="col-2">
+                @Html.LabelFor(m => m.Character.Name)
+                @Html.TextBoxFor(m => m.Character.Name, new { @class = "form-control " })
+                @Html.ValidationMessageFor(m => m.Character.Name)
+            </div>
+            <div class="col-md-8 col-sm-6"></div>
+            <div class="col-md-2 col-sm-4">
+                <button class="btn btn-primary add-btn">Save</button>
+            </div>
+        </div>
 
-    @Html.LabelFor(m => m.Name)
-    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-    @Html.ValidationMessageFor(m => m.Name)
+        <br />
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#stats">Stats</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#charachteristics">Characteristics</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#personality">Personality</a>
+            </li>
 
-    @Html.LabelFor(m => m.Level)
-    @Html.TextBoxFor(m => m.Level, new { @class = "form-control" })
-    @Html.ValidationMessageFor(m => m.Level)
+        </ul>
 
-    @Html.LabelFor(m => m.CharacterClass)
-    @Html.DropDownListFor(m => m.CharacterClass, new SelectList(Enum.GetValues(typeof(CharacterClass)), "Select Class"), new { @class = "form-control" })
-    @Html.ValidationMessageFor(m => m.CharacterClass)
-    <button>Submit</button>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active show" id="stats">
+                <br />
+                <table class="props-table">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Inspiration</th>
+                            <td class="form-check">
+                                Inspiration
+                                @Html.CheckBoxFor(m => m.Character.Inspiration, new { @class = "form-check-input ", type = "checkbox" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                Proficiency Bonus
+                            </th>
+                            <td>
+                                @Html.TextBoxFor(m => m.Character.ProfBonus, new { @class = "form-control ", type = "number" })
+                                @Html.ValidationMessageFor(m => m.Character.ProfBonus)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <div class="row character-props">
+                    <div class="col-md-3 col-5">
+                        <div class=" stat-table">
+                            <div class="stat">
+                                <p class="name">Strength</p>
+                                <h4 class="bonus">
+                                    @Html.TextBoxFor(m => m.Character.Strength, new { @class = "form-control ", type = "number" })
+                                    @Html.ValidationMessageFor(m => m.Character.Strength)
+                                </h4>
+                            </div>
+                            <div class="stat">
+                                <p class="name">Dexterity</p>
+                                <h4 class="bonus">
+                                    @Html.TextBoxFor(m => m.Character.Dexterity, new { @class = "form-control ", type = "number" })
+                                    @Html.ValidationMessageFor(m => m.Character.Dexterity)
+                                </h4>
+                            </div>
+                            <div class="stat">
+                                <p class="name">Constitution</p>
+                                <h4 class="bonus">
+                                    @Html.TextBoxFor(m => m.Character.Constitution, new { @class = "form-control ", type = "number" })
+                                    @Html.ValidationMessageFor(m => m.Character.Constitution)
+                                </h4>
+                            </div>
+                            <div class="stat">
+                                <p class="name">Intelligence</p>
+                                <h4 class="bonus">
+                                    @Html.TextBoxFor(m => m.Character.Intelligence, new { @class = "form-control ", type = "number" })
+                                    @Html.ValidationMessageFor(m => m.Character.Intelligence)
+                                </h4>
+                            </div>
+                            <div class="stat">
+                                <p class="name">Wisdom</p>
+                                <h4 class="bonus">
+                                    @Html.TextBoxFor(m => m.Character.Wisdom, new { @class = "form-control ", type = "number" })
+                                    @Html.ValidationMessageFor(m => m.Character.Wisdom)
+                                </h4>
+                            </div>
+                            <div class="stat">
+                                <p class="name">Charisma</p>
+                                <h4 class="bonus">
+                                    @Html.TextBoxFor(m => m.Character.Charisma, new { @class = "form-control ", type = "number" })
+                                    @Html.ValidationMessageFor(m => m.Character.Charisma)
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="second-table col-md-3 col-7">
+                        <div class="saving-throws">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th colspan="3" class="text-center" scope="row">SAVING THROWS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.StrengthSave, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td class="throw-name">Strength</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.DexteritySave, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td>Dexterity</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.ConstitutionSave, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td>Constitution</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.IntelligenceSave, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td>Intelligence</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.WisdomSave, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td>Wisdom</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.CharismaSave, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td>Charisma</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <br />
+
+                        <div class="saving-throws">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th colspan="3" class="text-center" scope="row">SKILLS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th colspan="3" class="text-center">Strength</th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.Athletics, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td class="throw-name">Athletics</td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3" class="text-center">Dexterity</th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.Acrobatics, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td class="throw-name">Acrobatics</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.SleightOfHand, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td class="throw-name">Sleight of Hand</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.Stealth, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td class="throw-name">Stealth</td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3" class="text-center">Intelligence</th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.Arcana, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td class="throw-name">Arcana</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.History, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td class="throw-name">History</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.Nature, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td class="throw-name">Nature</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.Religion, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td class="throw-name">Religion</td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3" class="text-center">Wisdom</th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.AnimalHandling, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td class="throw-name">Animal Handling</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.Insight, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td class="throw-name">Insight</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.Medicine, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td class="throw-name">Medicine</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.Perception, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td class="throw-name">Perception</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.Survival, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td class="throw-name">Survival</td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3" class="text-center">Charisma</th>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.Deception, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td class="throw-name">Deception</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.Intimidation, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td class="throw-name">Intimidation</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.Performance, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td class="throw-name">Performance</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="form-check">
+                                            @Html.CheckBoxFor(m => m.Character.Persuasion, new { @class = "form-check-input ", type = "checkbox" })
+                                        </th>
+                                        <td class="throw-name">Persuasion</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="tab-pane fade" id="charachteristics">
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <br />
+                        <table class="props-table">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Level</th>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Character.Level, new { @class = "form-control ", type = "number" })
+                                        @Html.ValidationMessageFor(m => m.Character.Level)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Class</th>
+                                    <td>
+                                        @Html.DropDownListFor(m => m.Character.CharacterClass, classList, new { @class = "form-control " })
+                                        @Html.ValidationMessageFor(m => m.Character.CharacterClass)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Race</th>
+                                    <td>
+                                        @Html.EnumDropDownListFor(m => m.Character.Race, new { @class = "form-control " })
+                                        @Html.ValidationMessageFor(m => m.Character.Race)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><hr /></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Armor class</th>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Character.ArmorClass, new { @class = "form-control ", type = "number" })
+                                        @Html.ValidationMessageFor(m => m.Character.ArmorClass)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Speed</th>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Character.Speed, new { @class = "form-control ", type = "number" })
+                                        @Html.ValidationMessageFor(m => m.Character.Speed)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Hit Dice</th>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Character.HitDice, new { @class = "form-control " })
+                                        @Html.ValidationMessageFor(m => m.Character.HitDice)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Maximum HP</th>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Character.MaxHP, new { @class = "form-control ", type = "number" })
+                                        @Html.ValidationMessageFor(m => m.Character.MaxHP)
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                    </div>
+                    <div class="col-md-6">
+                        <br />
+                        <div class="row">
+                            <div class="col-5">
+                                <h5>Spell Slots</h5>
+                            </div>
+                            <div class="col-5"></div>
+                            <div class="col-2"></div>
+                        </div>
+                        <table class="slots-table">
+                            <tbody>
+                                <tr>
+                                    <th scope="row" class="text-dark">Level 1</th>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Character.Level1, new { @class = "form-control ", type = "number" })
+                                        @Html.ValidationMessageFor(m => m.Character.Level1)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="text-dark">Level 2</th>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Character.Level2, new { @class = "form-control ", type = "number" })
+                                        @Html.ValidationMessageFor(m => m.Character.Level2)
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="text-dark">Level 3</th>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Character.Level3, new { @class = "form-control ", type = "number" })
+                                        @Html.ValidationMessageFor(m => m.Character.Level3)
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="text-dark">Level 4</th>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Character.Level4, new { @class = "form-control ", type = "number" })
+                                        @Html.ValidationMessageFor(m => m.Character.Level4)
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="text-dark">Level 5</th>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Character.Level5, new { @class = "form-control ", type = "number" })
+                                        @Html.ValidationMessageFor(m => m.Character.Level5)
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="text-dark">Level 6</th>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Character.Level6, new { @class = "form-control ", type = "number" })
+                                        @Html.ValidationMessageFor(m => m.Character.Level6)
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="text-dark">Level 7</th>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Character.Level7, new { @class = "form-control ", type = "number" })
+                                        @Html.ValidationMessageFor(m => m.Character.Level7)
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="text-dark">Level 8</th>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Character.Level8, new { @class = "form-control ", type = "number" })
+                                        @Html.ValidationMessageFor(m => m.Character.Level8)
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="text-dark">Level 9</th>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Character.Level9, new { @class = "form-control ", type = "number" })
+                                        @Html.ValidationMessageFor(m => m.Character.Level9)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="text-dark">Special</th>
+                                    <td>
+                                        @Html.TextBoxFor(m => m.Character.Special, new { @class = "form-control ", type = "number" })
+                                        @Html.ValidationMessageFor(m => m.Character.Special)
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="personality">
+                <br />
+                <table class="props-table">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Alignment</th>
+                            <td>
+                                @Html.TextBoxFor(m => m.Character.Alignment, new { @class = "form-control " })
+                                @Html.ValidationMessageFor(m => m.Character.Alignment)
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Background</th>
+                            <td>
+                                @Html.TextBoxFor(m => m.Character.Background, new { @class = "form-control " })
+                                @Html.ValidationMessageFor(m => m.Character.Background)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <div class="accordion" id="personality-accordition">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#traits">
+                                Personality Traits
+                            </button>
+                        </h2>
+                        <div id="traits" class="accordion-collapse collapse" data-bs-parent="#personality-accordition">
+                            <div class="accordion-body">
+                                <p class="description">
+                                    @Html.TextAreaFor(m => m.Character.PersonalityTraits, new { @class = "form-control " })
+                                    @Html.ValidationMessageFor(m => m.Character.PersonalityTraits)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ideals">
+                                Ideals
+                            </button>
+                        </h2>
+                        <div id="ideals" class="accordion-collapse collapse" data-bs-parent="#personality-accordition">
+                            <div class="accordion-body">
+                                <p class="description">
+                                    @Html.TextAreaFor(m => m.Character.Ideals, new { @class = "form-control " })
+                                    @Html.ValidationMessageFor(m => m.Character.Ideals)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header " id="headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bonds">
+                                Bonds
+                            </button>
+                        </h2>
+                        <div id="bonds" class="accordion-collapse collapse" data-bs-parent="#personality-accordition">
+                            <div class="accordion-body">
+                                <p class="description">
+                                    @Html.TextAreaFor(m => m.Character.Bonds, new { @class = "form-control " })
+                                    @Html.ValidationMessageFor(m => m.Character.Bonds)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header " id="headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flaws">
+                                Flaws
+                            </button>
+                        </h2>
+                        <div id="flaws" class="accordion-collapse collapse" data-bs-parent="#personality-accordition">
+                            <div class="accordion-body">
+                                <p class="description">
+                                    @Html.TextAreaFor(m => m.Character.Flaws, new { @class = "form-control " })
+                                    @Html.ValidationMessageFor(m => m.Character.Flaws)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header " id="headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#profs">
+                                Proficiencies & Languages
+                            </button>
+                        </h2>
+                        <div id="profs" class="accordion-collapse collapse" data-bs-parent="#personality-accordition">
+                            <div class="accordion-body">
+                                <p class="description">
+                                    @Html.TextAreaFor(m => m.Character.Proficiencies, new { @class = "form-control " })
+                                    @Html.ValidationMessageFor(m => m.Character.Proficiencies)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header " id="headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#features">
+                                Features & Traits
+                            </button>
+                        </h2>
+                        <div id="features" class="accordion-collapse collapse" data-bs-parent="#personality-accordition">
+                            <div class="accordion-body">
+                                <p class="description">
+                                    @Html.TextAreaFor(m => m.Character.Features, new { @class = "form-control " })
+                                    @Html.ValidationMessageFor(m => m.Character.Features)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 }

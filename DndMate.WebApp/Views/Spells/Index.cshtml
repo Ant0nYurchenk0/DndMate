@@ -92,7 +92,67 @@
                                             <p class="description">
                                                 @spell.Description
                                             </p>
-                                            <a class="btn btn-outline-success" href="#">Use</a>
+                                            @{
+                                                var disabled = string.Empty;
+                                                switch (spell.Level)
+                                                {
+                                                    case 1:
+                                                        if (Model.Gamespace.Character.Level1Used == Model.Gamespace.Character.Level1)
+                                                        {
+                                                            disabled = "disabled";
+                                                        }
+                                                        break;
+                                                    case 2:
+                                                        if (Model.Gamespace.Character.Level2Used == Model.Gamespace.Character.Level2)
+                                                        {
+                                                            disabled = "disabled";
+                                                        }
+                                                        break;
+                                                    case 3:
+                                                        if (Model.Gamespace.Character.Level3Used == Model.Gamespace.Character.Level3)
+                                                        {
+                                                            disabled = "disabled";
+                                                        }
+                                                        break;
+                                                    case 4:
+                                                        if (Model.Gamespace.Character.Level4Used == Model.Gamespace.Character.Level4)
+                                                        {
+                                                            disabled = "disabled";
+                                                        }
+                                                        break;
+                                                    case 5:
+                                                        if (Model.Gamespace.Character.Level5Used == Model.Gamespace.Character.Level5)
+                                                        {
+                                                            disabled = "disabled";
+                                                        }
+                                                        break;
+                                                    case 6:
+                                                        if (Model.Gamespace.Character.Level6Used == Model.Gamespace.Character.Level6)
+                                                        {
+                                                            disabled = "disabled";
+                                                        }
+                                                        break;
+                                                    case 7:
+                                                        if (Model.Gamespace.Character.Level7Used == Model.Gamespace.Character.Level7)
+                                                        {
+                                                            disabled = "disabled";
+                                                        }
+                                                        break;
+                                                    case 8:
+                                                        if (Model.Gamespace.Character.Level8Used == Model.Gamespace.Character.Level8)
+                                                        {
+                                                            disabled = "disabled";
+                                                        }
+                                                        break;
+                                                    case 9:
+                                                        if (Model.Gamespace.Character.Level9Used == Model.Gamespace.Character.Level9)
+                                                        {
+                                                            disabled = "disabled";
+                                                        }
+                                                        break;
+                                                }
+                                            }
+                                            <a class="btn btn-outline-success @disabled" href="@Url.Action("UseSlot", "Characters", new {id = Model.Gamespace.Character.Id, level=spell.Level.ToString(), page="1"})">Use</a>
                                             <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Spells", new {id = spell.Id})">Edit</a>
                                             <a class="btn btn-outline-dark" href="@Url.Action("DropSpell", "Characters", new {charId=Model.Gamespace.Character.Id, spellId = spell.Id})">Drop</a>
                                         </div>

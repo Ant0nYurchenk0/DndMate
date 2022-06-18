@@ -201,6 +201,7 @@
     <Compile Include="Dtos\NotificationDto.cs" />
     <Compile Include="Dtos\SpellDto.cs" />
     <Compile Include="Enums\Class.cs" />
+    <Compile Include="Enums\Race.cs" />
     <Compile Include="Enums\PlayerClass.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -284,6 +285,30 @@
     <Compile Include="Migrations\202206180824192_RemoveRoleFromCharacter.cs" />
     <Compile Include="Migrations\202206180824192_RemoveRoleFromCharacter.designer.cs">
       <DependentUpon>202206180824192_RemoveRoleFromCharacter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206180843476_AddStatsToCharacter.cs" />
+    <Compile Include="Migrations\202206180843476_AddStatsToCharacter.designer.cs">
+      <DependentUpon>202206180843476_AddStatsToCharacter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206180845426_AddStatsToCharacter1.cs" />
+    <Compile Include="Migrations\202206180845426_AddStatsToCharacter1.designer.cs">
+      <DependentUpon>202206180845426_AddStatsToCharacter1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206180910382_BoolStatsNotNullable.cs" />
+    <Compile Include="Migrations\202206180910382_BoolStatsNotNullable.designer.cs">
+      <DependentUpon>202206180910382_BoolStatsNotNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206181032502_AddCharacteristicsToCharacter.cs" />
+    <Compile Include="Migrations\202206181032502_AddCharacteristicsToCharacter.designer.cs">
+      <DependentUpon>202206181032502_AddCharacteristicsToCharacter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206181047591_AddBonusHp.cs" />
+    <Compile Include="Migrations\202206181047591_AddBonusHp.designer.cs">
+      <DependentUpon>202206181047591_AddBonusHp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206181310145_AddPersonality.cs" />
+    <Compile Include="Migrations\202206181310145_AddPersonality.designer.cs">
+      <DependentUpon>202206181310145_AddPersonality.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -483,6 +508,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206180824192_RemoveRoleFromCharacter.resx">
       <DependentUpon>202206180824192_RemoveRoleFromCharacter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206180843476_AddStatsToCharacter.resx">
+      <DependentUpon>202206180843476_AddStatsToCharacter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206180845426_AddStatsToCharacter1.resx">
+      <DependentUpon>202206180845426_AddStatsToCharacter1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206180910382_BoolStatsNotNullable.resx">
+      <DependentUpon>202206180910382_BoolStatsNotNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206181032502_AddCharacteristicsToCharacter.resx">
+      <DependentUpon>202206181032502_AddCharacteristicsToCharacter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206181047591_AddBonusHp.resx">
+      <DependentUpon>202206181047591_AddBonusHp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206181310145_AddPersonality.resx">
+      <DependentUpon>202206181310145_AddPersonality.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

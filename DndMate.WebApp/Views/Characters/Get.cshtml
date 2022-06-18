@@ -1,14 +1,44 @@
 ﻿@model DndMate.WebApp.ViewModels.CharacterViewModel
+@using Microsoft.AspNet.Identity;
+
 @{
     ViewBag.Title = "Get";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var userId = User.Identity.GetUserId();
+
+}
+@functions{
+    public int Bonus(int modifier)
+    {
+        return (modifier - 10) / 2;
+    }
+    public int Prof(int skill)
+    {
+        return skill + Model.Character.ProfBonus;
+    }
+    public bool ThisUser()
+    {
+        if (Model.Character.Id == Model.Gamespace.Character.Id)
+            return true;
+        return false;
+    }
 }
 @Html.Partial("_GamespaceTools", Model.Gamespace)
 
 <div class="gamespace-content">
 
-    <h3>@Model.Character.Name</h3>
-
+    <div class="row">
+        <div class="col-2">
+            <h3>@Model.Character.Name</h3>
+        </div>
+        <div class="col-md-8 col-sm-6"></div>
+        <div class="col-md-2 col-sm-4">
+            @if (ThisUser())
+            {
+                <a href="@Url.Action("Edit", "Characters", new {id=Model.Character.Id})" class="btn btn-primary add-btn">Edit</a>
+            }
+        </div>
+    </div>
     <ul class="nav nav-tabs">
         <li class="nav-item">
             <a class="nav-link active" data-bs-toggle="tab" href="#stats">Stats</a>
@@ -27,16 +57,26 @@
             <table class="props-table">
                 <tbody>
                     <tr>
-                        <th scope="row">Inspiration</th>
-                        <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled></td>
+                        <th scope="row">
+                            @Html.LabelFor(m => m.Character.Inspiration)
+                        </th>
+                        <td>
+
+                            @Html.CheckBoxFor(m => m.Character.Inspiration, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
+                        </td>
+
                     </tr>
                     <tr>
                         <th scope="row">Proficiency bonus</th>
-                        <td>2</td>
+                        <td>
+                            @Model.Character.ProfBonus
+                        </td>
                     </tr>
                     <tr>
                         <th scope="row">Passive Wisdom</th>
-                        <td>18</td>
+                        <td>
+                            @(10+Model.Character.Wisdom+Model.Character.ProfBonus)
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -46,33 +86,35 @@
                     <div class=" stat-table">
                         <div class="stat">
                             <p class="name">Strength</p>
-                            <h4 class="bonus">5</h4>
-                            <p class="value">18</p>
+                            <h4 class="bonus">@Bonus(Model.Character.Strength)</h4>
+                            <p class="value">
+                                @Model.Character.Strength
+                            </p>
                         </div>
                         <div class="stat">
                             <p class="name">Dexterity</p>
-                            <h4 class="bonus">5</h4>
-                            <p class="value">18</p>
+                            <h4 class="bonus">@Bonus(Model.Character.Dexterity)</h4>
+                            <p class="value">@Model.Character.Dexterity</p>
                         </div>
                         <div class="stat">
                             <p class="name">Constitution</p>
-                            <h4 class="bonus">5</h4>
-                            <p class="value">18</p>
+                            <h4 class="bonus">@Bonus(Model.Character.Constitution)</h4>
+                            <p class="value">@Model.Character.Constitution</p>
                         </div>
                         <div class="stat">
                             <p class="name">Intelligence</p>
-                            <h4 class="bonus">5</h4>
-                            <p class="value">18</p>
+                            <h4 class="bonus">@Bonus(Model.Character.Intelligence)</h4>
+                            <p class="value">@Model.Character.Intelligence</p>
                         </div>
                         <div class="stat">
                             <p class="name">Wisdom</p>
-                            <h4 class="bonus">5</h4>
-                            <p class="value">18</p>
+                            <h4 class="bonus">@Bonus(Model.Character.Wisdom)</h4>
+                            <p class="value">@Model.Character.Wisdom</p>
                         </div>
                         <div class="stat">
                             <p class="name">Charisma</p>
-                            <h4 class="bonus">5</h4>
-                            <p class="value">18</p>
+                            <h4 class="bonus">@Bonus(Model.Character.Charisma)</h4>
+                            <p class="value">@Model.Character.Charisma</p>
                         </div>
                     </div>
                 </div>
@@ -87,44 +129,92 @@
                             <tbody>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        @Html.CheckBoxFor(m => m.Character.StrengthSave, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline"> 3 </td>
+                                    @if (Model.Character.StrengthSave)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Strength)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Strength)</td>
+                                    }
                                     <td class="throw-name">Strength</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                        @Html.CheckBoxFor(m => m.Character.DexteritySave, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline">3</td>
+                                    @if (Model.Character.DexteritySave)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Dexterity)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Dexterity)</td>
+                                    }
                                     <td>Dexterity</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        @Html.CheckBoxFor(m => m.Character.ConstitutionSave, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline">3</td>
+                                    @if (Model.Character.ConstitutionSave)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Constitution)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Constitution)</td>
+                                    }
                                     <td>Constitution</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                        @Html.CheckBoxFor(m => m.Character.IntelligenceSave, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline">3</td>
+                                    @if (Model.Character.IntelligenceSave)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Intelligence)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Intelligence)</td>
+                                    }
                                     <td>Intelligence</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                        @Html.CheckBoxFor(m => m.Character.WisdomSave, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline">3</td>
+                                    @if (Model.Character.WisdomSave)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Wisdom)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Wisdom)</td>
+                                    }
                                     <td>Wisdom</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                        @Html.CheckBoxFor(m => m.Character.CharismaSave, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline">3</td>
+                                    @if (Model.Character.CharismaSave)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Charisma)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Charisma)</td>
+                                    }
                                     <td>Charisma</td>
                                 </tr>
                             </tbody>
@@ -146,9 +236,17 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                        @Html.CheckBoxFor(m => m.Character.Athletics, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline"> 3 </td>
+                                    @if (Model.Character.Athletics)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Strength)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Strength)</td>
+                                    }
                                     <td class="throw-name">Athletics</td>
                                 </tr>
                                 <tr>
@@ -156,23 +254,47 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        @Html.CheckBoxFor(m => m.Character.Acrobatics, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline"> 3 </td>
+                                    @if (Model.Character.Acrobatics)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Dexterity)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Dexterity)</td>
+                                    }
                                     <td class="throw-name">Acrobatics</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                        @Html.CheckBoxFor(m => m.Character.SleightOfHand, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline"> 3 </td>
+                                    @if (Model.Character.SleightOfHand)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Dexterity)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Dexterity)</td>
+                                    }
                                     <td class="throw-name">Sleight of Hand</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        @Html.CheckBoxFor(m => m.Character.Stealth, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline"> 3 </td>
+                                    @if (Model.Character.Stealth)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Dexterity)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Dexterity)</td>
+                                    }
                                     <td class="throw-name">Stealth</td>
                                 </tr>
                                 <tr>
@@ -180,30 +302,62 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                        @Html.CheckBoxFor(m => m.Character.Arcana, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline"> 3 </td>
+                                    @if (Model.Character.Arcana)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Intelligence)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Intelligence)</td>
+                                    }
                                     <td class="throw-name">Arcana</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        @Html.CheckBoxFor(m => m.Character.History, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline"> 3 </td>
+                                    @if (Model.Character.History)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Intelligence)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Intelligence)</td>
+                                    }
                                     <td class="throw-name">History</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                        @Html.CheckBoxFor(m => m.Character.Nature, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline"> 3 </td>
+                                    @if (Model.Character.Nature)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Intelligence)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Intelligence)</td>
+                                    }
                                     <td class="throw-name">Nature</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        @Html.CheckBoxFor(m => m.Character.Religion, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline"> 3 </td>
+                                    @if (Model.Character.Religion)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Intelligence)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Intelligence)</td>
+                                    }
                                     <td class="throw-name">Religion</td>
                                 </tr>
                                 <tr>
@@ -211,37 +365,77 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                        @Html.CheckBoxFor(m => m.Character.AnimalHandling, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline"> 3 </td>
+                                    @if (Model.Character.AnimalHandling)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Wisdom)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Wisdom)</td>
+                                    }
                                     <td class="throw-name">Animal Handling</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        @Html.CheckBoxFor(m => m.Character.Insight, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline"> 3 </td>
+                                    @if (Model.Character.Insight)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Wisdom)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Wisdom)</td>
+                                    }
                                     <td class="throw-name">Insight</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                        @Html.CheckBoxFor(m => m.Character.Medicine, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline"> 3 </td>
+                                    @if (Model.Character.Medicine)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Wisdom)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Wisdom)</td>
+                                    }
                                     <td class="throw-name">Medicine</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        @Html.CheckBoxFor(m => m.Character.Perception, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline"> 3 </td>
+                                    @if (Model.Character.Perception)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Wisdom)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Wisdom)</td>
+                                    }
                                     <td class="throw-name">Perception</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                        @Html.CheckBoxFor(m => m.Character.Survival, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline"> 3 </td>
+                                    @if (Model.Character.Survival)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Wisdom)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Wisdom)</td>
+                                    }
                                     <td class="throw-name">Survival</td>
                                 </tr>
                                 <tr>
@@ -249,30 +443,62 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                        @Html.CheckBoxFor(m => m.Character.Deception, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline"> 3 </td>
+                                    @if (Model.Character.Deception)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Charisma)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Charisma)</td>
+                                    }
                                     <td class="throw-name">Deception</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        @Html.CheckBoxFor(m => m.Character.Intimidation, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline"> 3 </td>
+                                    @if (Model.Character.Intimidation)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Charisma)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Charisma)</td>
+                                    }
                                     <td class="throw-name">Intimidation</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" disabled>
+                                        @Html.CheckBoxFor(m => m.Character.Performance, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline"> 3 </td>
+                                    @if (Model.Character.Performance)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Charisma)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Charisma)</td>
+                                    }
                                     <td class="throw-name">Performance</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        @Html.CheckBoxFor(m => m.Character.Persuasion, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                                     </th>
-                                    <td class="text-decoration-underline"> 3 </td>
+                                    @if (Model.Character.Persuasion)
+                                    {
+
+                                        <td class="text-decoration-underline"> @Prof(Bonus(Model.Character.Charisma)) </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-decoration-underline"> @Bonus(Model.Character.Charisma)</td>
+                                    }
                                     <td class="throw-name">Persuasion</td>
                                 </tr>
 
@@ -300,26 +526,26 @@
                             </tr>
                             <tr>
                                 <th scope="row">Race</th>
-                                <td>Dark Elf</td>
+                                <td>@Model.Character.Race</td>
                             </tr>
                             <tr>
                                 <td colspan="2"><hr /></td>
                             </tr>
                             <tr>
                                 <th scope="row">Armor class</th>
-                                <td>16</td>
+                                <td>@Model.Character.ArmorClass</td>
                             </tr>
                             <tr>
                                 <th scope="row">Initiative</th>
-                                <td>3</td>
+                                <td>@Bonus(Model.Character.Dexterity)</td>
                             </tr>
                             <tr>
                                 <th scope="row">Speed</th>
-                                <td>6 feet</td>
+                                <td>@Model.Character.Speed feet</td>
                             </tr>
                             <tr>
                                 <th scope="row">Hit Dice</th>
-                                <td>1d6</td>
+                                <td>@Model.Character.HitDice</td>
                             </tr>
                         </tbody>
                     </table>
@@ -329,28 +555,69 @@
                             <h5>Hit Points</h5>
                         </div>
                         <div class="col-5">
-                            <a class="btn btn-sm btn-outline-secondary">Heal all</a>
+                            @if (ThisUser())
+                            {
+                                if (Model.Character.CurrentHP == Model.Character.MaxHP)
+                                {
+                                    <a href="@Url.Action("HealAll", "Characters", new {id = Model.Character.Id})" class="btn btn-sm btn-outline-secondary disabled">Heal all</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("HealAll", "Characters", new {id = Model.Character.Id})" class="btn btn-sm btn-outline-secondary">Heal all</a>
+                                }
+                            }
                         </div>
                         <div class="col-3"></div>
                     </div>
                     <table class="slots-table">
                         <tbody>
                             <tr>
-                                <th scope="row" class="text-danger">32</th>
-                                <th scope="row" class="text-info"></th>
+                                <th scope="row" class="text-danger">@Model.Character.CurrentHP</th>
+                                @if (Model.Character.BonusHP != 0)
+                                {
+                                    <th scope="row" class="text-info">+@Model.Character.BonusHP</th>
+                                }
                                 <th scope="row">/</th>
-                                <th scope="row" class="text-success">32</th>
-                                <td>
-                                    <form>
+                                <th scope="row" class="text-success">@Model.Character.MaxHP</th>
+                                @if (ThisUser())
+                                {
+                                    <td>
                                         <div class="form-group">
-                                            <div class="input-group hp-input">
-                                                <input type="text" class="form-control form-control-sm" placeholder="# of HP">
-                                                <button class="btn btn-sm btn-success" type="button" id="button-addon2">+</button>
-                                                <button class="btn btn-sm btn-danger" type="button" id="button-addon2">-</button>
-                                            </div>
+                                            <form action="@Url.Action("Heal", "Characters", new {id = Model.Character.Id})">
+                                                <div class="input-group hp-input">
+                                                    <input type="number" name="hp" class="form-control form-control-sm" placeholder="Heal">
+                                                    @if (Model.Character.CurrentHP == Model.Character.MaxHP)
+                                                    {
+                                                        <button class="btn btn-sm btn-success disabled" type="submit" id="button-addon2">+</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="btn btn-sm btn-success" type="submit" id="button-addon2">+</button>
+                                                    }
+                                                </div>
+                                            </form>
+                                            <form action="@Url.Action("BonusHp", "Characters", new {id = Model.Character.Id})">
+                                                <div class="input-group hp-input">
+                                                    <input type="number" name="hp" class="form-control form-control-sm" placeholder="Bonus">
+                                                    <button class="btn btn-sm btn-info" type="submit" id="button-addon2">+</button>
+                                                </div>
+                                            </form>
+                                            <form class="form-group" action="@Url.Action("Damage", "Characters", new {id = Model.Character.Id})">
+                                                <div class="input-group hp-input">
+                                                    <input type="number" name="hp" class="form-control form-control-sm" placeholder="Damage">
+                                                    @if (Model.Character.CurrentHP == 0 && Model.Character.BonusHP == 0)
+                                                    {
+                                                        <button class="btn btn-sm btn-danger disabled" type="submit" id="button-addon2">+</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="btn btn-sm btn-danger" type="submit" id="button-addon2">+</button>
+                                                    }
+                                                </div>
+                                            </form>
                                         </div>
-                                    </form>
-                                </td>
+                                    </td>
+                                }
                             </tr>
                         </tbody>
                     </table>
@@ -360,7 +627,18 @@
                             <h5>Death Saves</h5>
                         </div>
                         <div class="col-5">
-                            <a class="btn btn-sm btn-outline-secondary">Reset</a>
+                            @if (ThisUser())
+                            {
+                                if (Model.Character.Failures == 0 && Model.Character.Successes == 0)
+                                {
+                                    <a href="@Url.Action("Reset", "Characters", new {id = Model.Character.Id})" class="btn btn-sm btn-outline-secondary disabled">Reset</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Reset", "Characters", new {id = Model.Character.Id})" class="btn btn-sm btn-outline-secondary ">Reset</a>
+
+                                }
+                            }
                         </div>
                         <div class="col-3"></div>
                     </div>
@@ -369,20 +647,51 @@
                             <tr>
                                 <th scope="row" class="text-success">Successes</th>
                                 <td>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    @for (int i = 0; i < Model.Character.Successes; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    }
+                                    @for (int i = 0; i < 3 - Model.Character.Successes; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+
+                                    }
                                 </td>
-                                <td><a class="btn btn-sm btn-outline-success" href="#">+</a></td>
+                                @if (ThisUser())
+                                {
+                                    if (Model.Character.Successes != 3)
+                                    {
+                                        <td><a href="@Url.Action("Succeed", "Characters", new {id = Model.Character.Id})" class="btn btn-sm btn-outline-success">+</a></td>
+                                    }
+                                    else
+                                    {
+                                        <td><a href="@Url.Action("Succeed", "Characters", new {id = Model.Character.Id})" class="btn btn-sm btn-outline-success disabled">+</a></td>
+                                    }
+                                }
                             </tr>
                             <tr>
                                 <th scope="row" class="text-danger">Failures</th>
                                 <td>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    @for (int i = 0; i < Model.Character.Failures; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    }
+                                    @for (int i = 0; i < 3 - Model.Character.Failures; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    }
                                 </td>
-                                <td><a class="btn btn-sm btn-outline-danger" href="#">+</a></td>
+                                @if (ThisUser())
+                                {
+                                    if (Model.Character.Failures != 3)
+                                    {
+                                        <td><a class="btn btn-sm btn-outline-danger" href="@Url.Action("Fail", "Characters", new {id = Model.Character.Id})">+</a></td>
+                                    }
+                                    else
+                                    {
+                                        <td><a class="btn btn-sm btn-outline-danger disabled" href="@Url.Action("Fail", "Characters", new {id = Model.Character.Id})">+</a></td>
+                                    }
+                                }
                             </tr>
                         </tbody>
                     </table>
@@ -395,7 +704,26 @@
                             <h5>Spell Slots</h5>
                         </div>
                         <div class="col-5">
-                            <a class="btn btn-sm btn-outline-secondary">Restore all</a>
+                            @if (ThisUser())
+                            {
+                                if (Model.Character.Level1Used == 0
+                                && Model.Character.Level2Used == 0
+                                && Model.Character.Level3Used == 0
+                                && Model.Character.Level4Used == 0
+                                && Model.Character.Level5Used == 0
+                                && Model.Character.Level6Used == 0
+                                && Model.Character.Level7Used == 0
+                                && Model.Character.Level8Used == 0
+                                && Model.Character.Level9Used == 0
+                                && Model.Character.SpecialUsed == 0)
+                                {
+                                    <a class="btn btn-sm btn-outline-secondary disabled">Restore all</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("RestoreAll", "Characters", new {id = Model.Character.Id})" class="btn btn-sm btn-outline-secondary">Restore all</a>
+                                }
+                            }
                         </div>
                         <div class="col-2"></div>
                     </div>
@@ -404,120 +732,291 @@
                             <tr>
                                 <th scope="row" class="text-dark">Level 1</th>
                                 <td>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    @for (int i = 0; i < Model.Character.Level1Used; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    }
+                                    @for (int i = 0; i < Model.Character.Level1 - Model.Character.Level1Used; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    }
                                 </td>
-                                <td><a class="btn btn-outline-dark" href="#">+</a></td>
-                                <td><a class="btn btn-outline-dark" href="#">-</a></td>
+                                @if (ThisUser())
+                                {
+                                    var add = string.Empty;
+                                    var sub = string.Empty;
+                                    if (Model.Character.Level1Used == Model.Character.Level1)
+                                    {
+                                        add = "disabled";
+                                    }
+                                    if (Model.Character.Level1Used == 0)
+                                    {
+                                        sub = "disabled";
+                                    }
+
+                                    <td><a class="btn btn-outline-dark @add" href="@Url.Action("UseSlot", "Characters", new {id = Model.Character.Id, level="1"})">+</a></td>
+                                    <td><a class="btn btn-outline-dark @sub" href="@Url.Action("RestoreSlot", "Characters", new {id = Model.Character.Id, level="1"})">-</a></td>
+                                }
                             </tr>
                             <tr>
                                 <th scope="row" class="text-dark">Level 2</th>
                                 <td>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    @for (int i = 0; i < Model.Character.Level2Used; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    }
+                                    @for (int i = 0; i < Model.Character.Level2 - Model.Character.Level2Used; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    }
                                 </td>
-                                <td><a class="btn btn-outline-dark" href="#">+</a></td>
-                                <td><a class="btn btn-outline-dark" href="#">-</a></td>
-
+                                @if (ThisUser())
+                                {
+                                    var add = string.Empty;
+                                    var sub = string.Empty;
+                                    if (Model.Character.Level2Used == Model.Character.Level2)
+                                    {
+                                        add = "disabled";
+                                    }
+                                    if (Model.Character.Level2Used == 0)
+                                    {
+                                        sub = "disabled";
+                                    }
+                                    <td><a class="btn btn-outline-dark @add" href="@Url.Action("UseSlot", "Characters", new {id = Model.Character.Id, level="2"})">+</a></td>
+                                    <td><a class="btn btn-outline-dark @sub" href="@Url.Action("RestoreSlot", "Characters", new {id = Model.Character.Id, level="2"})">-</a></td>
+                                }
                             </tr>
                             <tr>
                                 <th scope="row" class="text-dark">Level 3</th>
                                 <td>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    @for (int i = 0; i < Model.Character.Level3Used; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    }
+                                    @for (int i = 0; i < Model.Character.Level3 - Model.Character.Level3Used; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    }
                                 </td>
-                                <td><a class="btn btn-outline-dark" href="#">+</a></td>
-                                <td><a class="btn btn-outline-dark" href="#">-</a></td>
+                                @if (ThisUser())
+                                {
+                                    var add = string.Empty;
+                                    var sub = string.Empty;
+                                    if (Model.Character.Level3Used == Model.Character.Level3)
+                                    {
+                                        add = "disabled";
+                                    }
+                                    if (Model.Character.Level3Used == 0)
+                                    {
+                                        sub = "disabled";
+                                    }
+                                    <td><a class="btn btn-outline-dark @add" href="@Url.Action("UseSlot", "Characters", new {id = Model.Character.Id, level="3"})">+</a></td>
+                                    <td><a class="btn btn-outline-dark @sub" href="@Url.Action("RestoreSlot", "Characters", new {id = Model.Character.Id, level="3"})">-</a></td>
+                                }
 
                             </tr>
                             <tr>
                                 <th scope="row" class="text-dark">Level 4</th>
                                 <td>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    @for (int i = 0; i < Model.Character.Level4Used; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    }
+                                    @for (int i = 0; i < Model.Character.Level4 - Model.Character.Level4Used; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    }
                                 </td>
-                                <td><a class="btn btn-outline-dark" href="#">+</a></td>
-                                <td><a class="btn btn-outline-dark" href="#">-</a></td>
-
+                                @if (ThisUser())
+                                {
+                                    var add = string.Empty;
+                                    var sub = string.Empty;
+                                    if (Model.Character.Level4Used == Model.Character.Level4)
+                                    {
+                                        add = "disabled";
+                                    }
+                                    if (Model.Character.Level4Used == 0)
+                                    {
+                                        sub = "disabled";
+                                    }
+                                    <td><a class="btn btn-outline-dark @add" href="@Url.Action("UseSlot", "Characters", new {id = Model.Character.Id, level="4"})">+</a></td>
+                                    <td><a class="btn btn-outline-dark @sub" href="@Url.Action("RestoreSlot", "Characters", new {id = Model.Character.Id, level="4"})">-</a></td>
+                                }
                             </tr>
                             <tr>
                                 <th scope="row" class="text-dark">Level 5</th>
                                 <td>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    @for (int i = 0; i < Model.Character.Level5Used; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    }
+                                    @for (int i = 0; i < Model.Character.Level5 - Model.Character.Level5Used; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    }
                                 </td>
-                                <td><a class="btn btn-outline-dark" href="#">+</a></td>
-                                <td><a class="btn btn-outline-dark" href="#">-</a></td>
+                                @if (ThisUser())
+                                {
+                                    var add = string.Empty;
+                                    var sub = string.Empty;
+                                    if (Model.Character.Level5Used == Model.Character.Level5)
+                                    {
+                                        add = "disabled";
+                                    }
+                                    if (Model.Character.Level5Used == 0)
+                                    {
+                                        sub = "disabled";
+                                    }
+                                    <td><a class="btn btn-outline-dark @add" href="@Url.Action("UseSlot", "Characters", new {id = Model.Character.Id, level="5"})">+</a></td>
+                                    <td><a class="btn btn-outline-dark @sub" href="@Url.Action("RestoreSlot", "Characters", new {id = Model.Character.Id, level="5"})">-</a></td>
+                                }
 
                             </tr>
                             <tr>
                                 <th scope="row" class="text-dark">Level 6</th>
                                 <td>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    @for (int i = 0; i < Model.Character.Level6Used; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    }
+                                    @for (int i = 0; i < Model.Character.Level6 - Model.Character.Level6Used; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    }
                                 </td>
-                                <td><a class="btn btn-outline-dark" href="#">+</a></td>
-                                <td><a class="btn btn-outline-dark" href="#">-</a></td>
+                                @if (ThisUser())
+                                {
+                                    var add = string.Empty;
+                                    var sub = string.Empty;
+                                    if (Model.Character.Level6Used == Model.Character.Level6)
+                                    {
+                                        add = "disabled";
+                                    }
+                                    if (Model.Character.Level6Used == 0)
+                                    {
+                                        sub = "disabled";
+                                    }
+                                    <td><a class="btn btn-outline-dark @add" href="@Url.Action("UseSlot", "Characters", new {id = Model.Character.Id, level="6"})">+</a></td>
+                                    <td><a class="btn btn-outline-dark @sub" href="@Url.Action("RestoreSlot", "Characters", new {id = Model.Character.Id, level="6"})">-</a></td>
+                                }
 
                             </tr>
                             <tr>
                                 <th scope="row" class="text-dark">Level 7</th>
                                 <td>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    @for (int i = 0; i < Model.Character.Level7Used; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    }
+                                    @for (int i = 0; i < Model.Character.Level7 - Model.Character.Level7Used; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    }
                                 </td>
-                                <td><a class="btn btn-outline-dark" href="#">+</a></td>
-                                <td><a class="btn btn-outline-dark" href="#">-</a></td>
+                                @if (ThisUser())
+                                {
+                                    var add = string.Empty;
+                                    var sub = string.Empty;
+                                    if (Model.Character.Level7Used == Model.Character.Level7)
+                                    {
+                                        add = "disabled";
+                                    }
+                                    if (Model.Character.Level7Used == 0)
+                                    {
+                                        sub = "disabled";
+                                    }
+                                    <td><a class="btn btn-outline-dark @add" href="@Url.Action("UseSlot", "Characters", new {id = Model.Character.Id, level="7"})">+</a></td>
+                                    <td><a class="btn btn-outline-dark @sub" href="@Url.Action("RestoreSlot", "Characters", new {id = Model.Character.Id, level="7"})">-</a></td>
+                                }
 
                             </tr>
                             <tr>
                                 <th scope="row" class="text-dark">Level 8</th>
                                 <td>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    @for (int i = 0; i < Model.Character.Level8Used; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    }
+                                    @for (int i = 0; i < Model.Character.Level8 - Model.Character.Level8Used; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    }
                                 </td>
-                                <td><a class="btn btn-outline-dark" href="#">+</a></td>
-                                <td><a class="btn btn-outline-dark" href="#">-</a></td>
+                                @if (ThisUser())
+                                {
+                                    var add = string.Empty;
+                                    var sub = string.Empty;
+                                    if (Model.Character.Level8Used == Model.Character.Level8)
+                                    {
+                                        add = "disabled";
+                                    }
+                                    if (Model.Character.Level8Used == 0)
+                                    {
+                                        sub = "disabled";
+                                    }
+                                    <td><a class="btn btn-outline-dark @add" href="@Url.Action("UseSlot", "Characters", new {id = Model.Character.Id, level="8"})">+</a></td>
+                                    <td><a class="btn btn-outline-dark @sub" href="@Url.Action("RestoreSlot", "Characters", new {id = Model.Character.Id, level="8"})">-</a></td>
+                                }
 
                             </tr>
                             <tr>
                                 <th scope="row" class="text-dark">Level 9</th>
                                 <td>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    @for (int i = 0; i < Model.Character.Level9Used; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    }
+                                    @for (int i = 0; i < Model.Character.Level9 - Model.Character.Level9Used; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    }
                                 </td>
-                                <td><a class="btn btn-outline-dark" href="#">+</a></td>
-                                <td><a class="btn btn-outline-dark" href="#">-</a></td>
+                                @if (ThisUser())
+                                {
+                                    var add = string.Empty;
+                                    var sub = string.Empty;
+                                    if (Model.Character.Level9Used == Model.Character.Level9)
+                                    {
+                                        add = "disabled";
+                                    }
+                                    if (Model.Character.Level9Used == 0)
+                                    {
+                                        sub = "disabled";
+                                    }
+                                    <td><a class="btn btn-outline-dark @add" href="@Url.Action("UseSlot", "Characters", new {id = Model.Character.Id, level="9"})">+</a></td>
+                                    <td><a class="btn btn-outline-dark @sub" href="@Url.Action("RestoreSlot", "Characters", new {id = Model.Character.Id, level="9"})">-</a></td>
+                                }
 
                             </tr>
                             <tr>
                                 <th scope="row" class="text-dark">Special</th>
                                 <td>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    @for (int i = 0; i < Model.Character.SpecialUsed; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+                                    }
+                                    @for (int i = 0; i < Model.Character.Special - Model.Character.SpecialUsed; i++)
+                                    {
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" disabled>
+                                    }
                                 </td>
-                                <td><a class="btn btn-outline-dark" href="#">+</a></td>
-                                <td><a class="btn btn-outline-dark" href="#">-</a></td>
-
+                                @if (ThisUser())
+                                {
+                                    var add = string.Empty;
+                                    var sub = string.Empty;
+                                    if (Model.Character.SpecialUsed == Model.Character.Special)
+                                    {
+                                        add = "disabled";
+                                    }
+                                    if (Model.Character.SpecialUsed == 0)
+                                    {
+                                        sub = "disabled";
+                                    }
+                                    <td><a class="btn btn-outline-dark @add" href="@Url.Action("UseSlot", "Characters", new {id = Model.Character.Id, level="special"})">+</a></td>
+                                    <td><a class="btn btn-outline-dark @sub" href="@Url.Action("RestoreSlot", "Characters", new {id = Model.Character.Id, level="special"})">-</a></td>
+                                }
                             </tr>
-                            
+
                         </tbody>
                     </table>
                 </div>
@@ -529,11 +1028,11 @@
                 <tbody>
                     <tr>
                         <th scope="row">Alignment</th>
-                        <td>Neutral</td>
+                        <td>@Model.Character.Alignment</td>
                     </tr>
                     <tr>
                         <th scope="row">Background</th>
-                        <td>Happy childhood</td>
+                        <td>@Model.Character.Background</td>
                     </tr>
                 </tbody>
             </table>
@@ -548,7 +1047,7 @@
                     <div id="traits" class="accordion-collapse collapse" data-bs-parent="#personality-accordition">
                         <div class="accordion-body">
                             <p class="description">
-
+                                @Model.Character.PersonalityTraits
                             </p>
                         </div>
                     </div>
@@ -562,6 +1061,7 @@
                     <div id="ideals" class="accordion-collapse collapse" data-bs-parent="#personality-accordition">
                         <div class="accordion-body">
                             <p class="description">
+                                @Model.Character.Ideals
 
                             </p>
                         </div>
@@ -576,6 +1076,7 @@
                     <div id="bonds" class="accordion-collapse collapse" data-bs-parent="#personality-accordition">
                         <div class="accordion-body">
                             <p class="description">
+                                @Model.Character.Bonds
 
                             </p>
                         </div>
@@ -590,6 +1091,7 @@
                     <div id="flaws" class="accordion-collapse collapse" data-bs-parent="#personality-accordition">
                         <div class="accordion-body">
                             <p class="description">
+                                @Model.Character.Flaws
 
                             </p>
                         </div>
@@ -598,12 +1100,13 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header " id="headingOne">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#profs">
-                            Proficiencies & Languages  
+                            Proficiencies & Languages
                         </button>
                     </h2>
                     <div id="profs" class="accordion-collapse collapse" data-bs-parent="#personality-accordition">
                         <div class="accordion-body">
                             <p class="description">
+                                @Model.Character.Proficiencies
 
                             </p>
                         </div>
@@ -618,6 +1121,7 @@
                     <div id="features" class="accordion-collapse collapse" data-bs-parent="#personality-accordition">
                         <div class="accordion-body">
                             <p class="description">
+                                @Model.Character.Features
 
                             </p>
                         </div>
