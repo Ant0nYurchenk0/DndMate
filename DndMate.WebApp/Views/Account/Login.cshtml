@@ -33,15 +33,14 @@
                         @Html.CheckBoxFor(m => m.RememberMe, new { @class = "form-check-input", type = "checkbox" })
                         @Html.LabelFor(m => m.RememberMe)
                     </div>
-                    <br />
                     <div class="text-center">
+                    @* Enable this once you have account confirmation enabled for password reset functionality
+                        <a class="text-decoration-underline" href="@Url.Action("ForgotPassword")">Forgot password?</a>
+                    *@
+                        <br />
                         <a class="btn btn-secondary" href="@Url.Action("Register", "Account")">Register</a>
                         <button class="btn btn-primary">Log in</button>
                     </div>
-                    @* Enable this once you have account confirmation enabled for password reset functionality
-                        <p>
-                            @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                        </p>*@
                 }
             </section>
             @*<section id="socialLoginForm">
