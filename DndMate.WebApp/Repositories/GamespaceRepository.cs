@@ -5,6 +5,7 @@ using DndMate.WebApp.Models;
 using DndMate.WebApp.ViewModels;
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNet.Identity;
 using System.Linq;
 using System.Web;
 
@@ -21,7 +22,7 @@ namespace DndMate.WebApp.Repositories
             _context = context;
             _charRepository = charRepository;
         }
-        public int Create(GamespaceDto gamespaceDto, string userId)
+        public int Create(GamespaceDto gamespaceDto, string userId, string masterName)
         {
             var gamespace = Mapper.Map<GamespaceDto, Gamespace>(gamespaceDto);
             _context.Gamespaces.Add(gamespace);
@@ -32,16 +33,18 @@ namespace DndMate.WebApp.Repositories
             gamespaceChar.GamespaceId = gamespace.Id;
             gamespaceChar.CharacterClass = CharacterClass.Master;
             gamespaceChar.Level = 20;
-            gamespaceChar.Name = "Master";
+            gamespaceChar.Name = masterName;
             _context.Characters.Add(gamespaceChar);
             _context.SaveChanges();
             return gamespace.Id;
         }
 
-        public void Update(GamespaceDto gamespaceDto)
+        public void Update(GamespaceDto gamespaceDto, string masterName)
         {
             var gamespaceInDb = _context.Gamespaces.SingleOrDefault(x => x.Id == gamespaceDto.Id);
             Mapper.Map(gamespaceDto, gamespaceInDb);
+            var master = _context.Characters.Single(c=>c.CharacterClass == CharacterClass.Master && c.GamespaceId == gamespaceDto.Id);
+            master.Name = masterName;
             _context.SaveChanges();
         }
         public void Leave(GamespaceChar gamespaceCharacter)

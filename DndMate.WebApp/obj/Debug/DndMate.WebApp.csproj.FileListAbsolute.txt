@@ -278,3 +278,5 @@ C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\Dn
 C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.AddCharacteristicsToCharacter.resources
 C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.AddBonusHp.resources
 C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.AddPersonality.resources
+C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.AddNotes.resources
+C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.LinkNotes.resources

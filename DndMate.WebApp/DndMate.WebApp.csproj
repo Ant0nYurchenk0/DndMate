@@ -193,11 +193,13 @@
     <Compile Include="Controllers\GamespaceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\NotesController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\SpellsController.cs" />
     <Compile Include="Dtos\GamespaceCharDto.cs" />
     <Compile Include="Dtos\GamespaceDto.cs" />
     <Compile Include="Dtos\GamespaceWithCharacter.cs" />
+    <Compile Include="Dtos\NoteDto.cs" />
     <Compile Include="Dtos\NotificationDto.cs" />
     <Compile Include="Dtos\SpellDto.cs" />
     <Compile Include="Enums\Class.cs" />
@@ -310,6 +312,14 @@
     <Compile Include="Migrations\202206181310145_AddPersonality.designer.cs">
       <DependentUpon>202206181310145_AddPersonality.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202206181432395_AddNotes.cs" />
+    <Compile Include="Migrations\202206181432395_AddNotes.designer.cs">
+      <DependentUpon>202206181432395_AddNotes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206181439202_LinkNotes.cs" />
+    <Compile Include="Migrations\202206181439202_LinkNotes.designer.cs">
+      <DependentUpon>202206181439202_LinkNotes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -318,6 +328,7 @@
     <Compile Include="Models\GamespaceCharacterSpell.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Note.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Spell.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -329,6 +340,8 @@
     <Compile Include="ViewModels\CharacterViewModel.cs" />
     <Compile Include="ViewModels\GamespaceFormViewModel.cs" />
     <Compile Include="ViewModels\GamespaceListViewModel.cs" />
+    <Compile Include="ViewModels\NoteFormViewModel.cs" />
+    <Compile Include="ViewModels\NoteListViewModel.cs" />
     <Compile Include="ViewModels\SpellFormViewModel.cs" />
     <Compile Include="ViewModels\SpellListViewModel.cs" />
     <Compile Include="ViewModels\GamespacePropsViewModel.cs" />
@@ -430,7 +443,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Gamespace\Form.cshtml" />
     <Content Include="Views\Gamespace\Index.cshtml" />
-    <Content Include="Views\Gamespace\Get.cshtml" />
+    <Content Include="Views\Notes\Index.cshtml" />
     <Content Include="Views\Notifications\Index.cshtml" />
     <Content Include="Views\Spells\Form.cshtml" />
     <Content Include="Views\Spells\Index.cshtml" />
@@ -439,6 +452,7 @@
     <Content Include="Views\Shared\_GamespaceTools.cshtml" />
     <Content Include="Views\Characters\Get.cshtml" />
     <Content Include="Views\Characters\Index.cshtml" />
+    <Content Include="Views\Notes\Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -526,6 +540,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206181310145_AddPersonality.resx">
       <DependentUpon>202206181310145_AddPersonality.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206181432395_AddNotes.resx">
+      <DependentUpon>202206181432395_AddNotes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206181439202_LinkNotes.resx">
+      <DependentUpon>202206181439202_LinkNotes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

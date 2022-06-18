@@ -1,0 +1,30 @@
+﻿@model DndMate.WebApp.ViewModels.NoteFormViewModel
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_GamespaceTools", Model.Gamespace)
+
+<div class="gamespace-content">
+
+    @using (Html.BeginForm("Save", "Notes", FormMethod.Post))
+    {
+
+        @Html.LabelFor(m => m.Note.Name)
+        @Html.TextBoxFor(m => m.Note.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Note.Name)
+        <br />
+        @Html.LabelFor(m => m.Note.Content)
+        @Html.TextAreaFor(m => m.Note.Content, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Note.Content)
+        <br />
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Note.CharacterId)
+        @Html.HiddenFor(m => m.Note.Id)
+        <input type="hidden" name="gamespaceId" value="@Model.Gamespace.Gamespace.Id"/>
+        <a class="btn btn-secondary" href="@Url.Action("Index", "Notes", new {id = Model.Gamespace.Gamespace.Id})">Cancel</a>
+        <button class="btn btn-primary">Submit</button>
+    }
+</div>
+

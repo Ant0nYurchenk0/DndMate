@@ -30,6 +30,9 @@ else
                     @Html.TextBoxFor(m => m.Gamespace.Name, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.Gamespace.Name)
                     <br />
+                    <label>Master's name</label>
+                    <input class="form-control" type="text" name="masterName" value="@Model.GamespaceProps.Character.Name"/>
+                    <br />
                     @Html.LabelFor(m => m.Gamespace.Description)
                     @Html.TextAreaFor(m => m.Gamespace.Description, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.Gamespace.Description)

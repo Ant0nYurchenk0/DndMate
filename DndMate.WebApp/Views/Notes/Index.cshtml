@@ -1,0 +1,82 @@
+﻿@model DndMate.WebApp.ViewModels.NoteListViewModel
+@using Microsoft.AspNet.Identity;
+@using DndMate.WebApp.Enums
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_GamespaceTools", Model.Gamespace)
+<div class="gamespace-content">
+    <div class="row">
+        <div class="col-2">
+            <h2>@Model.Gamespace.Gamespace.Name</h2>
+        </div>
+        <div class="col-md-8 col-sm-6"></div>
+        <div class="col-md-2 col-sm-4">
+            <a class="btn btn-primary add-btn" href="@Url.Action("Create", "Notes", new {charId = Model.Gamespace.Character.Id, gamespaceId= Model.Gamespace.Gamespace.Id})">Add note</a>
+        </div>
+    </div>
+    <hr />
+    <h2></h2>
+
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#description" aria-expanded="true" aria-controls="collapseOne">
+                    Introduction
+                </button>
+            </h2>
+            <div id="description" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <p class="description">@Model.Gamespace.Gamespace.Description</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (Model.MasterNotes.Count() != 0)
+    {
+        <hr />
+        <h4>Master's Notes:</h4>
+        <div class="accordion" id="accordionExample">
+            @foreach (var note in Model.MasterNotes)
+            {
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#note@(note.Id)" aria-expanded="true" aria-controls="collapseOne">
+                            @note.Name
+                        </button>
+                    </h2>
+                    <div id="note@(note.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <p class="description">@note.Content</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    @if (Model.MyNotes.Count() != 0 && Model.Gamespace.Character.CharacterClass != CharacterClass.Master)
+    {
+        <hr />
+        <h4>My Notes:</h4>
+        <div class="accordion" id="accordionExample">
+            @foreach (var note in Model.MyNotes)
+            {
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#note@(note.Id)" aria-expanded="true" aria-controls="collapseOne">
+                            @note.Name
+                        </button>
+                    </h2>
+                    <div id="note@(note.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <p class="description">@note.Content</p>
+                            <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Notes", new {id = note.Id})">Edit</a>
+                            <a class="btn btn-outline-danger" href="@Url.Action("Delete", "Notes", new {id = note.Id})">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

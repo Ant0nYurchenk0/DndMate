@@ -57,7 +57,7 @@ namespace DndMate.WebApp.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(GamespaceFormViewModel form)
+        public ActionResult Save(GamespaceFormViewModel form, string masterName)
         {
             var gamespaceDto = form.Gamespace; 
             if (!ModelState.IsValid)
@@ -65,11 +65,11 @@ namespace DndMate.WebApp.Controllers
 
             if(!_context.Gamespaces.Any(g=>g.Id == gamespaceDto.Id))
             {
-                gamespaceDto.Id = _repository.Create(gamespaceDto, User.Identity.GetUserId());
+                gamespaceDto.Id = _repository.Create(gamespaceDto, User.Identity.GetUserId(), masterName);
             }
             else
             {
-                _repository.Update(gamespaceDto);
+                _repository.Update(gamespaceDto, masterName);
             }
             
             return RedirectToAction("Get", "Gamespace", new {id = gamespaceDto.Id});
@@ -99,11 +99,8 @@ namespace DndMate.WebApp.Controllers
         [Route("Gamespace/Get")]
         public ActionResult Get(int id)
         {
-            var gamespace = _context.Gamespaces.SingleOrDefault(g => g.Id == id);
-            if (gamespace == null)
-                return HttpNotFound();
-            var viewModel = _repository.GetViewModel(id, User.Identity.GetUserId());
-            return View("Get",  viewModel);
+
+            return RedirectToAction("Index","Notes", new {id = id});
         }
         [Route("Gamespace/Leave")]
         public ActionResult Leave(int gamespaceId)

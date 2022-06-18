@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace DndMate.WebApp.Models
+namespace DndMate.WebApp.Dtos
 {
-    public class Note
+    public class NoteDto
     {
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Content { get; set; }
         public int CharacterId { get; set; }
-        public GamespaceChar Character { get; set; }
+
     }
 }

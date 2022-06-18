@@ -14,6 +14,7 @@ namespace DndMate.WebApp.Models
         public DbSet<Gamespace> Gamespaces { get; set; }
         public DbSet<GamespaceChar> Characters { get; set; }
         public DbSet<GamespaceCharacterSpell> CharacterSpells { get; set; }
+        public DbSet<Note> Notes { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

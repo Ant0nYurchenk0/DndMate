@@ -18,24 +18,34 @@ namespace DndMate.WebApp.Controllers
         private ApplicationDbContext _context;
 
         // GET: Notifications
-        public NotificationsController( ApplicationDbContext context)
+        public NotificationsController(ApplicationDbContext context)
         {
             _context = context;
         }
         public ActionResult Index()
         {
-            var notifications = _context.Notifications.Where(n=>n.UserEmail == User.Identity.Name)
+            var notifications = _context.Notifications.Where(n => n.UserEmail == User.Identity.Name)
                 .ToList()
-                .Select(n=>Mapper.Map<Notification, NotificationDto>(n)); 
+                .Select(n => Mapper.Map<Notification, NotificationDto>(n));
             return View(notifications);
         }
         public ActionResult Submit(GamespacePropsViewModel form)
         {
             var notificationDto = form.Notification;
+
+            if (!ModelState.IsValid)
+                return RedirectToAction("Get", "Gamespace", new { id = notificationDto.GamespaceId });
+
+            var userId = _context.Users.Single(u=>u.Email == notificationDto.UserEmail).Id;
+
+            if (_context.Characters.Any(gs => gs.GamespaceId == notificationDto.GamespaceId && gs.CharacterId == userId))
+                return RedirectToAction("Get", "Gamespace", new { id = notificationDto.GamespaceId });
+
+            if (_context.Notifications.Any(n => n.UserEmail == notificationDto.UserEmail && n.GamespaceId == notificationDto.GamespaceId))
+                return RedirectToAction("Get", "Gamespace", new { id = notificationDto.GamespaceId });
+
             var notification = Mapper.Map<NotificationDto, Notification>(notificationDto);
             notification.GamespaceName = _context.Gamespaces.SingleOrDefault(n => n.Id == notification.GamespaceId).Name;
-            if (!ModelState.IsValid)
-                return RedirectToAction("Get", "Gamespace", new { id = notification.GamespaceId });
             _context.Notifications.Add(notification);
             _context.SaveChanges();
             return RedirectToAction("Get", "Gamespace", new { id = notification.GamespaceId });
@@ -56,8 +66,8 @@ namespace DndMate.WebApp.Controllers
             if (notification == null)
                 return HttpNotFound();
             if (_context.Characters.Any(gs => gs.GamespaceId == notification.GamespaceId && gs.CharacterId == userId))
-                return RedirectToAction("Deny", "Notifications", new {id = id});
-            return RedirectToAction("Create", "Characters", new {charId = userId, gamespaceId = notification.GamespaceId});
+                return RedirectToAction("Deny", "Notifications", new { id = id });
+            return RedirectToAction("Create", "Characters", new { charId = userId, gamespaceId = notification.GamespaceId });
         }
     }
 }
