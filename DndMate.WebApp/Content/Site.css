@@ -39,7 +39,7 @@ a:link, a:visited, a:hover, a:active {
 
 .navbar-vertical ul {
     position: relative;
-    top: -140px;
+    top: 0;
 }
 .navbar-vertical {
     width: 60px;

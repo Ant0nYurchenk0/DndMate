@@ -50,13 +50,14 @@ else
     <div class="gamespace-content">
         @Html.ValidationSummary()
         <div class="row">
-            <div class="col-2">
+            <div class="col-md-4 ">
                 @Html.LabelFor(m => m.Character.Name)
                 @Html.TextBoxFor(m => m.Character.Name, new { @class = "form-control " })
                 @Html.ValidationMessageFor(m => m.Character.Name)
             </div>
-            <div class="col-md-8 col-sm-6"></div>
-            <div class="col-md-2 col-sm-4">
+            <div class="col-md-6"></div>
+            <div class="col-md-2">
+                <br />
                 <button class="btn btn-primary add-btn">Save</button>
             </div>
         </div>
