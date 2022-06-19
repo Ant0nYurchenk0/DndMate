@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
 using DndMate.WebApp.Dtos;
-using DndMate.WebApp.Enums;
 using DndMate.WebApp.Models;
 using DndMate.WebApp.Repositories;
 using DndMate.WebApp.ViewModels;
 using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DndMate.WebApp.Controllers
@@ -30,13 +26,13 @@ namespace DndMate.WebApp.Controllers
         {
             var userId = User.Identity.GetUserId();
             var viewModel = new GamespaceListViewModel();
-            var gamespaceList = from g in _context.Gamespaces 
-                                join gs in _context.Characters 
+            var gamespaceList = from g in _context.Gamespaces
+                                join gs in _context.Characters
                                 on g.Id equals gs.GamespaceId
                                 where gs.CharacterId == userId
                                 select g;
             foreach (var gamespace in gamespaceList.ToList())
-            {                
+            {
                 var character = _context.Characters.SingleOrDefault(c => c.CharacterId == userId && c.GamespaceId == gamespace.Id);
                 var gamespaceWithChar = new GamespaceWithCharacter
                 {
@@ -59,11 +55,11 @@ namespace DndMate.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Save(GamespaceFormViewModel form, string masterName)
         {
-            var gamespaceDto = form.Gamespace; 
+            var gamespaceDto = form.Gamespace;
             if (!ModelState.IsValid)
                 return View("Form", form);
 
-            if(!_context.Gamespaces.Any(g=>g.Id == gamespaceDto.Id))
+            if (!_context.Gamespaces.Any(g => g.Id == gamespaceDto.Id))
             {
                 gamespaceDto.Id = _repository.Create(gamespaceDto, User.Identity.GetUserId(), masterName);
             }
@@ -71,8 +67,8 @@ namespace DndMate.WebApp.Controllers
             {
                 _repository.Update(gamespaceDto, masterName);
             }
-            
-            return RedirectToAction("Get", "Gamespace", new {id = gamespaceDto.Id});
+
+            return RedirectToAction("Get", "Gamespace", new { id = gamespaceDto.Id });
         }
         [Route("Gamespace/Edit")]
         public ActionResult Edit(int id)
@@ -100,17 +96,17 @@ namespace DndMate.WebApp.Controllers
         public ActionResult Get(int id)
         {
 
-            return RedirectToAction("Index","Notes", new {id = id});
+            return RedirectToAction("Index", "Notes", new { id = id });
         }
         [Route("Gamespace/Leave")]
         public ActionResult Leave(int gamespaceId)
         {
             var userId = User.Identity.GetUserId();
             var gamespaceCharacter = _context.Characters.SingleOrDefault(gs => gs.GamespaceId == gamespaceId && gs.CharacterId == userId);
-            if(gamespaceCharacter == null)
+            if (gamespaceCharacter == null)
                 return HttpNotFound();
             _repository.Leave(gamespaceCharacter);
             return RedirectToAction("Index", "Gamespace");
-        }        
+        }
     }
 }

@@ -6,10 +6,7 @@ using DndMate.WebApp.Repositories;
 using DndMate.WebApp.ViewModels;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DndMate.WebApp.Controllers
@@ -38,7 +35,7 @@ namespace DndMate.WebApp.Controllers
                 return HttpNotFound();
             var viewModel = new NoteListViewModel();
             viewModel.Gamespace = _gamespaceRepository.GetViewModel(id, userId);
-            viewModel.MasterNotes = _context.Notes.Where(n => n.CharacterId == master.Id).ToList().Select(n=>Mapper.Map<NoteDto>(n));
+            viewModel.MasterNotes = _context.Notes.Where(n => n.CharacterId == master.Id).ToList().Select(n => Mapper.Map<NoteDto>(n));
             viewModel.MyNotes = _context.Notes.Where(n => n.CharacterId == character.Id).ToList().Select(n => Mapper.Map<NoteDto>(n));
             return View(viewModel);
         }
@@ -60,7 +57,7 @@ namespace DndMate.WebApp.Controllers
                 return HttpNotFound();
             _context.Notes.Remove(note);
             _context.SaveChanges();
-            return RedirectToAction("Index", "Notes", new { id = gamespaceId});
+            return RedirectToAction("Index", "Notes", new { id = gamespaceId });
         }
         [Route("Notes/Edit")]
         public ActionResult Edit(int id)

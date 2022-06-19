@@ -1,11 +1,5 @@
 ﻿using DndMate.WebApp.Enums;
-using DndMate.WebApp.Models;
-using DndMate.WebApp.Validations;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace DndMate.WebApp.Dtos
 {
@@ -16,7 +10,7 @@ namespace DndMate.WebApp.Dtos
         public string Name { get; set; }
         public string CharacterId { get; set; }
         public int GamespaceId { get; set; }
-        
+
         public int Strength { get; set; }
         public int Dexterity { get; set; }
         public int Constitution { get; set; }

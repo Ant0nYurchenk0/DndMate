@@ -1,15 +1,12 @@
 ﻿using DndMate.WebApp.Dtos;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace DndMate.WebApp.ViewModels
 {
     public class NoteListViewModel
     {
-        public IEnumerable<NoteDto> MyNotes{ get; set; }
-        public IEnumerable<NoteDto> MasterNotes{ get; set; }
+        public IEnumerable<NoteDto> MyNotes { get; set; }
+        public IEnumerable<NoteDto> MasterNotes { get; set; }
         public GamespacePropsViewModel Gamespace { get; set; }
 
     }

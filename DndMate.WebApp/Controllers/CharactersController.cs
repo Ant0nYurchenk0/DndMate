@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
 using DndMate.WebApp.Dtos;
-using DndMate.WebApp.Enums;
 using DndMate.WebApp.Models;
 using DndMate.WebApp.Repositories;
 using DndMate.WebApp.ViewModels;
 using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DndMate.WebApp.Controllers
@@ -80,6 +76,7 @@ namespace DndMate.WebApp.Controllers
 
             if (!_context.Characters.Any(s => s.Id == characterDto.Id))
             {
+                characterDto.CurrentHP = characterDto.MaxHP;
                 _context.Characters.Add(Mapper.Map<GamespaceChar>(characterDto));
             }
             else
@@ -203,7 +200,7 @@ namespace DndMate.WebApp.Controllers
             {
                 case "1":
                     character.Level1Used++;
-                    if(character.Level1Used > character.Level1)
+                    if (character.Level1Used > character.Level1)
                         character.Level1Used = character.Level1;
                     break;
                 case "2":
@@ -255,7 +252,7 @@ namespace DndMate.WebApp.Controllers
                     break;
             }
             _context.SaveChanges();
-            if (string.IsNullOrEmpty(page)) 
+            if (string.IsNullOrEmpty(page))
                 return RedirectToAction("Get", "Characters", new { id = id });
             return RedirectToAction("Index", "Spells", new { gamespaceId = character.GamespaceId });
         }
@@ -271,7 +268,7 @@ namespace DndMate.WebApp.Controllers
                     break;
                 case "2":
                     character.Level2Used--;
-                    if (character.Level2Used <0)
+                    if (character.Level2Used < 0)
                         character.Level2Used = 0;
                     break;
                 case "3":

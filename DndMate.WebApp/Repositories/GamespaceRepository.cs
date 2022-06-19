@@ -3,11 +3,7 @@ using DndMate.WebApp.Dtos;
 using DndMate.WebApp.Enums;
 using DndMate.WebApp.Models;
 using DndMate.WebApp.ViewModels;
-using System;
-using System.Collections.Generic;
-using Microsoft.AspNet.Identity;
 using System.Linq;
-using System.Web;
 
 namespace DndMate.WebApp.Repositories
 {
@@ -43,13 +39,13 @@ namespace DndMate.WebApp.Repositories
         {
             var gamespaceInDb = _context.Gamespaces.SingleOrDefault(x => x.Id == gamespaceDto.Id);
             Mapper.Map(gamespaceDto, gamespaceInDb);
-            var master = _context.Characters.Single(c=>c.CharacterClass == CharacterClass.Master && c.GamespaceId == gamespaceDto.Id);
+            var master = _context.Characters.Single(c => c.CharacterClass == CharacterClass.Master && c.GamespaceId == gamespaceDto.Id);
             master.Name = masterName;
             _context.SaveChanges();
         }
         public void Leave(GamespaceChar gamespaceCharacter)
         {
-            if(gamespaceCharacter.CharacterClass == CharacterClass.Master)
+            if (gamespaceCharacter.CharacterClass == CharacterClass.Master)
             {
                 var gamespace = _context.Gamespaces.Single(g => g.Id == gamespaceCharacter.GamespaceId);
                 _context.Gamespaces.Remove(gamespace);
@@ -60,7 +56,7 @@ namespace DndMate.WebApp.Repositories
                                     && gs.CharacterId == gamespaceCharacter.CharacterId);
                 _context.Characters.Remove(gamespaceChar);
             }
-            _context.SaveChanges();                
+            _context.SaveChanges();
         }
         public GamespacePropsViewModel GetViewModel(int id, string userId)
         {
@@ -68,11 +64,11 @@ namespace DndMate.WebApp.Repositories
             var viewModel = new GamespacePropsViewModel();
             viewModel.Gamespace = Mapper.Map<Gamespace, GamespaceDto>(gamespace);
             viewModel.Character = Mapper.Map<GamespaceCharDto>(_charRepository.GetCharacter(userId, id));
-            viewModel.Characters = _context.Characters.Where(c => c.GamespaceId == id).ToList().Select(c=>Mapper.Map<GamespaceCharDto>(c));
+            viewModel.Characters = _context.Characters.Where(c => c.GamespaceId == id).ToList().Select(c => Mapper.Map<GamespaceCharDto>(c));
             viewModel.Notification = new NotificationDto();
             viewModel.Notification.GamespaceId = id;
             return viewModel;
         }
-        
+
     }
 }

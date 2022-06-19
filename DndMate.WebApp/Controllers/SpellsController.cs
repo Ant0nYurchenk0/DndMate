@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 using DndMate.WebApp.Dtos;
-using DndMate.WebApp.Enums;
 using DndMate.WebApp.Models;
 using DndMate.WebApp.Repositories;
 using DndMate.WebApp.ViewModels;
 using Microsoft.AspNet.Identity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DndMate.WebApp.Controllers
@@ -56,10 +53,10 @@ namespace DndMate.WebApp.Controllers
             if (spell == null)
                 return HttpNotFound();
             _context.Spells.Remove(spell);
-            foreach(var charSpell in _context.CharacterSpells.Where(cs=>cs.SpellId == id))
+            foreach (var charSpell in _context.CharacterSpells.Where(cs => cs.SpellId == id))
                 _context.CharacterSpells.Remove(charSpell);
             _context.SaveChanges();
-            return RedirectToAction("Index", "Spells", new {gamespaceId = spell.GamespaceId});
+            return RedirectToAction("Index", "Spells", new { gamespaceId = spell.GamespaceId });
         }
         [Route("Spells/Edit")]
         public ActionResult Edit(int id)

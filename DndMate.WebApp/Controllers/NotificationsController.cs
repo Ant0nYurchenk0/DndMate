@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
 using DndMate.WebApp.Dtos;
 using DndMate.WebApp.Models;
-using System;
-using Microsoft.AspNet.Identity;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using DndMate.WebApp.Enums;
 using DndMate.WebApp.ViewModels;
+using Microsoft.AspNet.Identity;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace DndMate.WebApp.Controllers
 {
@@ -36,7 +32,7 @@ namespace DndMate.WebApp.Controllers
             if (!ModelState.IsValid)
                 return RedirectToAction("Get", "Gamespace", new { id = notificationDto.GamespaceId });
 
-            var userId = _context.Users.Single(u=>u.Email == notificationDto.UserEmail).Id;
+            var userId = _context.Users.Single(u => u.Email == notificationDto.UserEmail).Id;
 
             if (_context.Characters.Any(gs => gs.GamespaceId == notificationDto.GamespaceId && gs.CharacterId == userId))
                 return RedirectToAction("Get", "Gamespace", new { id = notificationDto.GamespaceId });
@@ -65,6 +61,7 @@ namespace DndMate.WebApp.Controllers
             var userId = User.Identity.GetUserId();
             if (notification == null)
                 return HttpNotFound();
+            _context.Notifications.Remove(notification);
             if (_context.Characters.Any(gs => gs.GamespaceId == notification.GamespaceId && gs.CharacterId == userId))
                 return RedirectToAction("Deny", "Notifications", new { id = id });
             return RedirectToAction("Create", "Characters", new { charId = userId, gamespaceId = notification.GamespaceId });
