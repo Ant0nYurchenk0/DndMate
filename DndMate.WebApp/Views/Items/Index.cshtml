@@ -1,0 +1,1165 @@
+﻿@model DndMate.WebApp.ViewModels.ItemListViewModel
+@using DndMate.WebApp.Enums
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var weapons = Model.AllItems.Where(i => i.ItemType == ItemType.Weapon).ToList();
+    var other = Model.AllItems.Where(i => i.ItemType == ItemType.Other).ToList();
+    var equipment = Model.AllItems.Where(i => i.ItemType == ItemType.Equipment).ToList();
+    var myWeapons = Model.MyItems.Where(i => i.Item.ItemType == ItemType.Weapon).ToList();
+    var myOther = Model.MyItems.Where(i => i.Item.ItemType == ItemType.Other).ToList();
+    var myEquipment = Model.MyItems.Where(i => i.Item.ItemType == ItemType.Equipment).ToList();
+}
+@Html.Partial("_GamespaceTools", Model.Gamespace)
+<div class="gamespace-content">
+
+    <div class="row">
+        <div class="col-2">
+            <h2>Items</h2>
+        </div>
+        <div class="col-md-8 col-sm-6"></div>
+        <div class="col-md-2 col-sm-4">
+            <a class="btn btn-primary add-btn" href="@Url.Action("Create", "Items", new {gamespaceId = Model.Gamespace.Gamespace.Id})">Add new</a>
+        </div>
+    </div>
+    <br />
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="#money">Money</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " data-bs-toggle="tab" href="#weapons">Weapons</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " data-bs-toggle="tab" href="#equipment">Equipment </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " data-bs-toggle="tab" href="#other">Other </a>
+        </li>
+    </ul>
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade show active" id="money">
+            <br />
+            <div class="accordion" id="money">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#platinum" aria-expanded="true">
+                            Platinum
+                        </button>
+                    </h2>
+                    <div id="platinum" class="accordion-collapse collapse" data-bs-parent="#money">
+                        <div class="accordion-body">
+                            @if (Model.Gamespace.Character.CharacterClass != CharacterClass.Master)
+                            {
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Amount: </th>
+                                            <td>@Model.Gamespace.Character.Platinum</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Add: </th>
+                                            <td>
+                                                <div class="form-group">
+                                                    <form action="@Url.Action("AddPlatinum", "Characters", new {returnId = Model.Gamespace.Character.Id, id =Model.Gamespace.Character.Id})">
+                                                        <div class="input-group">
+                                                            <input type="hidden" name="returnId" value="@Model.Gamespace.Character.Id" />
+                                                            <input type="number" name="money" class="form-control" aria-describedby="button-addon2">
+                                                            <button class="btn btn-outline-success" type="submit">+</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Give: </th>
+                                            <td>
+                                                <div class="form-group">
+                                                    <form action="@Url.Action("GivePlatinum", "Characters", new {id =Model.Gamespace.Character.Id})">
+                                                        <div class="input-group">
+                                                            @{
+                                                                var disabled = string.Empty;
+                                                                if (Model.Gamespace.Character.Platinum == 0)
+                                                                {
+
+                                                                    disabled = "disabled";
+                                                                }
+                                                            }
+                                                            <input type="number" class="form-control" name="money" @disabled aria-describedby="button-addon2">
+                                                            <span type="button" class="dropdown">
+                                                                <button type="button" class="btn btn-outline-danger dropdown-toggle @disabled" id="charactersList" data-bs-toggle="dropdown">
+                                                                    To
+                                                                </button>
+                                                                <ul class="dropdown-menu" role="menu">
+                                                                    @foreach (var character in Model.Gamespace.Characters)
+                                                                    {
+                                                                        if (character.Id != Model.Gamespace.Character.Id)
+                                                                        {
+
+                                                                            <li>
+                                                                                <input type="hidden" name="recepientId" value="@character.Id" />
+                                                                                <button type="submit" class="dropdown-item">@character.Name</button>
+                                                                            </li>
+                                                                        }
+                                                                    }
+                                                                </ul>
+                                                            </span>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            }
+                            else
+                            {
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Amount: </th>
+                                            <td>@Model.Gamespace.Character.Platinum</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Total: </th>
+                                            <td>@Model.Gamespace.Characters.Where(c => c.CharacterClass != CharacterClass.Master).Sum(c => c.Platinum)</td>
+                                        </tr>
+                                        @foreach (var character in Model.Gamespace.Characters)
+                                        {
+                                            if (character.CharacterClass != CharacterClass.Master)
+                                            {
+
+                                                <tr>
+                                                    <th scope="row"></th>
+                                                    <th scope="row">@character.Name</th>
+                                                    <td>@character.Platinum</td>
+                                                </tr>
+                                            }
+                                        }
+                                        <tr>
+                                            <th scope="row">Give: </th>
+                                            <td>
+                                                <div class="form-group">
+                                                    <form action="@Url.Action("AddPlatinum", "Characters")">
+                                                        <input type="hidden" name="returnId" value="@Model.Gamespace.Character.Id" />
+                                                        <div class="input-group">
+                                                            <input type="number" class="form-control" name="money" aria-describedby="button-addon2">
+                                                            <span type="button" class="dropdown">
+                                                                <button type="button" class="btn btn-outline-success dropdown-toggle" id="charactersList" data-bs-toggle="dropdown">
+                                                                    To
+                                                                </button>
+                                                                <ul class="dropdown-menu" role="menu">
+                                                                    @foreach (var character in Model.Gamespace.Characters)
+                                                                    {
+                                                                        if (character.Id != Model.Gamespace.Character.Id)
+                                                                        {
+
+                                                                            <li>
+                                                                                <input type="hidden" name="id" value="@character.Id" />
+                                                                                <button type="submit" class="dropdown-item">@character.Name</button>
+                                                                            </li>
+                                                                        }
+                                                                    }
+                                                                </ul>
+                                                            </span>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#gold" aria-expanded="true">
+                            Gold
+                        </button>
+                    </h2>
+                    <div id="gold" class="accordion-collapse collapse " aria-labelledby="headingOne" data-bs-parent="#money">
+                        <div class="accordion-body">
+
+                            @if (Model.Gamespace.Character.CharacterClass != CharacterClass.Master)
+                            {
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Amount: </th>
+                                            <td>@Model.Gamespace.Character.Gold</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Add: </th>
+                                            <td>
+                                                <div class="form-group">
+                                                    <form action="@Url.Action("AddGold", "Characters", new {returnId = Model.Gamespace.Character.Id, id =Model.Gamespace.Character.Id})">
+                                                        <div class="input-group">
+                                                            <input type="hidden" name="returnId" value="@Model.Gamespace.Character.Id" />
+                                                            <input type="number" name="money" class="form-control" aria-describedby="button-addon2">
+                                                            <button class="btn btn-outline-success" type="submit">+</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Give: </th>
+                                            <td>
+                                                <div class="form-group">
+                                                    <form action="@Url.Action("GiveGold", "Characters", new {id =Model.Gamespace.Character.Id})">
+                                                        <div class="input-group">
+                                                            @{
+                                                                var disabled = string.Empty;
+                                                                if (Model.Gamespace.Character.Gold == 0 && Model.Gamespace.Character.Platinum == 0)
+                                                                {
+
+                                                                    disabled = "disabled";
+                                                                }
+                                                            }
+                                                            <input type="number" class="form-control" name="money" @disabled aria-describedby="button-addon2">
+                                                            <span type="button" class="dropdown">
+                                                                <button type="button" class="btn btn-outline-danger dropdown-toggle @disabled" id="charactersList" data-bs-toggle="dropdown">
+                                                                    To
+                                                                </button>
+                                                                <ul class="dropdown-menu" role="menu">
+                                                                    @foreach (var character in Model.Gamespace.Characters)
+                                                                    {
+                                                                        if (character.Id != Model.Gamespace.Character.Id)
+                                                                        {
+
+                                                                            <li>
+                                                                                <input type="hidden" name="recepientId" value="@character.Id" />
+                                                                                <button type="submit" class="dropdown-item">@character.Name</button>
+                                                                            </li>
+                                                                        }
+                                                                    }
+                                                                </ul>
+                                                            </span>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            }
+                            else
+                            {
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Amount: </th>
+                                            <td>@Model.Gamespace.Character.Gold</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Total: </th>
+                                            <td>@Model.Gamespace.Characters.Where(c => c.CharacterClass != CharacterClass.Master).Sum(c => c.Gold)</td>
+                                        </tr>
+                                        @foreach (var character in Model.Gamespace.Characters)
+                                        {
+                                            if (character.CharacterClass != CharacterClass.Master)
+                                            {
+
+                                                <tr>
+                                                    <th scope="row"></th>
+                                                    <th scope="row">@character.Name</th>
+                                                    <td>@character.Gold</td>
+                                                </tr>
+                                            }
+                                        }
+                                        <tr>
+                                            <th scope="row">Give: </th>
+                                            <td>
+                                                <div class="form-group">
+                                                    <form action="@Url.Action("AddGold", "Characters")">
+                                                        <input type="hidden" name="returnId" value="@Model.Gamespace.Character.Id" />
+                                                        <div class="input-group">
+                                                            <input type="number" class="form-control" name="money" aria-describedby="button-addon2">
+                                                            <span type="button" class="dropdown">
+                                                                <button type="button" class="btn btn-outline-success dropdown-toggle" id="charactersList" data-bs-toggle="dropdown">
+                                                                    To
+                                                                </button>
+                                                                <ul class="dropdown-menu" role="menu">
+                                                                    @foreach (var character in Model.Gamespace.Characters)
+                                                                    {
+                                                                        if (character.Id != Model.Gamespace.Character.Id)
+                                                                        {
+
+                                                                            <li>
+                                                                                <input type="hidden" name="id" value="@character.Id" />
+                                                                                <button type="submit" class="dropdown-item">@character.Name</button>
+                                                                            </li>
+                                                                        }
+                                                                    }
+                                                                </ul>
+                                                            </span>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#silver" aria-expanded="true">
+                            Silver
+                        </button>
+                    </h2>
+                    <div id="silver" class="accordion-collapse collapse " aria-labelledby="headingOne" data-bs-parent="#money">
+                        <div class="accordion-body">
+
+                            @if (Model.Gamespace.Character.CharacterClass != CharacterClass.Master)
+                            {
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Amount: </th>
+                                            <td>@Model.Gamespace.Character.Silver</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Add: </th>
+                                            <td>
+                                                <div class="form-group">
+                                                    <form action="@Url.Action("AddSilver", "Characters", new {returnId = Model.Gamespace.Character.Id, id =Model.Gamespace.Character.Id})">
+                                                        <div class="input-group">
+                                                            <input type="hidden" name="returnId" value="@Model.Gamespace.Character.Id" />
+                                                            <input type="number" name="money" class="form-control" aria-describedby="button-addon2">
+                                                            <button class="btn btn-outline-success" type="submit">+</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Give: </th>
+                                            <td>
+                                                <div class="form-group">
+                                                    <form action="@Url.Action("GiveSilver", "Characters", new {id =Model.Gamespace.Character.Id})">
+                                                        <div class="input-group">
+                                                            @{
+                                                                var disabled = string.Empty;
+                                                                if (Model.Gamespace.Character.Silver == 0 && Model.Gamespace.Character.Gold == 0 && Model.Gamespace.Character.Platinum == 0)
+                                                                {
+
+                                                                    disabled = "disabled";
+                                                                }
+                                                            }
+                                                            <input type="number" class="form-control" name="money" @disabled aria-describedby="button-addon2">
+                                                            <span type="button" class="dropdown">
+                                                                <button type="button" class="btn btn-outline-danger dropdown-toggle @disabled" id="charactersList" data-bs-toggle="dropdown">
+                                                                    To
+                                                                </button>
+                                                                <ul class="dropdown-menu" role="menu">
+                                                                    @foreach (var character in Model.Gamespace.Characters)
+                                                                    {
+                                                                        if (character.Id != Model.Gamespace.Character.Id)
+                                                                        {
+
+                                                                            <li>
+                                                                                <input type="hidden" name="recepientId" value="@character.Id" />
+                                                                                <button type="submit" class="dropdown-item">@character.Name</button>
+                                                                            </li>
+                                                                        }
+                                                                    }
+                                                                </ul>
+                                                            </span>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            }
+                            else
+                            {
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Amount: </th>
+                                            <td>@Model.Gamespace.Character.Silver</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Total: </th>
+                                            <td>@Model.Gamespace.Characters.Where(c => c.CharacterClass != CharacterClass.Master).Sum(c => c.Silver)</td>
+                                        </tr>
+                                        @foreach (var character in Model.Gamespace.Characters)
+                                        {
+                                            if (character.CharacterClass != CharacterClass.Master)
+                                            {
+
+                                                <tr>
+                                                    <th scope="row"></th>
+                                                    <th scope="row">@character.Name</th>
+                                                    <td>@character.Silver</td>
+                                                </tr>
+                                            }
+                                        }
+                                        <tr>
+                                            <th scope="row">Give: </th>
+                                            <td>
+                                                <div class="form-group">
+                                                    <form action="@Url.Action("AddSilver", "Characters")">
+                                                        <input type="hidden" name="returnId" value="@Model.Gamespace.Character.Id" />
+                                                        <div class="input-group">
+                                                            <input type="number" class="form-control" name="money" aria-describedby="button-addon2">
+                                                            <span type="button" class="dropdown">
+                                                                <button type="button" class="btn btn-outline-success dropdown-toggle" id="charactersList" data-bs-toggle="dropdown">
+                                                                    To
+                                                                </button>
+                                                                <ul class="dropdown-menu" role="menu">
+                                                                    @foreach (var character in Model.Gamespace.Characters)
+                                                                    {
+                                                                        if (character.Id != Model.Gamespace.Character.Id)
+                                                                        {
+
+                                                                            <li>
+                                                                                <input type="hidden" name="id" value="@character.Id" />
+                                                                                <button type="submit" class="dropdown-item">@character.Name</button>
+                                                                            </li>
+                                                                        }
+                                                                    }
+                                                                </ul>
+                                                            </span>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#copper" aria-expanded="true">
+                            Copper
+                        </button>
+                    </h2>
+                    <div id="copper" class="accordion-collapse collapse " aria-labelledby="headingOne" data-bs-parent="#money">
+                        <div class="accordion-body">
+
+                            @if (Model.Gamespace.Character.CharacterClass != CharacterClass.Master)
+                            {
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Amount: </th>
+                                            <td>@Model.Gamespace.Character.Copper</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Add: </th>
+                                            <td>
+                                                <div class="form-group">
+                                                    <form action="@Url.Action("AddCopper", "Characters", new {returnId = Model.Gamespace.Character.Id, id =Model.Gamespace.Character.Id})">
+                                                        <div class="input-group">
+                                                            <input type="hidden" name="returnId" value="@Model.Gamespace.Character.Id" />
+                                                            <input type="number" name="money" class="form-control" aria-describedby="button-addon2">
+                                                            <button class="btn btn-outline-success" type="submit">+</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Give: </th>
+                                            <td>
+                                                <div class="form-group">
+                                                    <form action="@Url.Action("GiveCopper", "Characters", new {id =Model.Gamespace.Character.Id})">
+                                                        <div class="input-group">
+                                                            @{
+                                                                var disabled = string.Empty;
+                                                                if (Model.Gamespace.Character.Copper == 0 && Model.Gamespace.Character.Silver == 0 && Model.Gamespace.Character.Gold == 0 && Model.Gamespace.Character.Platinum == 0)
+                                                                {
+
+                                                                    disabled = "disabled";
+                                                                }
+                                                            }
+                                                            <input type="number" class="form-control" name="money" @disabled aria-describedby="button-addon2">
+                                                            <span type="button" class="dropdown">
+                                                                <button type="button" class="btn btn-outline-danger dropdown-toggle @disabled" id="charactersList" data-bs-toggle="dropdown">
+                                                                    To
+                                                                </button>
+                                                                <ul class="dropdown-menu" role="menu">
+                                                                    @foreach (var character in Model.Gamespace.Characters)
+                                                                    {
+                                                                        if (character.Id != Model.Gamespace.Character.Id)
+                                                                        {
+
+                                                                            <li>
+                                                                                <input type="hidden" name="recepientId" value="@character.Id" />
+                                                                                <button type="submit" class="dropdown-item">@character.Name</button>
+                                                                            </li>
+                                                                        }
+                                                                    }
+                                                                </ul>
+                                                            </span>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            }
+                            else
+                            {
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Amount: </th>
+                                            <td>@Model.Gamespace.Character.Copper</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Total: </th>
+                                            <td>@Model.Gamespace.Characters.Where(c => c.CharacterClass != CharacterClass.Master).Sum(c => c.Copper)</td>
+                                        </tr>
+                                        @foreach (var character in Model.Gamespace.Characters)
+                                        {
+                                            if (character.CharacterClass != CharacterClass.Master)
+                                            {
+
+                                                <tr>
+                                                    <th scope="row"></th>
+                                                    <th scope="row">@character.Name</th>
+                                                    <td>@character.Copper</td>
+                                                </tr>
+                                            }
+                                        }
+                                        <tr>
+                                            <th scope="row">Give: </th>
+                                            <td>
+                                                <div class="form-group">
+                                                    <form action="@Url.Action("AddCopper", "Characters")">
+                                                        <input type="hidden" name="returnId" value="@Model.Gamespace.Character.Id" />
+                                                        <div class="input-group">
+                                                            <input type="number" class="form-control" name="money" aria-describedby="button-addon2">
+                                                            <span type="button" class="dropdown">
+                                                                <button type="button" class="btn btn-outline-success dropdown-toggle" id="charactersList" data-bs-toggle="dropdown">
+                                                                    To
+                                                                </button>
+                                                                <ul class="dropdown-menu" role="menu">
+                                                                    @foreach (var character in Model.Gamespace.Characters)
+                                                                    {
+                                                                        if (character.Id != Model.Gamespace.Character.Id)
+                                                                        {
+
+                                                                            <li>
+                                                                                <input type="hidden" name="id" value="@character.Id" />
+                                                                                <button type="submit" class="dropdown-item">@character.Name</button>
+                                                                            </li>
+                                                                        }
+                                                                    }
+                                                                </ul>
+                                                            </span>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="weapons">
+            <br />
+
+            @if (Model.Gamespace.Character.CharacterClass != CharacterClass.Master)
+            {
+
+                <h4>My Weapons:</h4>
+                if (myWeapons.Count() == 0)
+                {
+                    <p class="text-muted">Nothing here.</p>
+                }
+                else
+                {
+
+                    foreach (var item in myWeapons)
+                    {
+                        <div class="accordion" id="assigneditem@(item.Id)">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#myweapon@(item.Id)" aria-expanded="false" aria-controls="collapseOne">
+                                        @item.Item.Name
+                                    </button>
+                                </h2>
+                                <div id="myweapon@(item.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#assigneditem@(item.Id)" style="">
+                                    <div class="accordion-body">
+                                        <table class="table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">Damage</th>
+                                                    <td>@item.Item.Damage</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Properties</th>
+                                                    <td>@item.Item.Properties</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Quantity</th>
+                                                    <td>@item.Quantity</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <p class="description">
+                                            @item.Item.Description
+                                        </p>
+                                        @{
+                                            switch (item.Item.Rarity)
+                                            {
+                                                case Rarity.Unknown:
+                                                    <div class="badge rounded-pill bg-secondary">unknown</div>
+                                                    break;
+                                                case Rarity.Common:
+                                                    <div class="badge rounded-pill bg-success">common</div>
+                                                    break;
+                                                case Rarity.Rare:
+                                                    <div class="badge rounded-pill bg-warning">rare</div>
+                                                    break;
+                                                case Rarity.VeryRare:
+                                                    <div class="badge rounded-pill bg-primary">very rare</div>
+                                                    break;
+                                                case Rarity.Unique:
+                                                    <div class="badge rounded-pill bg-dark">unique</div>
+                                                    break;
+                                                case Rarity.Legendary:
+                                                    <div class="badge rounded-pill bg-danger">legendary</div>
+                                                    break;
+                                            }
+                                        }
+                                        <br />
+                                        <br />
+                                        <span class="dropdown">
+                                            <a class="btn btn-outline-danger dropdown-toggle" href="#" id="charactersList" data-bs-toggle="dropdown">
+                                                Give to:
+                                            </a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                @foreach (var character in Model.Gamespace.Characters)
+                                                {
+                                                    if (character.Id != Model.Gamespace.Character.Id)
+                                                    {
+
+                                                        <li>
+                                                            <a href="@Url.Action("PassItem", "Items", new {itemId = item.Item.Id, recepientId = character.Id, charId = Model.Gamespace.Character.Id})" class="dropdown-item">@character.Name</a>
+                                                        </li>
+                                                    }
+                                                }
+                                            </ul>
+                                        </span>
+                                        <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Items", new {id = item.Item.Id})">Edit</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                <hr />
+            }
+            <h4>All Weapons:</h4>
+            @if (weapons.Count() == 0)
+            {
+
+
+                <p class="text-muted">Nothing here.</p>
+            }
+            else
+            {
+                foreach (var item in weapons)
+                {
+
+                    <div class="accordion" id="assigneditem@(item.Id)">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#weapon@(item.Id)" aria-expanded="false" aria-controls="collapseOne">
+                                    @item.Name
+                                </button>
+                            </h2>
+                            <div id="weapon@(item.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#assigneditem@(item.Id)" style="">
+                                <div class="accordion-body">
+                                    <table class="table-borderless">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">Damage</th>
+                                                <td>@item.Damage</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Properties</th>
+                                                <td>@item.Properties</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="description">
+                                        @item.Description
+                                    </p>
+                                    @{
+                                        switch (item.Rarity)
+                                        {
+                                            case Rarity.Unknown:
+                                                <div class="badge rounded-pill bg-secondary">unknown</div>
+                                                break;
+                                            case Rarity.Common:
+                                                <div class="badge rounded-pill bg-success">common</div>
+                                                break;
+                                            case Rarity.Rare:
+                                                <div class="badge rounded-pill bg-warning">rare</div>
+                                                break;
+                                            case Rarity.VeryRare:
+                                                <div class="badge rounded-pill bg-primary">very rare</div>
+                                                break;
+                                            case Rarity.Unique:
+                                                <div class="badge rounded-pill bg-dark">unique</div>
+                                                break;
+                                            case Rarity.Legendary:
+                                                <div class="badge rounded-pill bg-danger">legendary</div>
+                                                break;
+                                        }
+                                    }
+                                    <br />
+                                    <br />
+                                    @if (Model.Gamespace.Character.CharacterClass == CharacterClass.Master)
+                                    {
+                                        <span class="dropdown">
+                                            <a class="btn btn-outline-secondary dropdown-toggle" href="#" id="charactersList" data-bs-toggle="dropdown">
+                                                Give to:
+                                            </a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                @foreach (var character in Model.Gamespace.Characters)
+                                                {
+                                                    if (character.CharacterClass != CharacterClass.Master)
+                                                    {
+
+                                                        <li>
+                                                            <a href="@Url.Action("AssignItem", "Items", new {itemId = item.Id, charId = character.Id})" class="dropdown-item">@character.Name</a>
+                                                        </li>
+                                                    }
+                                                }
+
+
+
+                                            </ul>
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-outline-info" href="@Url.Action("AssignItem", "Items", new {itemId = item.Id, charId = Model.Gamespace.Character.Id})">Get</a>
+                                    }
+                                    <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Items", new {id = item.Id})">Edit</a>
+                                    @if (Model.Gamespace.Character.CharacterClass == CharacterClass.Master)
+                                    {
+
+                                        <a class="btn btn-outline-danger" href="@Url.Action("Delete", "Items", new {id = item.Id})">Delete</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="tab-pane fade" id="equipment">
+            <br />
+
+            @if (Model.Gamespace.Character.CharacterClass != CharacterClass.Master)
+            {
+
+                <br />
+                <h4>My Equipment:</h4>
+                if (myEquipment.Count() == 0)
+                {
+                    <p class="text-muted">Nothing here.</p>
+                    foreach (var item in myEquipment)
+                    {
+                        <div class="accordion" id="assigneditem@(item.Id)">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#myequipment@(item.Id)" aria-expanded="false" aria-controls="collapseOne">
+                                        @item.Item.Name
+                                    </button>
+                                </h2>
+                                <div id="myequipment@(item.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#assigneditem@(item.Id)" style="">
+                                    <div class="accordion-body">
+                                        <table class="table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">Damage</th>
+                                                    <td>@item.Item.Damage</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Properties</th>
+                                                    <td>@item.Item.Properties</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Quantity</th>
+                                                    <td>@item.Quantity</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <p class="description">
+                                            @item.Item.Description
+                                        </p>
+                                        @{
+                                            switch (item.Item.Rarity)
+                                            {
+                                                case Rarity.Unknown:
+                                                    <div class="badge rounded-pill bg-secondary">unknown</div>
+                                                    break;
+                                                case Rarity.Common:
+                                                    <div class="badge rounded-pill bg-success">common</div>
+                                                    break;
+                                                case Rarity.Rare:
+                                                    <div class="badge rounded-pill bg-warning">rare</div>
+                                                    break;
+                                                case Rarity.VeryRare:
+                                                    <div class="badge rounded-pill bg-primary">very rare</div>
+                                                    break;
+                                                case Rarity.Unique:
+                                                    <div class="badge rounded-pill bg-dark">unique</div>
+                                                    break;
+                                                case Rarity.Legendary:
+                                                    <div class="badge rounded-pill bg-danger">legendary</div>
+                                                    break;
+                                            }
+                                        }
+                                        <br />
+                                        <br />
+                                        <span class="dropdown">
+                                            <a class="btn btn-outline-danger dropdown-toggle" href="#" id="charactersList" data-bs-toggle="dropdown">
+                                                Give to:
+                                            </a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                @foreach (var character in Model.Gamespace.Characters)
+                                                {
+                                                    if (character.Id != Model.Gamespace.Character.Id)
+                                                    {
+
+                                                        <li>
+                                                            <a href="@Url.Action("PassItem", "Items", new {itemId = item.Item.Id, recepientId = character.Id, charId = Model.Gamespace.Character.Id})" class="dropdown-item">@character.Name</a>
+                                                        </li>
+                                                    }
+                                                }
+                                            </ul>
+                                        </span>
+                                        <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Items", new {id = item.Item.Id})">Edit</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                <hr />
+            }
+            <h4>All Equipment:</h4>
+            @if (equipment.Count() == 0)
+            {
+
+
+                <p class="text-muted">Nothing here.</p>
+            }
+            else
+            {
+
+                foreach (var item in equipment)
+                {
+
+                    <div class="accordion" id="assigneditem@(item.Id)">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#equipment@(item.Id)" aria-expanded="false" aria-controls="collapseOne">
+                                    @item.Name
+                                </button>
+                            </h2>
+                            <div id="equipment@(item.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#assigneditem@(item.Id)" style="">
+                                <div class="accordion-body">
+                                    <table class="table-borderless">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">Properties</th>
+                                                <td>@item.Properties</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="description">
+                                        @item.Description
+                                    </p>
+                                    @{
+                                        switch (item.Rarity)
+                                        {
+                                            case Rarity.Unknown:
+                                                <div class="badge rounded-pill bg-secondary">unknown</div>
+                                                break;
+                                            case Rarity.Common:
+                                                <div class="badge rounded-pill bg-success">common</div>
+                                                break;
+                                            case Rarity.Rare:
+                                                <div class="badge rounded-pill bg-warning">rare</div>
+                                                break;
+                                            case Rarity.VeryRare:
+                                                <div class="badge rounded-pill bg-primary">very rare</div>
+                                                break;
+                                            case Rarity.Unique:
+                                                <div class="badge rounded-pill bg-dark">unique</div>
+                                                break;
+                                            case Rarity.Legendary:
+                                                <div class="badge rounded-pill bg-danger">legendary</div>
+                                                break;
+                                        }
+                                    }
+                                    <br />
+                                    <br />
+                                    @if (Model.Gamespace.Character.CharacterClass == CharacterClass.Master)
+                                    {
+                                        <span class="dropdown">
+                                            <a class="btn btn-outline-secondary dropdown-toggle" href="#" id="charactersList" data-bs-toggle="dropdown">
+                                                Give to:
+                                            </a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                @foreach (var character in Model.Gamespace.Characters)
+                                                {
+                                                    if (character.CharacterClass != CharacterClass.Master)
+                                                    {
+
+                                                        <li>
+                                                            <a href="@Url.Action("AssignItem", "Items", new {itemId = item.Id, charId = character.Id})" class="dropdown-item">@character.Name</a>
+                                                        </li>
+                                                    }
+                                                }
+
+
+
+                                            </ul>
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-outline-info" href="@Url.Action("AssignItem", "Items", new {itemId = item.Id, charId = Model.Gamespace.Character.Id})">Get</a>
+                                    }
+                                    <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Items", new {id = item.Id})">Edit</a>
+                                    @if (Model.Gamespace.Character.CharacterClass == CharacterClass.Master)
+                                    {
+
+                                        <a class="btn btn-outline-danger" href="@Url.Action("Delete", "Items", new {id = item.Id})">Delete</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="tab-pane fade" id="other">
+            <br />
+            @if (Model.Gamespace.Character.CharacterClass != CharacterClass.Master)
+            {
+
+                <br />
+                <h4>My Items:</h4>
+                if (myOther.Count() == 0)
+                {
+
+
+                    <p class="text-muted">Nothing here.</p>
+                }
+                else
+                {
+
+                    foreach (var item in myOther)
+                    {
+                        <div class="accordion" id="assigneditem@(item.Id)">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#myother@(item.Id)" aria-expanded="false" aria-controls="collapseOne">
+                                        @item.Item.Name
+                                    </button>
+                                </h2>
+                                <div id="myother@(item.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#assigneditem@(item.Id)" style="">
+                                    <div class="accordion-body">
+                                        <table class="table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">Damage</th>
+                                                    <td>@item.Item.Damage</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Properties</th>
+                                                    <td>@item.Item.Properties</td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">Quantity</th>
+                                                    <td>@item.Quantity</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <p class="description">
+                                            @item.Item.Description
+                                        </p>
+                                        @{
+                                            switch (item.Item.Rarity)
+                                            {
+                                                case Rarity.Unknown:
+                                                    <div class="badge rounded-pill bg-secondary">unknown</div>
+                                                    break;
+                                                case Rarity.Common:
+                                                    <div class="badge rounded-pill bg-success">common</div>
+                                                    break;
+                                                case Rarity.Rare:
+                                                    <div class="badge rounded-pill bg-warning">rare</div>
+                                                    break;
+                                                case Rarity.VeryRare:
+                                                    <div class="badge rounded-pill bg-primary">very rare</div>
+                                                    break;
+                                                case Rarity.Unique:
+                                                    <div class="badge rounded-pill bg-dark">unique</div>
+                                                    break;
+                                                case Rarity.Legendary:
+                                                    <div class="badge rounded-pill bg-danger">legendary</div>
+                                                    break;
+                                            }
+                                        }
+                                        <br />
+                                        <br />
+                                        <span class="dropdown">
+                                            <a class="btn btn-outline-danger dropdown-toggle" href="#" id="charactersList" data-bs-toggle="dropdown">
+                                                Give to:
+                                            </a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                @foreach (var character in Model.Gamespace.Characters)
+                                                {
+                                                    if (character.Id != Model.Gamespace.Character.Id)
+                                                    {
+
+                                                        <li>
+                                                            <a href="@Url.Action("PassItem", "Items", new {itemId = item.Item.Id, recepientId = character.Id, charId = Model.Gamespace.Character.Id})" class="dropdown-item">@character.Name</a>
+                                                        </li>
+                                                    }
+                                                }
+                                            </ul>
+                                        </span>
+                                        <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Items", new {id = item.Item.Id})">Edit</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                <hr />
+            }
+            <h4>All Items:</h4>
+            @if (other.Count() == 0)
+            {
+
+
+                <p class="text-muted">Nothing here.</p>
+            }
+            else
+            {
+
+                foreach (var item in other)
+                {
+
+                    <div class="accordion" id="assigneditem@(item.Id)">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#other@(item.Id)" aria-expanded="false" aria-controls="collapseOne">
+                                    @item.Name
+                                </button>
+                            </h2>
+                            <div id="other@(item.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#assigneditem@(item.Id)" style="">
+                                <div class="accordion-body">
+                                    <table class="table-borderless">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">Properties</th>
+                                                <td>@item.Properties</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="description">
+                                        @item.Description
+                                    </p>
+                                    @{
+                                        switch (item.Rarity)
+                                        {
+                                            case Rarity.Unknown:
+                                                <div class="badge rounded-pill bg-secondary">unknown</div>
+                                                break;
+                                            case Rarity.Common:
+                                                <div class="badge rounded-pill bg-success">common</div>
+                                                break;
+                                            case Rarity.Rare:
+                                                <div class="badge rounded-pill bg-warning">rare</div>
+                                                break;
+                                            case Rarity.VeryRare:
+                                                <div class="badge rounded-pill bg-primary">very rare</div>
+                                                break;
+                                            case Rarity.Unique:
+                                                <div class="badge rounded-pill bg-dark">unique</div>
+                                                break;
+                                            case Rarity.Legendary:
+                                                <div class="badge rounded-pill bg-danger">legendary</div>
+                                                break;
+                                        }
+                                    }
+                                    <br />
+                                    <br />
+                                    @if (Model.Gamespace.Character.CharacterClass == CharacterClass.Master)
+                                    {
+                                        <span class="dropdown">
+                                            <a class="btn btn-outline-secondary dropdown-toggle" href="#" id="charactersList" data-bs-toggle="dropdown">
+                                                Give to:
+                                            </a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                @foreach (var character in Model.Gamespace.Characters)
+                                                {
+                                                    if (character.CharacterClass != CharacterClass.Master)
+                                                    {
+
+                                                        <li>
+                                                            <a href="@Url.Action("AssignItem", "Items", new {itemId = item.Id, charId = character.Id})" class="dropdown-item">@character.Name</a>
+                                                        </li>
+                                                    }
+                                                }
+
+
+
+                                            </ul>
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-outline-info" href="@Url.Action("AssignItem", "Items", new {itemId = item.Id, charId = Model.Gamespace.Character.Id})">Get</a>
+                                    }
+                                    <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Items", new {id = item.Id})">Edit</a>
+                                    @if (Model.Gamespace.Character.CharacterClass == CharacterClass.Master)
+                                    {
+
+                                        <a class="btn btn-outline-danger" href="@Url.Action("Delete", "Items", new {id = item.Id})">Delete</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            }
+
+        </div>
+    </div>
+</div>

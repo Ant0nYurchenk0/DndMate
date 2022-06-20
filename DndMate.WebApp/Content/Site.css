@@ -1,5 +1,10 @@
 ﻿body {
     height: 100vh;
+    background: url(https://dndmate.blob.core.windows.net/dndmate/background.png) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 body::-webkit-scrollbar {
@@ -43,10 +48,10 @@ a:link, a:visited, a:hover, a:active {
 }
 .navbar-vertical {
     width: 60px;
-    position: absolute;
+    position: fixed;
     height: 100%;
     left: 0;
-    top: 0;
+    bottom: 0;
     z-index: 20;
 }
 

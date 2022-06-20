@@ -253,3 +253,5 @@ C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\Dn
 C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.csproj.CopyComplete
 C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.dll
 C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.pdb
+C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.AddMoney.resources
+C:\Users\anyur\Documents\MyDocuments\prog\C#\DndMate\DndMate.WebApp\obj\Debug\DndMate.WebApp.Migrations.AddItem.resources

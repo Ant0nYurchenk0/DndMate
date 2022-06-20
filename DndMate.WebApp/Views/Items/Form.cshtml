@@ -1,0 +1,57 @@
+﻿@model DndMate.WebApp.ViewModels.ItemFormViewModel
+
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("_GamespaceTools", Model.Gamespace)
+
+<div class="gamespace-content">
+
+    @using (Html.BeginForm("Save", "Items", FormMethod.Post))
+    {
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <br />
+                    @Html.LabelFor(m => m.Item.Name)
+                    @Html.TextBoxFor(m => m.Item.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Item.Name)
+                    <br />
+                    @Html.LabelFor(m => m.Item.Properties)
+                    @Html.TextBoxFor(m => m.Item.Properties, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Item.Properties)
+                    <br />
+                    @Html.LabelFor(m => m.Item.Damage)
+                    @Html.TextBoxFor(m => m.Item.Damage, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Item.Damage)
+                </div>
+                <div class="col-md-6">
+                    <br />
+                    <label>Rarity</label>
+                    @Html.EnumDropDownListFor(m => m.Item.Rarity, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Item.Rarity)
+                    <br />
+                    <label>Type</label>
+                    @Html.EnumDropDownListFor(m => m.Item.ItemType, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Item.ItemType)
+
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-12">
+                    @Html.LabelFor(m => m.Item.Description)
+                    @Html.TextAreaFor(m => m.Item.Description, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Item.Description)
+                </div>
+            </div>
+            <br />
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Item.GamespaceId)
+            @Html.HiddenFor(m => m.Item.Id)
+        </div>
+        <a class="btn btn-secondary" href="@Url.Action("Index", "Items", new {gamespaceId = Model.Gamespace.Gamespace.Id})">Cancel</a>
+        <button class="btn btn-primary">Submit</button>
+    }
+</div>

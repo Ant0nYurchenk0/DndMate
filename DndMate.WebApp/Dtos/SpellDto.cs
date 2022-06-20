@@ -5,6 +5,7 @@ namespace DndMate.WebApp.Dtos
     public class SpellDto
     {
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
         [Range(0, 9)]
         public int Level { get; set; }

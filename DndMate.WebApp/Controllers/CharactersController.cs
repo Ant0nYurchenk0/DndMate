@@ -4,6 +4,7 @@ using DndMate.WebApp.Models;
 using DndMate.WebApp.Repositories;
 using DndMate.WebApp.ViewModels;
 using Microsoft.AspNet.Identity;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -318,5 +319,154 @@ namespace DndMate.WebApp.Controllers
             return RedirectToAction("Get", "Characters", new { id = id });
         }
 
+        public ActionResult AddPlatinum(int id, int returnId, int money = 0)
+        {
+            var character = _context.Characters.SingleOrDefault(c => c.Id == id);
+            character.Platinum += money;
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Items", new { id = returnId });
+        }
+        public ActionResult GivePlatinum(int id, int recepientId, int money = 0)
+        {
+            var character = _context.Characters.SingleOrDefault(c => c.Id == id);
+            var recepient = _context.Characters.SingleOrDefault(c => c.Id == recepientId);
+            if (money > character.Platinum)
+                money = character.Platinum;
+            character.Platinum -= money;
+            recepient.Platinum += money;
+            if (character.Platinum < 0)
+                character.Platinum = 0;
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Items", new { id = id });
+        }
+        public ActionResult AddGold(int id, int returnId, int money = 0)
+        {
+            var character = _context.Characters.SingleOrDefault(c => c.Id == id);
+            character.Gold += money;
+            if (character.Gold > 10)
+            {
+                var gold = character.Gold;
+                character.Gold = gold % 10;
+                AddPlatinum(id, returnId, gold / 10);
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Items", new { id = returnId });
+        }
+        public ActionResult GiveGold(int id, int recepientId, int money = 0)
+        {
+            var character = _context.Characters.SingleOrDefault(c => c.Id == id);
+            var recepient = _context.Characters.SingleOrDefault(c => c.Id == recepientId);
+            var gold = character.Gold + character.Platinum * 10;
+            if (money > gold)
+                money = gold;
+            character.Gold -= money;
+            recepient.Gold += money;
+            if (character.Gold > 10)
+            {
+                gold = character.Gold;
+                character.Gold = gold % 10;
+                AddPlatinum(id, id, character.Platinum - (gold / 10));
+            }
+            if (recepient.Gold > 10)
+            {
+                gold = recepient.Gold;
+                recepient.Gold = gold % 10;
+                AddPlatinum(recepientId, recepientId, recepient.Platinum - (gold / 10));
+            }
+            if(character.Gold < 0)
+            {
+                gold = character.Gold;
+                character.Gold = 10 - Math.Abs(gold % 10);
+                GivePlatinum(id, recepientId, (int)Math.Ceiling(Math.Abs((double)gold / 10)));
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Items", new { id = id });
+        }
+        public ActionResult AddSilver(int id, int returnId, int money = 0)
+        {
+            var character = _context.Characters.SingleOrDefault(c => c.Id == id);
+            character.Silver += money;
+            if (character.Silver > 10)
+            {
+                var silver = character.Silver;
+                character.Silver = silver % 10;
+                AddGold(id, returnId, silver / 10);
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Items", new { id = returnId });
+        }
+        public ActionResult GiveSilver(int id, int recepientId, int money = 0)
+        {
+            var character = _context.Characters.SingleOrDefault(c => c.Id == id);
+            var recepient = _context.Characters.SingleOrDefault(c => c.Id == recepientId);
+            var silver = character.Silver + character.Gold * 10 + character.Platinum*100;
+            if (money > silver)
+                money = silver;
+            character.Silver -= money;
+            recepient.Silver += money;
+            if (character.Silver > 10)
+            {
+                silver = character.Silver;
+                character.Silver = silver % 10;
+                AddGold(id, id, character.Gold - (silver / 10));
+            }
+            if (recepient.Silver > 10)
+            {
+                silver = recepient.Silver;
+                recepient.Silver = silver % 10;
+                AddGold(recepientId, recepientId, recepient.Platinum - (silver / 10));
+            }
+            if (character.Silver < 0)
+            {
+                silver = character.Silver;
+                character.Silver = 10 - Math.Abs(silver % 10);
+                GiveGold(id, recepientId, (int)Math.Ceiling(Math.Abs((double)silver / 10)));
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Items", new { id = id });
+        }
+        public ActionResult AddCopper(int id, int returnId, int money = 0)
+        {
+            var character = _context.Characters.SingleOrDefault(c => c.Id == id);
+            character.Copper += money;
+            if (character.Copper > 10)
+            {
+                var copper = character.Copper;
+                character.Copper = copper % 10;
+                AddSilver(id, returnId, copper / 10);
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Items", new { id = returnId });
+        }
+        public ActionResult GiveCopper(int id, int recepientId, int money = 0)
+        {
+            var character = _context.Characters.SingleOrDefault(c => c.Id == id);
+            var recepient = _context.Characters.SingleOrDefault(c => c.Id == recepientId);
+            var copper = character.Copper+character.Silver*10 + character.Gold * 100 + character.Platinum*1000;
+            if (money > copper)
+                money = copper;
+            character.Copper -= money;
+            recepient.Copper += money;
+            if (character.Copper > 10)
+            {
+                copper = character.Copper;
+                character.Copper = copper % 10;
+                AddSilver(id, id, character.Silver - (copper / 10));
+            }
+            if (recepient.Silver > 10)
+            {
+                copper = recepient.Copper;
+                recepient.Copper = copper % 10;
+                AddSilver(recepientId, recepientId, recepient.Silver - (copper / 10));
+            }
+            if (character.Copper < 0)
+            {
+                copper = character.Copper;
+                character.Copper = 10 - Math.Abs(copper % 10);
+                GiveSilver(id, recepientId, (int)Math.Ceiling(Math.Abs((double)copper / 10)));
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Items", new { id = id });
+        }
     }
 }

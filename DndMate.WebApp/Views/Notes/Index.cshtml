@@ -37,7 +37,7 @@
     {
         <hr />
         <h4>Master's Notes:</h4>
-        <div class="accordion" id="accordionExample">
+        <div class="accordion" id="MasterNotes">
             @foreach (var note in Model.MasterNotes)
             {
                 <div class="accordion-item">
@@ -46,7 +46,7 @@
                             @note.Name
                         </button>
                     </h2>
-                    <div id="note@(note.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div id="note@(note.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#MasterNotes">
                         <div class="accordion-body">
                             <p class="description">@note.Content</p>
                         </div>
@@ -59,7 +59,7 @@
     {
         <hr />
         <h4>My Notes:</h4>
-        <div class="accordion" id="accordionExample">
+        <div class="accordion" id="MyNotes">
             @foreach (var note in Model.MyNotes)
             {
                 <div class="accordion-item">
@@ -68,7 +68,7 @@
                             @note.Name
                         </button>
                     </h2>
-                    <div id="note@(note.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div id="note@(note.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#MyNotes">
                         <div class="accordion-body">
                             <p class="description">@note.Content</p>
                             <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Notes", new {id = note.Id})">Edit</a>

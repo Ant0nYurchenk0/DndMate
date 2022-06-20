@@ -19,7 +19,7 @@
                     @Html.ValidationMessageFor(m => m.Spell.Name)
                     <br />
                     @Html.LabelFor(m => m.Spell.Level)
-                    @Html.TextBoxFor(m => m.Spell.Level, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.Spell.Level, new { @class = "form-control", type="number" })
                     @Html.ValidationMessageFor(m => m.Spell.Level)
                     <br />
                     @Html.LabelFor(m => m.Spell.CastingTime)

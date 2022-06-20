@@ -14,6 +14,11 @@ namespace DndMate.WebApp.Models
         public int GamespaceId { get; set; }
         public Gamespace Gamespace { get; set; }
 
+        public int Platinum { get; set; }
+        public int Gold {get; set; }
+        public int Silver { get; set; }
+        public int Copper { get; set; }
+
         public int Strength { get; set; }
         public int Dexterity { get; set; }
         public int Constitution { get; set; }

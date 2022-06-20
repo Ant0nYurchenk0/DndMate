@@ -192,6 +192,7 @@
     <Compile Include="Controllers\CharactersController.cs" />
     <Compile Include="Controllers\GamespaceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NotesController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
@@ -199,12 +200,15 @@
     <Compile Include="Dtos\GamespaceCharDto.cs" />
     <Compile Include="Dtos\GamespaceDto.cs" />
     <Compile Include="Dtos\GamespaceWithCharacter.cs" />
+    <Compile Include="Dtos\ItemDto.cs" />
     <Compile Include="Dtos\NoteDto.cs" />
     <Compile Include="Dtos\NotificationDto.cs" />
     <Compile Include="Dtos\SpellDto.cs" />
     <Compile Include="Enums\Class.cs" />
+    <Compile Include="Enums\ItemType.cs" />
     <Compile Include="Enums\Race.cs" />
     <Compile Include="Enums\PlayerClass.cs" />
+    <Compile Include="Enums\Rarity.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -212,13 +216,23 @@
     <Compile Include="Migrations\202206190732536_All.designer.cs">
       <DependentUpon>202206190732536_All.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202206191441162_AddMoney.cs" />
+    <Compile Include="Migrations\202206191441162_AddMoney.designer.cs">
+      <DependentUpon>202206191441162_AddMoney.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206201227462_AddItem.cs" />
+    <Compile Include="Migrations\202206201227462_AddItem.designer.cs">
+      <DependentUpon>202206201227462_AddItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Gamespace.cs" />
     <Compile Include="Models\GamespaceChar.cs" />
     <Compile Include="Models\GamespaceCharacterSpell.cs" />
+    <Compile Include="Models\GamespaceCharacterItems.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\Notification.cs" />
@@ -232,6 +246,8 @@
     <Compile Include="ViewModels\CharacterViewModel.cs" />
     <Compile Include="ViewModels\GamespaceFormViewModel.cs" />
     <Compile Include="ViewModels\GamespaceListViewModel.cs" />
+    <Compile Include="ViewModels\ItemFormViewModel.cs" />
+    <Compile Include="ViewModels\ItemListViewModel.cs" />
     <Compile Include="ViewModels\NoteFormViewModel.cs" />
     <Compile Include="ViewModels\NoteListViewModel.cs" />
     <Compile Include="ViewModels\SpellFormViewModel.cs" />
@@ -311,9 +327,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -346,9 +359,12 @@
     <Content Include="Views\Characters\Get.cshtml" />
     <Content Include="Views\Characters\Index.cshtml" />
     <Content Include="Views\Notes\Form.cshtml" />
+    <Content Include="Views\Items\Index.cshtml" />
+    <Content Include="Views\Items\Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -358,6 +374,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202206190732536_All.resx">
       <DependentUpon>202206190732536_All.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206191441162_AddMoney.resx">
+      <DependentUpon>202206191441162_AddMoney.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206201227462_AddItem.resx">
+      <DependentUpon>202206201227462_AddItem.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

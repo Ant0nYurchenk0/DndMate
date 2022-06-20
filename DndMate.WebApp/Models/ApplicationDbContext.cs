@@ -10,6 +10,8 @@ namespace DndMate.WebApp.Models
         public DbSet<Gamespace> Gamespaces { get; set; }
         public DbSet<GamespaceChar> Characters { get; set; }
         public DbSet<GamespaceCharacterSpell> CharacterSpells { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<GamespaceCharacterItems> CharacterItems { get; set; }
         public DbSet<Note> Notes { get; set; }
 
         public ApplicationDbContext()

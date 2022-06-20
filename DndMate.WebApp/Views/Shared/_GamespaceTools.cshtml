@@ -38,12 +38,12 @@
             </a>
         </li>
         <li class="nav-item  vertical-item">
-            <a class="nav-link" href="@Url.Action("Index", "Spells", new {gamespaceId = Model.Gamespace.Id, charId = Model.Character.Id})" data-bs-toggle="tooltip" data-bs-placement="right" title="Spells">
+            <a class="nav-link" href="@Url.Action("Index", "Spells", new {gamespaceId = Model.Gamespace.Id})" data-bs-toggle="tooltip" data-bs-placement="right" title="Spells">
                 <img class="icon" src="https://cdn-icons-png.flaticon.com/512/4334/4334368.png" />
             </a>
         </li>
         <li class="nav-item vertical-item">
-            <a class="nav-link" href="@Url.Action()" data-bs-toggle="tooltip" data-bs-placement="right" title="Inventory">
+            <a class="nav-link" href="@Url.Action("Index", "Items", new { gamespaceId = Model.Gamespace.Id})" data-bs-toggle="tooltip" data-bs-placement="right" title="Inventory">
                 <img class="icon" src="https://cdn-icons-png.flaticon.com/512/6184/6184882.png" />
             </a>
         </li>
