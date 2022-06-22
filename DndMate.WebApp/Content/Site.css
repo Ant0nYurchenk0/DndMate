@@ -41,7 +41,6 @@ a:link, a:visited, a:hover, a:active {
 .navbar {
     z-index: 10;
 }
-
 .navbar-vertical ul {
     position: relative;
     top: 0;
@@ -76,7 +75,7 @@ a:link, a:visited, a:hover, a:active {
 }
 
 .toolbar {
-    margin-top: 56px;
+    margin-top: 56px; /*united: 56, pulse: 76*/
     margin-left: 50px;
 }
 

@@ -49,6 +49,11 @@
                     <div id="note@(note.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#MasterNotes">
                         <div class="accordion-body">
                             <p class="description">@note.Content</p>
+                            @if (Model.Gamespace.Character.CharacterClass == CharacterClass.Master)
+                            {
+                                <a class="btn btn-outline-warning" href="@Url.Action("Edit", "Notes", new {id = note.Id})">Edit</a>
+                                <a class="btn btn-outline-danger" href="@Url.Action("Delete", "Notes", new {id = note.Id})">Delete</a>
+                            }
                         </div>
                     </div>
                 </div>

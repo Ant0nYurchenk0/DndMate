@@ -20,26 +20,36 @@
     </div>
     <hr />
     <h4>Players:</h4>
-    @foreach (var player in players)
+    @if (players.Count() == 0)
     {
-        <a class="btn btn-long" href="@Url.Action("Get", "Characters", new { id = player.Id })">
-            <div class=" player-card" style="max-width: 20rem;">
-                <img class="character" src="@Class.Icons[player.CharacterClass]" />
-                <strong class="text-primary">Name:</strong>
-                <span class="space-right">
-                    @player.Name
-                </span>
-                <strong class="text-primary">Class:</strong>
-                <span class="space-right">
-                    @player.CharacterClass
-                </span>
-                <strong class="text-primary">Level:</strong>
-                <span class="space-right">
-                    @player.Level
-                </span>
-            </div>
-        </a>
-        <br />
-        <br />
+
+
+        <p class="text-muted">Nothing here.</p>
+    }
+    else
+    {
+
+        foreach (var player in players)
+        {
+            <a class="btn btn-long" href="@Url.Action("Get", "Characters", new { id = player.Id })">
+                <div class=" player-card" style="max-width: 20rem;">
+                    <img class="character" src="@Class.Icons[player.CharacterClass]" />
+                    <strong class="text-primary">Name:</strong>
+                    <span class="space-right">
+                        @player.Name
+                    </span>
+                    <strong class="text-primary">Class:</strong>
+                    <span class="space-right">
+                        @player.CharacterClass
+                    </span>
+                    <strong class="text-primary">Level:</strong>
+                    <span class="space-right">
+                        @player.Level
+                    </span>
+                </div>
+            </a>
+            <br />
+            <br />
+        }
     }
 </div>

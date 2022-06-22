@@ -25,20 +25,20 @@
     <br />
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link active" data-bs-toggle="tab" href="#money">Money</a>
+            <a class="nav-link active" data-bs-toggle="tab" href="#moneyTab">Money</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link " data-bs-toggle="tab" href="#weapons">Weapons</a>
+            <a class="nav-link " data-bs-toggle="tab" href="#weaponsTab">Weapons</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link " data-bs-toggle="tab" href="#equipment">Equipment </a>
+            <a class="nav-link " data-bs-toggle="tab" href="#equipmentTab">Equipment </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link " data-bs-toggle="tab" href="#other">Other </a>
+            <a class="nav-link " data-bs-toggle="tab" href="#otherTab">Other </a>
         </li>
     </ul>
     <div id="myTabContent" class="tab-content">
-        <div class="tab-pane fade show active" id="money">
+        <div class="tab-pane fade show active" id="moneyTab">
             <br />
             <div class="accordion" id="money">
                 <div class="accordion-item">
@@ -578,7 +578,7 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade" id="weapons">
+        <div class="tab-pane fade" id="weaponsTab">
             <br />
 
             @if (Model.Gamespace.Character.CharacterClass != CharacterClass.Master)
@@ -592,16 +592,16 @@
                 else
                 {
 
-                    foreach (var item in myWeapons)
-                    {
-                        <div class="accordion" id="assigneditem@(item.Id)">
+                    <div class="accordion" id="myWeapons">
+                        @foreach (var item in myWeapons)
+                        {
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingOne">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#myweapon@(item.Id)" aria-expanded="false" aria-controls="collapseOne">
                                         @item.Item.Name
                                     </button>
                                 </h2>
-                                <div id="myweapon@(item.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#assigneditem@(item.Id)" style="">
+                                <div id="myweapon@(item.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#myWeapons" style="">
                                     <div class="accordion-body">
                                         <table class="table-borderless">
                                             <tbody>
@@ -668,8 +668,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    }
+                        }
+                    </div>
                 }
                 <hr />
             }
@@ -682,17 +682,17 @@
             }
             else
             {
-                foreach (var item in weapons)
-                {
+                <div class="accordion" id="weapons">
+                    @foreach (var item in weapons)
+                    {
 
-                    <div class="accordion" id="assigneditem@(item.Id)">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingOne">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#weapon@(item.Id)" aria-expanded="false" aria-controls="collapseOne">
                                     @item.Name
                                 </button>
                             </h2>
-                            <div id="weapon@(item.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#assigneditem@(item.Id)" style="">
+                            <div id="weapon@(item.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#weapons" style="">
                                 <div class="accordion-body">
                                     <table class="table-borderless">
                                         <tbody>
@@ -770,11 +770,11 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             }
         </div>
-        <div class="tab-pane fade" id="equipment">
+        <div class="tab-pane fade" id="equipmentTab">
             <br />
 
             @if (Model.Gamespace.Character.CharacterClass != CharacterClass.Master)
@@ -784,17 +784,23 @@
                 <h4>My Equipment:</h4>
                 if (myEquipment.Count() == 0)
                 {
+
+
                     <p class="text-muted">Nothing here.</p>
-                    foreach (var item in myEquipment)
-                    {
-                        <div class="accordion" id="assigneditem@(item.Id)">
+                }
+                else
+                {
+
+                    <div class="accordion" id="myEquipment">
+                        @foreach (var item in myEquipment)
+                        {
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingOne">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#myequipment@(item.Id)" aria-expanded="false" aria-controls="collapseOne">
                                         @item.Item.Name
                                     </button>
                                 </h2>
-                                <div id="myequipment@(item.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#assigneditem@(item.Id)" style="">
+                                <div id="myequipment@(item.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#myEquipment" style="">
                                     <div class="accordion-body">
                                         <table class="table-borderless">
                                             <tbody>
@@ -861,11 +867,12 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    }
+                        }
+                    </div>
                 }
                 <hr />
             }
+
             <h4>All Equipment:</h4>
             @if (equipment.Count() == 0)
             {
@@ -876,17 +883,17 @@
             else
             {
 
-                foreach (var item in equipment)
-                {
+                <div class="accordion" id="equipment">
+                    @foreach (var item in equipment)
+                    {
 
-                    <div class="accordion" id="assigneditem@(item.Id)">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingOne">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#equipment@(item.Id)" aria-expanded="false" aria-controls="collapseOne">
                                     @item.Name
                                 </button>
                             </h2>
-                            <div id="equipment@(item.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#assigneditem@(item.Id)" style="">
+                            <div id="equipment@(item.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#equipment" style="">
                                 <div class="accordion-body">
                                     <table class="table-borderless">
                                         <tbody>
@@ -960,11 +967,11 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             }
         </div>
-        <div class="tab-pane fade" id="other">
+        <div class="tab-pane fade" id="otherTab">
             <br />
             @if (Model.Gamespace.Character.CharacterClass != CharacterClass.Master)
             {
@@ -980,16 +987,16 @@
                 else
                 {
 
-                    foreach (var item in myOther)
-                    {
-                        <div class="accordion" id="assigneditem@(item.Id)">
+                    <div class="accordion" id="myOther">
+                        @foreach (var item in myOther)
+                        {
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingOne">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#myother@(item.Id)" aria-expanded="false" aria-controls="collapseOne">
                                         @item.Item.Name
                                     </button>
                                 </h2>
-                                <div id="myother@(item.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#assigneditem@(item.Id)" style="">
+                                <div id="myother@(item.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#myOther" style="">
                                     <div class="accordion-body">
                                         <table class="table-borderless">
                                             <tbody>
@@ -1056,8 +1063,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    }
+                        }
+                    </div>
                 }
                 <hr />
             }
@@ -1071,17 +1078,17 @@
             else
             {
 
-                foreach (var item in other)
-                {
+                <div class="accordion" id="other">
+                    @foreach (var item in other)
+                    {
 
-                    <div class="accordion" id="assigneditem@(item.Id)">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingOne">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#other@(item.Id)" aria-expanded="false" aria-controls="collapseOne">
                                     @item.Name
                                 </button>
                             </h2>
-                            <div id="other@(item.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#assigneditem@(item.Id)" style="">
+                            <div id="other@(item.Id)" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#other" style="">
                                 <div class="accordion-body">
                                     <table class="table-borderless">
                                         <tbody>
@@ -1155,8 +1162,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
 
             }
 
