@@ -37,7 +37,10 @@ body {
 a:link, a:visited, a:hover, a:active {
     text-decoration: none;
 }
-
+.navbar{
+    padding-top: 9px ;
+    padding-bottom: 9px ;
+}
 .navbar {
     z-index: 10;
 }
@@ -75,7 +78,7 @@ a:link, a:visited, a:hover, a:active {
 }
 
 .toolbar {
-    margin-top: 56px; /*united: 56, pulse: 76*/
+    margin-top: 60px;
     margin-left: 50px;
 }
 
@@ -100,8 +103,13 @@ a:link, a:visited, a:hover, a:active {
     position: absolute;
 }
 
-.gamespace-content {
+.gamespace-content {   
     padding: 10px 6% 50px 70px;
+    max-height: calc(100vh - 130px);
+    overflow: scroll;
+}
+.content{
+    padding: 0 6% 50px 6%;
     max-height: calc(100vh - 130px);
     overflow: scroll;
 }
@@ -109,11 +117,11 @@ a:link, a:visited, a:hover, a:active {
 .second-table {
     padding-left: 0;
 }
-.gamespace-content::-webkit-scrollbar {
+.gamespace-content::-webkit-scrollbar, .content::-webkit-scrollbar {
     display: none;
 }
 
-.gamespace-content {
+.gamespace-content, .content {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
@@ -222,4 +230,28 @@ a:link, a:visited, a:hover, a:active {
 .character-button{
     border:none;
     background: none;
+}
+.badge{
+    width: 80px;
+}
+.legendary{
+    background-color: red;
+}
+.unique{
+    background-color: rebeccapurple;
+}
+.very-rare{
+    background-color: darkorange;
+}
+.rare{
+    background-color: gold;
+}
+.common{
+    background-color: green;
+}
+.unknown{
+    background-color: gray;
+}
+.form-check-input{
+    border-radius: 8px;
 }

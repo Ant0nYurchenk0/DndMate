@@ -11,10 +11,12 @@
                             Value = ((int)e).ToString(),
                             Text = e.ToString()
                         });
+    var content = "content";
 }
 @if (Model.Character.Id != 0)
 {
     @Html.Partial("_GamespaceTools", Model.Gamespace);
+    content = "gamespace-content";
     <input type="hidden" name="page" value="character" />
 }
 else
@@ -22,6 +24,8 @@ else
     <br />
     <br />
     <br />
+    <br />
+
 }
 @using (Html.BeginForm("Save", "Characters"))
 {
@@ -51,7 +55,7 @@ else
     @Html.HiddenFor(m => m.Character.Gold)
     @Html.HiddenFor(m => m.Character.Silver)
     @Html.HiddenFor(m => m.Character.Copper)
-    <div class="gamespace-content">
+    <div class="@content">
         @Html.ValidationSummary()
         <div class="row">
             <div class="col-md-4 ">

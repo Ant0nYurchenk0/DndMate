@@ -10,6 +10,28 @@
     var myOther = Model.MyItems.Where(i => i.Item.ItemType == ItemType.Other).ToList();
     var myEquipment = Model.MyItems.Where(i => i.Item.ItemType == ItemType.Equipment).ToList();
 }
+@functions{
+    public IHtmlString IdentifyRarity(Rarity rarity)
+    {
+        switch (rarity)
+        {
+            case Rarity.Unknown:
+                return Html.Raw("<div class=\"badge rounded-pill unknown\">unknown</div>");
+            case Rarity.Common:
+                return Html.Raw("<div class=\"badge rounded-pill common\">common</div>");
+            case Rarity.Rare:
+                return Html.Raw("<div class=\"badge rounded-pill rare\">rare</div>");
+            case Rarity.VeryRare:
+                return Html.Raw("<div class=\"badge rounded-pill very-rare\">very rare</div>");
+            case Rarity.Unique:
+                return Html.Raw("<div class=\"badge rounded-pill unique\">unique</div>");
+            case Rarity.Legendary:
+                return Html.Raw("<div class=\"badge rounded-pill legendary\">legendary</div>");
+            default:
+                return null;
+        }
+    }
+}
 @Html.Partial("_GamespaceTools", Model.Gamespace)
 <div class="gamespace-content">
 
@@ -622,29 +644,9 @@
                                         <p class="description">
                                             @item.Item.Description
                                         </p>
-                                        @{
-                                            switch (item.Item.Rarity)
-                                            {
-                                                case Rarity.Unknown:
-                                                    <div class="badge rounded-pill bg-secondary">unknown</div>
-                                                    break;
-                                                case Rarity.Common:
-                                                    <div class="badge rounded-pill bg-success">common</div>
-                                                    break;
-                                                case Rarity.Rare:
-                                                    <div class="badge rounded-pill bg-warning">rare</div>
-                                                    break;
-                                                case Rarity.VeryRare:
-                                                    <div class="badge rounded-pill bg-primary">very rare</div>
-                                                    break;
-                                                case Rarity.Unique:
-                                                    <div class="badge rounded-pill bg-dark">unique</div>
-                                                    break;
-                                                case Rarity.Legendary:
-                                                    <div class="badge rounded-pill bg-danger">legendary</div>
-                                                    break;
-                                            }
-                                        }
+                                        
+                                        @IdentifyRarity(item.Item.Rarity)
+                                        
                                         <br />
                                         <br />
                                         <span class="dropdown">
@@ -709,29 +711,9 @@
                                     <p class="description">
                                         @item.Description
                                     </p>
-                                    @{
-                                        switch (item.Rarity)
-                                        {
-                                            case Rarity.Unknown:
-                                                <div class="badge rounded-pill bg-secondary">unknown</div>
-                                                break;
-                                            case Rarity.Common:
-                                                <div class="badge rounded-pill bg-success">common</div>
-                                                break;
-                                            case Rarity.Rare:
-                                                <div class="badge rounded-pill bg-warning">rare</div>
-                                                break;
-                                            case Rarity.VeryRare:
-                                                <div class="badge rounded-pill bg-primary">very rare</div>
-                                                break;
-                                            case Rarity.Unique:
-                                                <div class="badge rounded-pill bg-dark">unique</div>
-                                                break;
-                                            case Rarity.Legendary:
-                                                <div class="badge rounded-pill bg-danger">legendary</div>
-                                                break;
-                                        }
-                                    }
+                                   
+                                        @IdentifyRarity(item.Rarity)
+
                                     <br />
                                     <br />
                                     @if (Model.Gamespace.Character.CharacterClass == CharacterClass.Master)
@@ -821,29 +803,8 @@
                                         <p class="description">
                                             @item.Item.Description
                                         </p>
-                                        @{
-                                            switch (item.Item.Rarity)
-                                            {
-                                                case Rarity.Unknown:
-                                                    <div class="badge rounded-pill bg-secondary">unknown</div>
-                                                    break;
-                                                case Rarity.Common:
-                                                    <div class="badge rounded-pill bg-success">common</div>
-                                                    break;
-                                                case Rarity.Rare:
-                                                    <div class="badge rounded-pill bg-warning">rare</div>
-                                                    break;
-                                                case Rarity.VeryRare:
-                                                    <div class="badge rounded-pill bg-primary">very rare</div>
-                                                    break;
-                                                case Rarity.Unique:
-                                                    <div class="badge rounded-pill bg-dark">unique</div>
-                                                    break;
-                                                case Rarity.Legendary:
-                                                    <div class="badge rounded-pill bg-danger">legendary</div>
-                                                    break;
-                                            }
-                                        }
+                                        @IdentifyRarity(item.Item.Rarity)
+
                                         <br />
                                         <br />
                                         <span class="dropdown">
@@ -906,29 +867,8 @@
                                     <p class="description">
                                         @item.Description
                                     </p>
-                                    @{
-                                        switch (item.Rarity)
-                                        {
-                                            case Rarity.Unknown:
-                                                <div class="badge rounded-pill bg-secondary">unknown</div>
-                                                break;
-                                            case Rarity.Common:
-                                                <div class="badge rounded-pill bg-success">common</div>
-                                                break;
-                                            case Rarity.Rare:
-                                                <div class="badge rounded-pill bg-warning">rare</div>
-                                                break;
-                                            case Rarity.VeryRare:
-                                                <div class="badge rounded-pill bg-primary">very rare</div>
-                                                break;
-                                            case Rarity.Unique:
-                                                <div class="badge rounded-pill bg-dark">unique</div>
-                                                break;
-                                            case Rarity.Legendary:
-                                                <div class="badge rounded-pill bg-danger">legendary</div>
-                                                break;
-                                        }
-                                    }
+                                    @IdentifyRarity(item.Rarity)
+
                                     <br />
                                     <br />
                                     @if (Model.Gamespace.Character.CharacterClass == CharacterClass.Master)
@@ -1017,29 +957,8 @@
                                         <p class="description">
                                             @item.Item.Description
                                         </p>
-                                        @{
-                                            switch (item.Item.Rarity)
-                                            {
-                                                case Rarity.Unknown:
-                                                    <div class="badge rounded-pill bg-secondary">unknown</div>
-                                                    break;
-                                                case Rarity.Common:
-                                                    <div class="badge rounded-pill bg-success">common</div>
-                                                    break;
-                                                case Rarity.Rare:
-                                                    <div class="badge rounded-pill bg-warning">rare</div>
-                                                    break;
-                                                case Rarity.VeryRare:
-                                                    <div class="badge rounded-pill bg-primary">very rare</div>
-                                                    break;
-                                                case Rarity.Unique:
-                                                    <div class="badge rounded-pill bg-dark">unique</div>
-                                                    break;
-                                                case Rarity.Legendary:
-                                                    <div class="badge rounded-pill bg-danger">legendary</div>
-                                                    break;
-                                            }
-                                        }
+                                        @IdentifyRarity(item.Item.Rarity)
+
                                         <br />
                                         <br />
                                         <span class="dropdown">
@@ -1101,29 +1020,8 @@
                                     <p class="description">
                                         @item.Description
                                     </p>
-                                    @{
-                                        switch (item.Rarity)
-                                        {
-                                            case Rarity.Unknown:
-                                                <div class="badge rounded-pill bg-secondary">unknown</div>
-                                                break;
-                                            case Rarity.Common:
-                                                <div class="badge rounded-pill bg-success">common</div>
-                                                break;
-                                            case Rarity.Rare:
-                                                <div class="badge rounded-pill bg-warning">rare</div>
-                                                break;
-                                            case Rarity.VeryRare:
-                                                <div class="badge rounded-pill bg-primary">very rare</div>
-                                                break;
-                                            case Rarity.Unique:
-                                                <div class="badge rounded-pill bg-dark">unique</div>
-                                                break;
-                                            case Rarity.Legendary:
-                                                <div class="badge rounded-pill bg-danger">legendary</div>
-                                                break;
-                                        }
-                                    }
+                                    @IdentifyRarity(item.Rarity)
+
                                     <br />
                                     <br />
                                     @if (Model.Gamespace.Character.CharacterClass == CharacterClass.Master)

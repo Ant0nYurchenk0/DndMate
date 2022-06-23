@@ -23,7 +23,8 @@ namespace DndMate.WebApp
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       //"~/Content/bootstrap.css",
-                      "~/Content/united.css",
+                      //"~/Content/united.css",
+                      "~/Content/pulse.css",
                       "~/Content/site.css"));
         }
     }

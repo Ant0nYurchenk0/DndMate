@@ -3,20 +3,24 @@
 @{
     ViewBag.Title = "Form";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var content = "content";
 }
 
 @if (Model.Gamespace.Id != 0)
 {
     @Html.Partial("_GamespaceTools", Model.GamespaceProps)
+    content = "gamespace-content";
 }
 else
 {
     <br />
     <br />
     <br />
+    <br />
+
 }
 
-<div class="gamespace-content">
+<div class="@content">
 
     @using (Html.BeginForm("Save", "Gamespace", FormMethod.Post))
     {
