@@ -185,10 +185,7 @@ a:link, a:visited, a:hover, a:active {
 .player-card {
     height: 52px;
     max-width: 100% !important;
-    width: 100%;
-    border-radius: 0;
-    border: 1px solid;
-    border-color: #dfdfdf;
+    width: 100%;    
     padding-top: 5px;
     padding-left: 20px;
     overflow: hidden;
@@ -201,6 +198,8 @@ a:link, a:visited, a:hover, a:active {
     text-align: left;
     padding: 0;
     border-radius: 0;
+    border: 1px solid;
+    border-color: #dfdfdf;
 }
 
 .space-right {
@@ -253,5 +252,22 @@ a:link, a:visited, a:hover, a:active {
     background-color: gray;
 }
 .form-check-input{
+    border-radius: 50%;
+}
+.switch {
+    outline: 0;
     border-radius: 8px;
+}
+.btn:focus, .accordion-button:focus, .form-check-input:focus, .navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.btn-long:focus {
+    background-color:#eeeaf5 ;
+}
+.navbar-toggler.collapsed{
+    background-color: none;
+}
+.master{
+    cursor: auto;
 }

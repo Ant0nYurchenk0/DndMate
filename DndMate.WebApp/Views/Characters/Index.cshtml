@@ -11,12 +11,14 @@
 
 <div class="gamespace-content">
     <h4>Master:</h4>
-    <div class=" player-card" style="max-width: 20rem;">
-        <img class="character" src="@Class.Icons[master.CharacterClass]" />
-        <strong class="text-primary">Name:</strong>
-        <span class="space-right">
-            @master.Name
-        </span>
+    <div class="btn btn-long master">
+        <div class=" player-card" style="max-width: 20rem;">
+            <img class="character" src="@Class.Icons[master.CharacterClass]" />
+            <strong class="text-primary">Name:</strong>
+            <span class="space-right">
+                @master.Name
+            </span>
+        </div>
     </div>
     <hr />
     <h4>Players:</h4>
@@ -32,7 +34,7 @@
         foreach (var player in players)
         {
             <a class="btn btn-long" href="@Url.Action("Get", "Characters", new { id = player.Id })">
-                <div class=" player-card" style="max-width: 20rem;">
+                <div class=" player-card">
                     <img class="character" src="@Class.Icons[player.CharacterClass]" />
                     <strong class="text-primary">Name:</strong>
                     <span class="space-right">
