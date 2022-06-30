@@ -1,6 +1,6 @@
 ﻿@model DndMate.WebApp.ViewModels.CharacterViewModel
 @using Microsoft.AspNet.Identity;
-
+@using DndMate.WebApp.Enums;
 @{
     ViewBag.Title = "Get";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -21,6 +21,25 @@
         if (Model.Character.Id == Model.Gamespace.Character.Id)
             return true;
         return false;
+    }
+    public int ProfModfier()
+    {
+        switch (Model.Character.Ability)
+        {
+            case Ability.Strength:
+                return Bonus(Model.Character.Strength);
+            case Ability.Dexterity:
+                return Bonus(Model.Character.Dexterity);
+            case Ability.Constitution:
+                return Bonus(Model.Character.Constitution);
+            case Ability.Intelligence:
+                return Bonus(Model.Character.Intelligence);
+            case Ability.Wisdom:
+                return Bonus(Model.Character.Wisdom);
+            case Ability.Charisma:
+                return Bonus(Model.Character.Charisma);
+            default: return 0;
+        }
     }
 }
 @Html.Partial("_GamespaceTools", Model.Gamespace)
@@ -66,6 +85,11 @@
                             @Html.CheckBoxFor(m => m.Character.Inspiration, new { @class = "form-check-input ", type = "checkbox", disabled = "" })
                         </td>
 
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Initiative</th>
+                        <td>@Bonus(Model.Character.Dexterity)</td>
                     </tr>
                     <tr>
                         <th scope="row">Proficiency bonus</th>
@@ -526,6 +550,10 @@
                                 <td>@Model.Character.CharacterClass</td>
                             </tr>
                             <tr>
+                                <th scope="row">Spellcasting Ability</th>
+                                <td>@Model.Character.Ability</td>
+                            </tr>
+                            <tr>
                                 <th scope="row">Race</th>
                                 <td>@Model.Character.Race</td>
                             </tr>
@@ -537,16 +565,20 @@
                                 <td>@Model.Character.ArmorClass</td>
                             </tr>
                             <tr>
-                                <th scope="row">Initiative</th>
-                                <td>@Bonus(Model.Character.Dexterity)</td>
-                            </tr>
-                            <tr>
                                 <th scope="row">Speed</th>
                                 <td>@Model.Character.Speed feet</td>
                             </tr>
                             <tr>
                                 <th scope="row">Hit Dice</th>
                                 <td>@Model.Character.HitDice</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Spell Save DC</th>
+                                <td>@(8+Model.Character.ProfBonus+ProfModfier())</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Spell Atack Bonus</th>
+                                <td>@(Model.Character.ProfBonus+ProfModfier())</td>
                             </tr>
                         </tbody>
                     </table>

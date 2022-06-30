@@ -92,5 +92,7 @@ namespace DndMate.WebApp.Models
         public string Flaws { get; set; }
         public string Proficiencies { get; set; }
         public string Features { get; set; }
+
+        public Ability Ability { get; set; }
     }
 }

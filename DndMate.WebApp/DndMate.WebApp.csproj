@@ -204,6 +204,7 @@
     <Compile Include="Dtos\NoteDto.cs" />
     <Compile Include="Dtos\NotificationDto.cs" />
     <Compile Include="Dtos\SpellDto.cs" />
+    <Compile Include="Enums\Ability.cs" />
     <Compile Include="Enums\Class.cs" />
     <Compile Include="Enums\ItemType.cs" />
     <Compile Include="Enums\Race.cs" />
@@ -223,6 +224,10 @@
     <Compile Include="Migrations\202206201227462_AddItem.cs" />
     <Compile Include="Migrations\202206201227462_AddItem.designer.cs">
       <DependentUpon>202206201227462_AddItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202206301110156_AddAbility.cs" />
+    <Compile Include="Migrations\202206301110156_AddAbility.designer.cs">
+      <DependentUpon>202206301110156_AddAbility.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -381,6 +386,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206201227462_AddItem.resx">
       <DependentUpon>202206201227462_AddItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202206301110156_AddAbility.resx">
+      <DependentUpon>202206301110156_AddAbility.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

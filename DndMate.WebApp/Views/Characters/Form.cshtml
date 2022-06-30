@@ -361,6 +361,13 @@ else
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th scope="row">Spellcasting Ability</th>
+                                    <td>
+                                        @Html.EnumDropDownListFor(m => m.Character.Ability, new { @class = "form-control " })
+                                        @Html.ValidationMessageFor(m => m.Character.Ability)
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th scope="row">Race</th>
                                     <td>
                                         @Html.EnumDropDownListFor(m => m.Character.Race, new { @class = "form-control " })
