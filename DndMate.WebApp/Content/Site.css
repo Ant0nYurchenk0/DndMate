@@ -189,11 +189,11 @@ a:link, a:visited, a:hover, a:active {
     padding-top: 5px;
     padding-left: 20px;
     overflow: hidden;
-    background-color: white;
 }
 
 .btn-long {
     height: 52px;
+    background-color: white;
     overflow: hidden;
     max-width: 100% !important;
     width: 100%;
@@ -203,6 +203,13 @@ a:link, a:visited, a:hover, a:active {
     border: 1px solid;
     border-color: #dfdfdf;
 }
+    .btn-long:active {
+        background-color: #eeeaf5;
+    }
+    .master:active{
+        background-color: white;
+
+    }
 
 .space-right {
     margin-right: 20px;
