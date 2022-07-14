@@ -189,10 +189,12 @@ a:link, a:visited, a:hover, a:active {
     padding-top: 5px;
     padding-left: 20px;
     overflow: hidden;
+    background-color: white;
 }
 
 .btn-long {
     height: 52px;
+    overflow: hidden;
     max-width: 100% !important;
     width: 100%;
     text-align: left;
